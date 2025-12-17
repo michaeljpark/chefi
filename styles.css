@@ -1172,3 +1172,120 @@ body {
 .btn-like { color: #4CD964; }
 .btn-pass { color: #FF3B30; }
 
+/* MOBILE OPTIMIZATIONS FOR ONBOARDING IMAGES */
+@media (max-width: 450px) {
+  /* Step 1: Reduce main onboarding image size to prevent cutoff */
+  .onboarding-image {
+    height: 60%; /* Reduced from 80% */
+    max-height: 450px;
+  }
+
+  /* Step 1: Adjust title position and size for smaller screens */
+  #step-1 .onboarding-title {
+    top: 8%;
+    font-size: 28px;
+  }
+
+  .title-highlight {
+    font-size: 48px; /* Reduced from 60px */
+  }
+
+  /* Step 1: Adjust action buttons position */
+  #step-1 .onboarding-actions {
+    bottom: 8%;
+  }
+
+  /* Step 1: Adjust decorative stars size */
+  .star-left {
+    width: 60px; /* Reduced from 75px */
+  }
+
+  .star-right {
+    width: 100px; /* Reduced from 130px */
+  }
+
+  /* Step 2: Optimize preference icons grid */
+  .preference-grid-images {
+    gap: 12px; /* Reduced from 15px */
+    max-width: 100%;
+    padding: 0 10px;
+  }
+
+  .pref-image-btn {
+    padding: 10px; /* Reduced from 15px */
+  }
+
+  .pref-icon-wrapper {
+    height: 60%; /* Reduced from 70% */
+    margin-bottom: 15px; /* Reduced from 25px */
+  }
+
+  .pref-label {
+    font-size: 13px; /* Slightly reduced */
+  }
+
+  /* Step 3: Optimize cuisine icons grid (3 columns) */
+  .preference-grid-images.grid-3-cols {
+    gap: 8px; /* Reduced from 10px */
+    max-width: 100%;
+    padding: 0 10px;
+  }
+
+  .preference-grid-images.grid-3-cols .pref-image-btn {
+    padding: 8px; /* Reduced from 10px */
+  }
+
+  .preference-grid-images.grid-3-cols .pref-icon-wrapper {
+    height: 55%; /* Reduced to fit better */
+    margin-bottom: 10px; /* Reduced from 15px */
+  }
+
+  .preference-grid-images.grid-3-cols .pref-label {
+    font-size: 11px; /* Reduced from 12px */
+  }
+
+  /* Adjust onboarding step padding for mobile */
+  .onboarding-step {
+    padding: 15px; /* Reduced from 20px */
+  }
+
+  /* Ensure buttons are properly sized on mobile */
+  .onboarding-nav-buttons {
+    margin-top: 20px; /* Reduced from 30px */
+  }
+
+  .onboarding-btn {
+    padding: 10px; /* Reduced from 12px */
+    font-size: 13px; /* Reduced from 14px */
+  }
+
+  .btn-next, .btn-finish, .btn-back {
+    padding: 14px; /* Reduced from 16px */
+    font-size: 15px; /* Reduced from 16px */
+  }
+}
+
+/* Extra small screens (narrower phones) */
+@media (max-width: 375px) {
+  /* Further reduce Step 1 image */
+  .onboarding-image {
+    height: 55%;
+    max-height: 400px;
+  }
+
+  /* Further reduce preference icons */
+  .pref-icon-wrapper {
+    height: 55%;
+    margin-bottom: 12px;
+  }
+
+  .preference-grid-images.grid-3-cols .pref-icon-wrapper {
+    height: 50%;
+    margin-bottom: 8px;
+  }
+
+  .preference-grid-images.grid-3-cols .pref-label {
+    font-size: 10px;
+  }
+}
+
