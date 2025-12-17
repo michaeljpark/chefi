@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Chefi — Food Social</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="stage">
+    <div class="phone">
+      <!-- Onboarding Overlay -->
+      <div id="onboarding" class="onboarding">
+        <!-- Step 1: Hungry? -->
+        <div class="onboarding-step active" id="step-1">
+          <h1 class="onboarding-title">Are you<br><span class="title-highlight">Hungry?</span></h1>
+          <img src="onboarding1.png" class="onboarding-image" alt="Hungry?" />
+          
+          <!-- Deco Stars -->
+          <img src="star2.png" class="deco-star star-left" alt="" />
+          <img src="star1.png" class="deco-star star-right" alt="" />
+
+          <div class="onboarding-actions">
+            <button class="onboarding-btn btn-yes" onclick="nextStep(2)">Yes!!</button>
+            <button class="onboarding-btn btn-no" onclick="skipOnboarding()">Maybe later</button>
+          </div>
+        </div>
+
+        <!-- Step 2: Taste Preference -->
+        <div class="onboarding-step" id="step-2">
+          <h1 class="onboarding-title">What are you craving?</h1>
+          <div class="preference-grid-images">
+            <button class="pref-image-btn" onclick="togglePref(this)">
+              <div class="pref-icon-wrapper">
+                <img src="heavyrich.png" class="pref-icon" alt="Heavy & Rich" />
+              </div>
+              <span class="pref-label">Heavy & Rich</span>
+            </button>
+            <button class="pref-image-btn" onclick="togglePref(this)">
+              <div class="pref-icon-wrapper">
+                <img src="lightfresh.png" class="pref-icon" alt="Light & Fresh" />
+              </div>
+              <span class="pref-label">Light & Fresh</span>
+            </button>
+            <button class="pref-image-btn" onclick="togglePref(this)">
+              <div class="pref-icon-wrapper">
+                <img src="warmcozy.png" class="pref-icon" alt="Warm & Cozy" />
+              </div>
+              <span class="pref-label">Warm & Cozy</span>
+            </button>
+            <button class="pref-image-btn" onclick="togglePref(this)">
+              <div class="pref-icon-wrapper">
+                <img src="softchewy.png" class="pref-icon" alt="Soft & Sweet" />
+              </div>
+              <span class="pref-label">Soft & Sweet</span>
+            </button>
+          </div>
+          <div class="onboarding-nav-buttons">
+            <button class="onboarding-btn btn-back" onclick="nextStep(1)">Back</button>
+            <button class="onboarding-btn btn-next" onclick="nextStep(3)">Next</button>
+          </div>
+        </div>
+
+        <!-- Step 3: Cuisine Preference -->
+        <div class="onboarding-step" id="step-3">
+          <h1 class="onboarding-title">Pick your cuisines</h1>
+          <div class="preference-grid-images grid-3-cols">
+            <button class="pref-image-btn" onclick="togglePref(this)">
+              <div class="pref-icon-wrapper">
+                <img src="korean.png" class="pref-icon" alt="Korean" />
+              </div>
+              <span class="pref-label">Korean</span>
+            </button>
+            <button class="pref-image-btn" onclick="togglePref(this)">
+              <div class="pref-icon-wrapper">
+                <img src="japanese.png" class="pref-icon" alt="Japanese" />
+              </div>
+              <span class="pref-label">Japanese</span>
+            </button>
+            <button class="pref-image-btn" onclick="togglePref(this)">
+              <div class="pref-icon-wrapper">
+                <img src="chinese.png" class="pref-icon" alt="Chinese" />
+              </div>
+              <span class="pref-label">Chinese</span>
+            </button>
+            <button class="pref-image-btn" onclick="togglePref(this)">
+              <div class="pref-icon-wrapper">
+                <img src="western.png" class="pref-icon" alt="Western" />
+              </div>
+              <span class="pref-label">Western</span>
+            </button>
+            <button class="pref-image-btn" onclick="togglePref(this)">
+              <div class="pref-icon-wrapper">
+                <img src="southasian.png" class="pref-icon" alt="South Asian" />
+              </div>
+              <span class="pref-label">South Asian</span>
+            </button>
+            <button class="pref-image-btn" onclick="togglePref(this)">
+              <div class="pref-icon-wrapper">
+                <img src="latinamerican.png" class="pref-icon" alt="Latin American" />
+              </div>
+              <span class="pref-label">Latin American</span>
+            </button>
+            <button class="pref-image-btn" onclick="togglePref(this)">
+              <div class="pref-icon-wrapper">
+                <img src="halal.png" class="pref-icon" alt="Halal" />
+              </div>
+              <span class="pref-label">Halal</span>
+            </button>
+            <button class="pref-image-btn" onclick="togglePref(this)">
+              <div class="pref-icon-wrapper">
+                <img src="caribbean.png" class="pref-icon" alt="Caribbean" />
+              </div>
+              <span class="pref-label">Caribbean</span>
+            </button>
+            <button class="pref-image-btn" onclick="togglePref(this)">
+              <div class="pref-icon-wrapper">
+                <img src="american.png" class="pref-icon" alt="American" />
+              </div>
+              <span class="pref-label">American</span>
+            </button>
+          </div>
+          <div class="onboarding-nav-buttons">
+            <button class="onboarding-btn btn-back" onclick="nextStep(2)">Back</button>
+            <button class="onboarding-btn btn-finish" onclick="finishOnboarding()">Let's Eat!</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Viewport -->
+      <main class="viewport">
+        <div class="pager" id="pager">
+          <div class="pages" id="pages">
+            
+            <!-- PAGE 1: FEED (Tinder Style) -->
+            <article class="page page-feed" id="page-feed">
+              <div class="card-stack-container">
+                <div class="card-stack" id="card-stack">
+                  <!-- Cards will be injected by JS -->
+                  <div class="tinder-card" style="z-index: 3; background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);">
+                    <div class="card-content">
+                      <h2>Spicy Ramen</h2>
+                      <p>Japanese • Spicy</p>
+                    </div>
+                    <div class="card-overlay overlay-nope">NOPE</div>
+                    <div class="card-overlay overlay-like">YUM</div>
+                  </div>
+                  <div class="tinder-card" style="z-index: 2; background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);">
+                    <div class="card-content">
+                      <h2>Avocado Toast</h2>
+                      <p>Brunch • Healthy</p>
+                    </div>
+                    <div class="card-overlay overlay-nope">NOPE</div>
+                    <div class="card-overlay overlay-like">YUM</div>
+                  </div>
+                  <div class="tinder-card" style="z-index: 1; background: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);">
+                    <div class="card-content">
+                      <h2>Tacos</h2>
+                      <p>Mexican • Savory</p>
+                    </div>
+                    <div class="card-overlay overlay-nope">NOPE</div>
+                    <div class="card-overlay overlay-like">YUM</div>
+                  </div>
+                </div>
+                <div class="tinder-actions">
+                  <button class="tinder-btn btn-pass" onclick="swipeCard('left')">❌</button>
+                  <button class="tinder-btn btn-like" onclick="swipeCard('right')">💚</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- PAGE 2: REELS -->
+            <article class="page page-reels" id="page-reels">
+              <div class="reels-header-overlay">
+                <span class="reels-title">Reels</span>
+                <button class="icon-btn"><svg viewBox="0 0 24 24"><path d="M7 7h2l1-2h4l1 2h2a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3v-8a3 3 0 0 1 3-3Zm5 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/></svg></button>
+              </div>
+              <div class="reels-container" id="reels-container">
+                <!-- Reel 1 -->
+                <div class="reel-item">
+                  <video class="reel-video" src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" loop muted playsinline></video>
+                  <div class="reel-ui">
+                    <div class="reel-info">
+                      <div class="reel-user">
+                        <div class="avatar-small">CJ</div>
+                        <span class="username">chef_jo</span>
+                        <span class="follow-btn">• Follow</span>
+                      </div>
+                      <div class="reel-desc">Perfect knife skills for scallions! 🔪✨ #chef #skills</div>
+                      <div class="reel-audio">
+                        <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+                        <span>Original Audio - chef_jo</span>
+                      </div>
+                    </div>
+                    <div class="reel-actions-bar">
+                      <button class="reel-action">
+                        <svg viewBox="0 0 24 24"><path d="M12 21s-7-4.35-10-9.5C-.7 6.2 3 2.5 7 4.2c1.3.55 2.3 1.65 3 2.7.7-1.05 1.7-2.15 3-2.7 4-1.7 7.7 2 5 7.3C19 16.65 12 21 12 21Z"/></svg>
+                        <span>24K</span>
+                      </button>
+                      <button class="reel-action">
+                        <svg viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v8Z"/></svg>
+                        <span>420</span>
+                      </button>
+                      <button class="reel-action">
+                        <svg viewBox="0 0 24 24"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7Z"/></svg>
+                        <span>Share</span>
+                      </button>
+                      <button class="reel-action">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="1.5"/><circle cx="6" cy="12" r="1.5"/><circle cx="18" cy="12" r="1.5"/></svg>
+                      </button>
+                      <div class="reel-audio-cover"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Reel 2 -->
+                <div class="reel-item">
+                  <video class="reel-video" src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" loop muted playsinline></video>
+                  <div class="reel-ui">
+                    <div class="reel-info">
+                      <div class="reel-user">
+                        <div class="avatar-small">SE</div>
+                        <span class="username">street_eats</span>
+                        <span class="follow-btn">• Follow</span>
+                      </div>
+                      <div class="reel-desc">Sizzling steak perfection 🥩🔥 #steak #foodporn</div>
+                      <div class="reel-audio">
+                        <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+                        <span>Sizzle Sounds - street_eats</span>
+                      </div>
+                    </div>
+                    <div class="reel-actions-bar">
+                      <button class="reel-action">
+                        <svg viewBox="0 0 24 24"><path d="M12 21s-7-4.35-10-9.5C-.7 6.2 3 2.5 7 4.2c1.3.55 2.3 1.65 3 2.7.7-1.05 1.7-2.15 3-2.7 4-1.7 7.7 2 5 7.3C19 16.65 12 21 12 21Z"/></svg>
+                        <span>58K</span>
+                      </button>
+                      <button class="reel-action">
+                        <svg viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v8Z"/></svg>
+                        <span>1.2K</span>
+                      </button>
+                      <button class="reel-action">
+                        <svg viewBox="0 0 24 24"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7Z"/></svg>
+                        <span>Share</span>
+                      </button>
+                      <button class="reel-action">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="1.5"/><circle cx="6" cy="12" r="1.5"/><circle cx="18" cy="12" r="1.5"/></svg>
+                      </button>
+                      <div class="reel-audio-cover"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- PAGE 3: PROFILE -->
+            <article class="page page-profile" id="page-profile">
+              <div class="scroll-container">
+                <div class="profile-header">
+                  <div class="profile-top-row">
+                    <div class="profile-pic"></div>
+                    <div class="profile-name-container">
+                      <div class="profile-username">test_user</div>
+                    </div>
+                  </div>
+                  <div class="profile-bio-section">
+                    <div class="bio-tags">
+                      <span class="bio-tag tag-1"># enthusiastic-chef</span>
+                      <span class="bio-tag tag-2"># Italian Foods</span>
+                      <span class="bio-tag tag-3"># diabetic fighter</span>
+                    </div>
+                    <a href="#" class="bio-link">chefi.app/chef_jo</a>
+                  </div>
+                  <div class="profile-actions">
+                    <button class="profile-btn">Edit preference</button>
+                    <button class="profile-btn">Share profile</button>
+                  </div>
+                </div>
+                
+                <div class="profile-tabs">
+                  <button class="tab-btn active" aria-label="Grid"><svg viewBox="0 0 24 24"><path d="M3 3h7v7H3V3Zm11 0h7v7h-7V3Zm0 11h7v7h-7v-7ZM3 14h7v7H3v-7Z"/></svg></button>
+                  <button class="tab-btn" aria-label="Reels"><svg viewBox="0 0 24 24"><path d="M4 6a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V6Zm3.2-.8 2.4 3.2h2.2L9.4 5.2H7.2Zm7.4 0 2.4 3.2H19a1 1 0 0 1 1 1v-.2l-2.7-3.6h-2.7Zm-3.8 6.2a1 1 0 0 1 1.5-.86l4 2.4a1 1 0 0 1 0 1.72l-4 2.4a1 1 0 0 1-1.5-.86v-4.8Z"/></svg></button>
+                  <button class="tab-btn" aria-label="Tagged"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8 6c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm6 10H6v-1c0-2 4-3.1 6-3.1s6 1.1 6 3.1v1z"/></svg></button>
+                </div>
+
+                <div class="photo-grid">
+                  <div class="grid-item item-1"></div>
+                  <div class="grid-item item-2"></div>
+                  <div class="grid-item item-3"></div>
+                  <div class="grid-item item-4"></div>
+                  <div class="grid-item item-5"></div>
+                  <div class="grid-item item-6"></div>
+                  <div class="grid-item item-7"></div>
+                  <div class="grid-item item-8"></div>
+                  <div class="grid-item item-9"></div>
+                </div>
+                <div class="spacer-bottom"></div>
+              </div>
+            </article>
+
+          </div>
+        </div>
+      </main>
+
+      <!-- Bottom Navigation -->
+      <nav class="navbar">
+        <button class="nav-btn active" data-target="feed">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-cooking-pot-icon lucide-cooking-pot"><path d="M2 12h20"/><path d="M20 12v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8"/><path d="m4 8 16-4"/><path d="m8.86 6.78-.45-1.81a2 2 0 0 1 1.45-2.43l1.94-.48a2 2 0 0 1 2.43 1.46l.45 1.8"/></svg>
+          <span class="nav-label">feed</span>
+        </button>
+        <button class="nav-btn" data-target="reels">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-copy-icon lucide-book-copy"><path d="M5 7a2 2 0 0 0-2 2v11"/><path d="M5.803 18H5a2 2 0 0 0 0 4h9.5a.5.5 0 0 0 .5-.5V21"/><path d="M9 15V4a2 2 0 0 1 2-2h9.5a.5.5 0 0 1 .5.5v14a.5.5 0 0 1-.5.5H11a2 2 0 0 1 0-4h10"/></svg>
+          <span class="nav-label">recipes</span>
+        </button>
+        <button class="nav-btn" data-target="profile">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-user-round-icon lucide-circle-user-round nav-icon-profile"><path d="M18 20a6 6 0 0 0-12 0"/><circle cx="12" cy="10" r="4"/><circle cx="12" cy="12" r="10"/></svg>
+          <div class="nav-avatar">CJ</div>
+          <span class="nav-label">Journal</span>
+        </button>
+      </nav>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
