@@ -1,4 +1,6 @@
-﻿:root {
+﻿@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap');
+
+:root {
   --bg-color: #000000;
   --text-color: #ffffff;
   --secondary-text: #a8a8a8;
@@ -20,12 +22,21 @@
 body {
   background-color: var(--bg-color);
   color: var(--text-color);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'Source Serif 4', serif;
   height: 100vh;
   overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 16px; /* Reset base size */
+}
+
+button, input, textarea, select {
+  font-family: 'Source Serif 4', serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Instrument Serif', serif;
 }
 
 /* Stage & Phone Container */
@@ -76,14 +87,14 @@ body {
 
 .pages {
   display: flex;
-  width: 300%; /* 3 pages */
+  width: 400%; /* 4 pages */
   height: 100%;
   transform: translateX(0);
   transition: transform 0.3s cubic-bezier(0.215, 0.610, 0.355, 1.000);
 }
 
 .page {
-  width: 33.333%;
+  width: 25%;
   height: 100%;
   overflow-y: auto;
   position: relative;
@@ -692,6 +703,23 @@ body {
   flex-shrink: 0;
 }
 
+/* Journey Mode Overrides */
+.nav-btn.active.journey-mode {
+  width: 48px;
+  border-radius: 50%;
+  padding: 0;
+  gap: 0;
+}
+
+.nav-btn.active.journey-mode .nav-label,
+.nav-btn.active.journey-mode .nav-avatar {
+  display: none;
+}
+
+.nav-btn.active.journey-mode .nav-icon-profile {
+  display: block;
+}
+
 /* Remove old icon classes */
 .nav-icon-filled, .nav-icon-outline { display: none; }
 /* ONBOARDING STYLES */
@@ -879,7 +907,7 @@ body {
 }
 
 .onboarding-title {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Instrument Serif', serif;
   font-size: 64px;
   margin-top: 0;
   font-weight: 400;
@@ -1179,6 +1207,8 @@ body {
 
 .card-front, .card-back {
   position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   -webkit-backface-visibility: hidden;
@@ -1190,7 +1220,7 @@ body {
 .card-front {
   /* background-size: cover; REMOVED - now handled by .card-img-bg */
   /* background-position: center; REMOVED */
-  position: relative;
+  /* position: relative; REMOVED - caused layout shift on flip */
   overflow: hidden; /* Ensure image doesn't overflow when scaled */
 }
 
@@ -1224,7 +1254,7 @@ body {
 .card-front::after {
   content: '';
   position: absolute;
-  bottom: 0;
+  bottom: -5px; /* Moved down slightly to fix gap/alignment */
   left: 0;
   width: 100%;
   height: 60%;
@@ -1471,7 +1501,7 @@ body {
 }
 
 .feed-content h2 {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Instrument Serif', serif;
   font-size: 32px;
   margin-bottom: 6px;
   text-shadow: 0 2px 4px rgba(0,0,0,0.5);
@@ -1988,4 +2018,488 @@ body {
   padding: 0 16px;
   font-weight: 700;
 }
+
+/* --- NEW PROFILE STYLES --- */
+.profile-header-centered {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 20px;
+  gap: 12px;
+}
+
+.profile-pic-large {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 32px;
+  font-weight: 700;
+  color: #fff;
+  border: 2px solid #444;
+}
+
+.profile-username-large {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-color);
+  margin: 0;
+}
+
+.profile-actions-centered {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.profile-btn-pill {
+  background: #1F1F1F;
+  border: 1px solid #333;
+  color: var(--text-color);
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.profile-btn-pill:hover {
+  background: #333;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.section-header h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-color);
+  margin: 0;
+}
+
+.btn-icon-only {
+  background: none;
+  border: none;
+  color: var(--secondary-text);
+  cursor: pointer;
+  padding: 4px;
+}
+
+.fridge-image-container {
+  margin: 0 20px 10px 20px;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #111111; /* Much Darker Grey */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  position: relative;
+  min-height: 180px;
+}
+
+.fs-label {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 36px;
+  color: white;
+  text-transform: none;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  font-family: 'Instrument Serif', serif;
+  z-index: 2;
+}
+
+.fs-value {
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
+  font-size: 96px; /* Much larger */
+  font-weight: 400; /* Lighter weight for large serif */
+  color: var(--text-color);
+  font-family: 'Instrument Serif', serif;
+  z-index: 2;
+  line-height: 1;
+}
+
+.fridge-img {
+  width: 55%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  animation: breathe-rotate 10s ease-in-out infinite;
+  transform-origin: center;
+  z-index: 1;
+}
+
+@keyframes breathe-rotate {
+  0% { transform: scale(1) rotate(-30deg); }
+  50% { transform: scale(1.1) rotate(-30deg); }
+  100% { transform: scale(1) rotate(-30deg); }
+}
+
+.journey-card {
+  margin: 0 20px 10px 20px;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #2C2C2C; /* Medium-Dark Grey */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 25px;
+  position: relative;
+  height: 90px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.journey-card:active {
+  transform: scale(0.98);
+}
+
+.journey-title {
+  font-size: 32px; /* Increased size */
+  font-weight: 800;
+  color: var(--text-color);
+  font-family: 'Instrument Serif', serif;
+}
+
+.journey-desc {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+  font-family: 'Source Serif 4', serif;
+}
+
+/* Removed .journey-info and .journal-img styles as they are no longer used */
+
+.journal-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px; /* Increased gap slightly */
+  padding: 0 20px; /* Added side padding */
+}
+
+.journal-item {
+  aspect-ratio: 1/1;
+  background-color: #222;
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px; /* Slight rounded edge */
+}
+
+/* --- FOOD JOURNEY DASHBOARD --- */
+.journey-header {
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 10px;
+}
+
+.journey-title-group h2 {
+  font-size: 24px;
+  font-weight: 800;
+  margin: 0 0 4px 0;
+  color: var(--text-color);
+}
+
+.journey-date {
+  font-size: 14px;
+  color: var(--secondary-text);
+  font-weight: 500;
+}
+
+.toggle-container {
+  background: #1F1F1F;
+  border-radius: 20px;
+  padding: 4px;
+  display: flex;
+  gap: 4px;
+}
+
+.toggle-btn {
+  background: none;
+  border: none;
+  color: var(--secondary-text);
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.toggle-btn.active {
+  background: #333;
+  color: white;
+}
+
+.bento-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding: 0 20px;
+}
+
+.bento-card {
+  background: #1F1F1F;
+  border-radius: 24px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.card-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--secondary-text);
+}
+
+.badge-good {
+  background: rgba(52, 199, 89, 0.2);
+  color: #34C759;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 10px;
+}
+
+/* Calorie Card */
+.calorie-card {
+  grid-column: span 1;
+}
+
+.calorie-display {
+  margin-bottom: 12px;
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.big-number {
+  font-size: 32px;
+  font-weight: 800;
+  color: white;
+  letter-spacing: -1px;
+}
+
+.unit {
+  font-size: 14px;
+  color: var(--secondary-text);
+  font-weight: 600;
+}
+
+.calorie-progress-bg {
+  width: 100%;
+  height: 6px;
+  background: #333;
+  border-radius: 3px;
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+
+.calorie-progress-fill {
+  height: 100%;
+  background: linear-gradient(45deg, #FF512F, #DD2476);
+  border-radius: 3px;
+}
+
+.sub-text {
+  font-size: 12px;
+  color: var(--secondary-text);
+}
+
+/* Spike Card */
+.spike-card {
+  grid-column: span 1;
+}
+
+.spike-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.spike-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.spike-icon {
+  font-size: 18px;
+}
+
+.spike-text {
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+}
+
+.mini-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 40px;
+}
+
+.mini-chart .bar {
+  flex: 1;
+  background: #333;
+  border-radius: 2px;
+}
+
+.mini-chart .bar.active {
+  background: linear-gradient(to top, #FF512F, #DD2476);
+}
+
+/* Macros Card */
+.macros-card {
+  grid-column: span 2;
+}
+
+.macro-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.macro-item {
+  width: 100%;
+}
+
+.macro-label-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.macro-label-row .label { color: var(--secondary-text); }
+.macro-label-row .val { color: white; }
+
+.m-bar-bg {
+  width: 100%;
+  height: 8px;
+  background: #333;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.m-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+}
+
+.c-fill { background: #FF9F0A; }
+.p-fill { background: #30D158; }
+.f-fill { background: #0A84FF; }
+
+/* Nutrient Split Card */
+.nutrient-split-card {
+  grid-column: span 2;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  padding: 24px;
+}
+
+.nutrient-half {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.nutrient-divider {
+  width: 1px;
+  height: 40px;
+  background: #333;
+}
+
+.n-label {
+  font-size: 12px;
+  color: var(--secondary-text);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.n-val {
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.n-val.warning { color: #FF453A; }
+.n-val.good { color: #30D158; }
+
+.n-sub {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--secondary-text);
+}
+
+/* Trend Card */
+.trend-card {
+  grid-column: span 2;
+}
+
+.trend-chart {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: 120px;
+  padding-top: 20px;
+}
+
+.t-bar-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  height: 100%;
+  flex: 1;
+}
+
+.t-bar {
+  width: 8px;
+  background: #333;
+  border-radius: 4px;
+  transition: height 0.5s ease;
+}
+
+.t-bar.active {
+  background: linear-gradient(to top, #FF512F, #DD2476);
+  box-shadow: 0 0 10px rgba(221, 36, 118, 0.4);
+}
+
+.day {
+  font-size: 12px;
+  color: var(--secondary-text);
+  font-weight: 600;
+}
+
+/* Removed old button styles to avoid conflict */
+/* .btn-check-journey { ... } */
 

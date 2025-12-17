@@ -1150,44 +1150,172 @@
             <!-- PAGE 3: PROFILE -->
             <article class="page page-profile" id="page-profile">
               <div class="scroll-container">
-                <div class="profile-header">
-                  <div class="profile-top-row">
-                    <div class="profile-pic"></div>
-                    <div class="profile-name-container">
-                      <div class="profile-username">test_user</div>
-                    </div>
-                  </div>
-                  <div class="profile-bio-section">
-                    <div class="bio-tags">
-                      <span class="bio-tag tag-1"># enthusiastic-chef</span>
-                      <span class="bio-tag tag-2"># Italian Foods</span>
-                      <span class="bio-tag tag-3"># diabetic fighter</span>
-                    </div>
-                    <a href="#" class="bio-link">chefi.app/chef_jo</a>
-                  </div>
-                  <div class="profile-actions">
-                    <button class="profile-btn">Edit preference</button>
-                    <button class="profile-btn">Share profile</button>
-                  </div>
-                </div>
                 
-                <div class="profile-tabs">
-                  <button class="tab-btn active" aria-label="Grid"><svg viewBox="0 0 24 24"><path d="M3 3h7v7H3V3Zm11 0h7v7h-7V3Zm0 11h7v7h-7v-7ZM3 14h7v7H3v-7Z"/></svg></button>
-                  <button class="tab-btn" aria-label="Reels"><svg viewBox="0 0 24 24"><path d="M4 6a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V6Zm3.2-.8 2.4 3.2h2.2L9.4 5.2H7.2Zm7.4 0 2.4 3.2H19a1 1 0 0 1 1 1v-.2l-2.7-3.6h-2.7Zm-3.8 6.2a1 1 0 0 1 1.5-.86l4 2.4a1 1 0 0 1 0 1.72l-4 2.4a1 1 0 0 1-1.5-.86v-4.8Z"/></svg></button>
-                  <button class="tab-btn" aria-label="Tagged"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8 6c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm6 10H6v-1c0-2 4-3.1 6-3.1s6 1.1 6 3.1v1z"/></svg></button>
+                <!-- 1. Top Area: Profile Centered -->
+                <div class="profile-header-centered">
+                  <div class="profile-pic-large">TU</div>
+                  <h2 class="profile-username-large">test_user</h2>
+                  <div class="profile-actions-centered">
+                    <button class="profile-btn-pill">Edit Taste</button>
+                    <button class="profile-btn-pill">Share Profile</button>
+                  </div>
                 </div>
 
-                <div class="photo-grid">
-                  <div class="grid-item item-1"></div>
-                  <div class="grid-item item-2"></div>
-                  <div class="grid-item item-3"></div>
-                  <div class="grid-item item-4"></div>
-                  <div class="grid-item item-5"></div>
-                  <div class="grid-item item-6"></div>
-                  <div class="grid-item item-7"></div>
-                  <div class="grid-item item-8"></div>
-                  <div class="grid-item item-9"></div>
+                <!-- Check My Food Journey -->
+                <div class="journey-card btn-check-journey">
+                  <span class="journey-title">Food Journey</span>
+                  <span class="journey-desc">Check History</span>
                 </div>
+
+                <!-- 2. My Fridge -->
+                <div class="section-header">
+                  <h3>My Fridge</h3>
+                  <button class="btn-icon-only" style="display: flex; align-items: center; gap: 4px;">
+                    <span style="font-size: 14px; font-weight: 600;">Scan</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  </button>
+                </div>
+                <div class="fridge-image-container">
+                  <span class="fs-label">Freshness</span>
+                  <span class="fs-value" id="fridgeFreshness">0.85</span>
+                </div>
+
+                <!-- 3. My Food Journal -->
+                <div class="section-header">
+                  <h3>My Food Journal</h3>
+                </div>
+                <div class="journal-grid">
+                  <div class="journal-item" style="background-image: url('https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80');"></div>
+                  <div class="journal-item" style="background-image: url('https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80');"></div>
+                  <div class="journal-item" style="background-image: url('https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80');"></div>
+                  <div class="journal-item" style="background-image: url('https://images.unsplash.com/photo-1600891964092-4316c288032e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80');"></div>
+                  <div class="journal-item" style="background-image: url('https://images.unsplash.com/photo-1574071318508-1cdbab80d002?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80');"></div>
+                  <div class="journal-item" style="background-image: url('https://images.unsplash.com/photo-1476124369491-e7addf5db371?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80');"></div>
+                </div>
+
+                <!-- 4. Check My Food Journey -->
+                <div class="journey-btn-container" style="display: none;">
+                  <button class="btn-check-journey">Check My Food Journey</button>
+                </div>
+
+                <div class="spacer-bottom"></div>
+              </div>
+            </article>
+
+            <!-- PAGE 4: FOOD JOURNEY -->
+            <article class="page page-journey" id="page-journey">
+              <div class="scroll-container">
+                
+                <!-- Header & Toggle -->
+                <div class="journey-header">
+                  <div class="journey-title-group">
+                    <h2>Daily Recap</h2>
+                    <span class="journey-date">Dec 17, 2025</span>
+                  </div>
+                  <div class="toggle-container">
+                    <button class="toggle-btn active">Daily</button>
+                    <button class="toggle-btn">Weekly</button>
+                  </div>
+                </div>
+
+                <!-- Bento Grid Dashboard -->
+                <div class="bento-grid">
+                  
+                  <!-- 1. Calorie Main Card -->
+                  <div class="bento-card calorie-card">
+                    <div class="card-header">
+                      <span class="card-title">Calories</span>
+                      <span class="badge-good">Good</span>
+                    </div>
+                    <div class="calorie-display">
+                      <span class="big-number">1,850</span>
+                      <span class="unit">kcal</span>
+                    </div>
+                    <div class="calorie-progress-bg">
+                      <div class="calorie-progress-fill" style="width: 75%;"></div>
+                    </div>
+                    <span class="sub-text">240 kcal remaining</span>
+                  </div>
+
+                  <!-- 2. Glucose Spike Risk -->
+                  <div class="bento-card spike-card">
+                    <div class="card-header">
+                      <span class="card-title">Glucose</span>
+                    </div>
+                    <div class="spike-content">
+                      <div class="spike-status">
+                        <span class="spike-icon">⚡</span>
+                        <span class="spike-text">Stable</span>
+                      </div>
+                      <div class="mini-chart">
+                        <div class="bar" style="height: 30%"></div>
+                        <div class="bar" style="height: 45%"></div>
+                        <div class="bar active" style="height: 80%"></div>
+                        <div class="bar" style="height: 40%"></div>
+                        <div class="bar" style="height: 25%"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 3. Macros (Carbs, Protein, Fat) -->
+                  <div class="bento-card macros-card">
+                    <div class="card-header"><span class="card-title">Macros</span></div>
+                    <div class="macro-bars">
+                      <div class="macro-item">
+                        <div class="macro-label-row">
+                          <span class="label">Carbs</span>
+                          <span class="val">50%</span>
+                        </div>
+                        <div class="m-bar-bg"><div class="m-bar-fill c-fill" style="width: 50%"></div></div>
+                      </div>
+                      <div class="macro-item">
+                        <div class="macro-label-row">
+                          <span class="label">Protein</span>
+                          <span class="val">30%</span>
+                        </div>
+                        <div class="m-bar-bg"><div class="m-bar-fill p-fill" style="width: 30%"></div></div>
+                      </div>
+                      <div class="macro-item">
+                        <div class="macro-label-row">
+                          <span class="label">Fat</span>
+                          <span class="val">20%</span>
+                        </div>
+                        <div class="m-bar-bg"><div class="m-bar-fill f-fill" style="width: 20%"></div></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 4. Sugar & Sodium -->
+                  <div class="bento-card nutrient-split-card">
+                    <div class="nutrient-half">
+                      <span class="n-label">Sugar</span>
+                      <span class="n-val warning">32g</span>
+                      <span class="n-sub">High</span>
+                    </div>
+                    <div class="nutrient-divider"></div>
+                    <div class="nutrient-half">
+                      <span class="n-label">Sodium</span>
+                      <span class="n-val good">1.2g</span>
+                      <span class="n-sub">Good</span>
+                    </div>
+                  </div>
+
+                  <!-- 5. Weekly Trend Chart -->
+                  <div class="bento-card trend-card">
+                    <div class="card-header"><span class="card-title">Calorie Trend</span></div>
+                    <div class="trend-chart">
+                      <div class="t-bar-group"><div class="t-bar" style="height: 60%"></div><span class="day">M</span></div>
+                      <div class="t-bar-group"><div class="t-bar" style="height: 80%"></div><span class="day">T</span></div>
+                      <div class="t-bar-group"><div class="t-bar active" style="height: 75%"></div><span class="day">W</span></div>
+                      <div class="t-bar-group"><div class="t-bar" style="height: 50%"></div><span class="day">T</span></div>
+                      <div class="t-bar-group"><div class="t-bar" style="height: 90%"></div><span class="day">F</span></div>
+                      <div class="t-bar-group"><div class="t-bar" style="height: 40%"></div><span class="day">S</span></div>
+                      <div class="t-bar-group"><div class="t-bar" style="height: 70%"></div><span class="day">S</span></div>
+                    </div>
+                  </div>
+
+                </div>
+
                 <div class="spacer-bottom"></div>
               </div>
             </article>
@@ -1208,7 +1336,7 @@
         </button>
         <button class="nav-btn" data-target="profile">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-user-round-icon lucide-circle-user-round nav-icon-profile"><path d="M18 20a6 6 0 0 0-12 0"/><circle cx="12" cy="10" r="4"/><circle cx="12" cy="12" r="10"/></svg>
-          <div class="nav-avatar">CJ</div>
+          <div class="nav-avatar">TU</div>
           <span class="nav-label">Journal</span>
         </button>
       </nav>

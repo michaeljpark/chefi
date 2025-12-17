@@ -78,8 +78,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // State
-  let currentPageIndex = 0; // 0: Feed, 1: Reels, 2: Profile
-  const totalPages = 3;
+  let currentPageIndex = 0; // 0: Feed, 1: Reels, 2: Profile, 3: Journey
+  const totalPages = 4;
 
   // --- ONBOARDING LOGIC ---
   window.nextStep = function(step) {
@@ -130,14 +130,28 @@ document.addEventListener('DOMContentLoaded', () => {
     currentPageIndex = index;
     
     // Slide pages
-    pagesContainer.style.transform = `translateX(-${index * 33.333}%)`;
+    pagesContainer.style.transform = `translateX(-${index * 25}%)`;
     
     // Update Bottom Nav
     navButtons.forEach((btn, i) => {
-      if (i === index) {
-        btn.classList.add('active');
+      // Special handling for Journey Mode (Index 3)
+      // When on Journey page, the Profile button (Index 2) should be active but in 'journey-mode'
+      if (index === 3) {
+        if (i === 2) {
+          btn.classList.add('active');
+          btn.classList.add('journey-mode');
+        } else {
+          btn.classList.remove('active');
+          btn.classList.remove('journey-mode');
+        }
       } else {
-        btn.classList.remove('active');
+        // Normal behavior
+        btn.classList.remove('journey-mode'); // Ensure journey mode is off
+        if (i === index) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
       }
     });
 
@@ -148,9 +162,26 @@ document.addEventListener('DOMContentLoaded', () => {
   // Click Listeners for Nav
   navButtons.forEach((btn, index) => {
     btn.addEventListener('click', () => {
-      navigateTo(index);
+      // Special toggle for Profile/Journey (Index 2)
+      if (index === 2) {
+        if (currentPageIndex === 2) {
+          navigateTo(3); // Toggle to Journey
+        } else {
+          navigateTo(2); // Go to Profile (or back from Journey)
+        }
+      } else {
+        navigateTo(index);
+      }
     });
   });
+
+  // Check My Food Journey Button
+  const btnCheckJourney = document.querySelector('.btn-check-journey');
+  if (btnCheckJourney) {
+    btnCheckJourney.addEventListener('click', () => {
+      navigateTo(3);
+    });
+  }
 
   // Swipe Logic (Pointer Events for Desktop/Mobile compatibility)
   let startX = 0;
@@ -461,6 +492,53 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial UI setup
     updateStepUI();
   });
+
+  // --- FRIDGE FRESHNESS LOGIC ---
+  const fridgeVal = document.getElementById('fridgeFreshness');
+  const fridgeContainer = document.querySelector('.fridge-image-container');
+
+  if (fridgeVal && fridgeContainer) {
+    // Fixed value
+    const randomVal = 0.82;
+    fridgeVal.textContent = randomVal.toFixed(2);
+
+    // Background gradient logic removed as per request
+    // fridgeContainer.style.background = '#2C2C2C'; // Handled in CSS
+  }
+
+  // --- JOURNEY DASHBOARD TOGGLE ---
+  const toggleBtns = document.querySelectorAll('.toggle-btn');
+  const journeyTitle = document.querySelector('.journey-title-group h2');
+  const calorieVal = document.querySelector('.calorie-display .big-number');
+  const calorieSub = document.querySelector('.calorie-card .sub-text');
+  const sugarVal = document.querySelector('.nutrient-split-card .n-val.warning');
+  const sodiumVal = document.querySelector('.nutrient-split-card .n-val.good');
+
+  if (toggleBtns.length > 0) {
+    toggleBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Remove active from all
+        toggleBtns.forEach(b => b.classList.remove('active'));
+        // Add active to clicked
+        btn.classList.add('active');
+
+        const mode = btn.textContent.trim();
+        if (mode === 'Weekly') {
+          if (journeyTitle) journeyTitle.textContent = 'Weekly Recap';
+          if (calorieVal) calorieVal.textContent = '13,450'; // Total weekly
+          if (calorieSub) calorieSub.textContent = 'Avg 1,921 kcal / day';
+          if (sugarVal) { sugarVal.textContent = '210g'; sugarVal.nextElementSibling.textContent = 'Avg 30g'; }
+          if (sodiumVal) { sodiumVal.textContent = '9.5g'; sodiumVal.nextElementSibling.textContent = 'Avg 1.3g'; }
+        } else {
+          if (journeyTitle) journeyTitle.textContent = 'Daily Recap';
+          if (calorieVal) calorieVal.textContent = '1,850';
+          if (calorieSub) calorieSub.textContent = '240 kcal remaining';
+          if (sugarVal) { sugarVal.textContent = '32g'; sugarVal.nextElementSibling.textContent = 'High'; }
+          if (sodiumVal) { sodiumVal.textContent = '1.2g'; sodiumVal.nextElementSibling.textContent = 'Good'; }
+        }
+      });
+    });
+  }
 
   // Initialize
   navigateTo(0);
