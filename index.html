@@ -1,9 +1,12 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Chefi — Food Social</title>
+  <title>Chefi €” Food Social</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -11,6 +14,13 @@
     <div class="phone">
       <!-- Onboarding Overlay -->
       <div id="onboarding" class="onboarding">
+        <!-- Indicators -->
+        <div class="onboarding-indicators">
+          <div class="indicator active" data-step="1"></div>
+          <div class="indicator" data-step="2"></div>
+          <div class="indicator" data-step="3"></div>
+        </div>
+
         <!-- Step 1: Hungry? -->
         <div class="onboarding-step active" id="step-1">
           <h1 class="onboarding-title">Are you<br><span class="title-highlight">Hungry?</span></h1>
@@ -24,6 +34,7 @@
             <button class="onboarding-btn btn-yes" onclick="nextStep(2)">Yes!!</button>
             <button class="onboarding-btn btn-no" onclick="skipOnboarding()">Maybe later</button>
           </div>
+          <p class="welcome-msg">Welcome back user_test!</p>
         </div>
 
         <!-- Step 2: Taste Preference -->
@@ -56,8 +67,8 @@
             </button>
           </div>
           <div class="onboarding-nav-buttons">
-            <button class="onboarding-btn btn-back" onclick="nextStep(1)">Back</button>
-            <button class="onboarding-btn btn-next" onclick="nextStep(3)">Next</button>
+            <button class="onboarding-btn btn-no" onclick="nextStep(1)">Back</button>
+            <button class="onboarding-btn btn-yes" onclick="nextStep(3)">Next</button>
           </div>
         </div>
 
@@ -121,8 +132,8 @@
             </button>
           </div>
           <div class="onboarding-nav-buttons">
-            <button class="onboarding-btn btn-back" onclick="nextStep(2)">Back</button>
-            <button class="onboarding-btn btn-finish" onclick="finishOnboarding()">Let's Eat!</button>
+            <button class="onboarding-btn btn-no" onclick="nextStep(2)">Back</button>
+            <button class="onboarding-btn btn-yes" onclick="finishOnboarding()">Let's Cook!</button>
           </div>
         </div>
       </div>
@@ -132,39 +143,923 @@
         <div class="pager" id="pager">
           <div class="pages" id="pages">
             
-            <!-- PAGE 1: FEED (Tinder Style) -->
+            <!-- PAGE 1: FEED (Vertical Scroll) -->
             <article class="page page-feed" id="page-feed">
               <div class="card-stack-container">
-                <div class="card-stack" id="card-stack">
-                  <!-- Cards will be injected by JS -->
-                  <div class="tinder-card" style="z-index: 3; background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);">
-                    <div class="card-content">
-                      <h2>Spicy Ramen</h2>
-                      <p>Japanese • Spicy</p>
+                <div class="feed-scroll-container">
+                  <!-- Item 1 -->
+                  <div class="feed-item">
+                    <div class="food-card">
+                      <div class="card-inner">
+                        <div class="card-front">
+                          <div class="card-img-bg" style="background-image: url('https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                          <div class="rating-badge">★ 4.8</div>
+                          <div class="feed-content">
+                            <h2>Double Cheeseburger</h2>
+                            <span class="food-tag">American • Heavy & Rich</span>
+                          </div>
+                          <div class="dietary-tags">
+                            <span class="dietary-tag">Halal</span>
+                          </div>
+                        </div>
+                        <button class="btn-flip-back"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+<div class="card-back">
+                          
+                          <div class="recipe-section">
+                            <h3>Ingredients</h3>
+                            <div class="ingredients-list">
+                              <span class="ingredient-tag">Beef Patty</span>
+                              <span class="ingredient-tag">Cheese</span>
+                              <span class="ingredient-tag">Bun</span>
+                              <span class="ingredient-tag">Lettuce</span>
+                              <span class="ingredient-tag">Tomato</span>
+                              <span class="ingredient-tag">Onion</span>
+                              <span class="ingredient-tag">Pickles</span>
+                              <span class="ingredient-tag">Sauce</span>
+                            </div>
+                          </div>
+                          <div class="recipe-section">
+                            <h3>Recipe</h3>
+                            <div class="recipe-steps">
+                              <div class="step-item active"><span class="step-num">1</span>Season patties with salt & pepper.</div>
+                              <div class="step-item"><span class="step-num">2</span>Grill patties 3 mins per side.</div>
+                              <div class="step-item"><span class="step-num">3</span>Melt cheese on patties.</div>
+                              <div class="step-item"><span class="step-num">4</span>Toast buns until golden.</div>
+                              <div class="step-item"><span class="step-num">5</span>Spread sauce on buns.</div>
+                              <div class="step-item"><span class="step-num">6</span>Assemble with veggies.</div>
+                            </div>
+                          </div>
+                          <div class="timer-control-panel">
+                            <div class="timer-adjust-group">
+                              <button class="btn-adjust minus">-</button>
+                              <div class="timer-display">06:00</div>
+                              <button class="btn-adjust plus">+</button>
+                            </div>
+                            <button class="btn-timer-toggle">Start</button>
+                          </div>
+                          <div class="step-nav-panel">
+                            <button class="btn-step prev">Prev</button>
+                            <span class="step-indicator">Step 1/6</span>
+                            <button class="btn-step next">Next</button>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <div class="card-overlay overlay-nope">NOPE</div>
-                    <div class="card-overlay overlay-like">YUM</div>
-                  </div>
-                  <div class="tinder-card" style="z-index: 2; background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);">
-                    <div class="card-content">
-                      <h2>Avocado Toast</h2>
-                      <p>Brunch • Healthy</p>
+                    <div class="feed-info-box">
+                      <div class="info-item">
+                        <span class="info-label">Est. Price</span>
+                        <span class="info-value">CA$ 4.50</span>
+                      </div>
+                      <div class="info-item">
+                        <span class="info-label">Calories</span>
+                        <span class="info-value">850 kcal</span>
+                      </div>
+                      <button class="btn-save">Save</button>
                     </div>
-                    <div class="card-overlay overlay-nope">NOPE</div>
-                    <div class="card-overlay overlay-like">YUM</div>
-                  </div>
-                  <div class="tinder-card" style="z-index: 1; background: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);">
-                    <div class="card-content">
-                      <h2>Tacos</h2>
-                      <p>Mexican • Savory</p>
+                    <div class="feed-author-area">
+                      <div class="author-avatar">JD</div>
+                      <div class="author-info">
+                        <span class="author-name">John Doe</span>
+                        <span class="author-rating">★ 4.8</span>
+                      </div>
+                    
+                      <div class="feed-item-stats">
+                        <div class="f-stat">
+                          <span class="f-value">1.2k</span>
+                          <span class="f-label">Views</span>
+                        </div>
+                        <div class="f-stat">
+                          <span class="f-value">850</span>
+                          <span class="f-label">Likes</span>
+                        </div>
+                        <div class="f-stat">
+                          <span class="f-value">120</span>
+                          <span class="f-label">Reviews</span>
+                        </div>
+                      </div>
                     </div>
-                    <div class="card-overlay overlay-nope">NOPE</div>
-                    <div class="card-overlay overlay-like">YUM</div>
                   </div>
-                </div>
-                <div class="tinder-actions">
-                  <button class="tinder-btn btn-pass" onclick="swipeCard('left')">❌</button>
-                  <button class="tinder-btn btn-like" onclick="swipeCard('right')">💚</button>
+
+                  <!-- Item 2 -->
+                  <div class="feed-item">
+                    <div class="food-card">
+                      <div class="card-inner">
+                        <div class="card-front">
+                          <div class="card-img-bg" style="background-image: url('https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                          <div class="rating-badge">★ 4.9</div>
+                          <div class="feed-content">
+                            <h2>Avocado Salad</h2>
+                            <span class="food-tag">Healthy • Light & Fresh</span>
+                          </div>
+                          <div class="dietary-tags">
+                            <span class="dietary-tag">Vegan</span>
+                            <span class="dietary-tag">Diabetic-friendly</span>
+                          </div>
+                        </div>
+                        <button class="btn-flip-back"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+<div class="card-back">
+                          
+                          <div class="recipe-section">
+                            <h3>Ingredients</h3>
+                            <div class="ingredients-list">
+                              <span class="ingredient-tag">Avocado</span>
+                              <span class="ingredient-tag">Tomato</span>
+                              <span class="ingredient-tag">Cucumber</span>
+                              <span class="ingredient-tag">Greens</span>
+                              <span class="ingredient-tag">Olive Oil</span>
+                              <span class="ingredient-tag">Lemon</span>
+                            </div>
+                          </div>
+                          <div class="recipe-section">
+                            <h3>Recipe</h3>
+                            <div class="recipe-steps">
+                              <div class="step-item active"><span class="step-num">1</span>Wash and dry all vegetables.</div>
+                              <div class="step-item"><span class="step-num">2</span>Slice avocado into wedges.</div>
+                              <div class="step-item"><span class="step-num">3</span>Halve cherry tomatoes.</div>
+                              <div class="step-item"><span class="step-num">4</span>Slice cucumber thinly.</div>
+                              <div class="step-item"><span class="step-num">5</span>Whisk oil and lemon juice.</div>
+                              <div class="step-item"><span class="step-num">6</span>Toss everything gently.</div>
+                            </div>
+                          </div>
+                          <div class="timer-control-panel">
+                            <div class="timer-adjust-group">
+                              <button class="btn-adjust minus">-</button>
+                              <div class="timer-display">10:00</div>
+                              <button class="btn-adjust plus">+</button>
+                            </div>
+                            <button class="btn-timer-toggle">Start</button>
+                          </div>
+                          <div class="step-nav-panel">
+                            <button class="btn-step prev">Prev</button>
+                            <span class="step-indicator">Step 1/6</span>
+                            <button class="btn-step next">Next</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="feed-info-box">
+                      <div class="info-item">
+                        <span class="info-label">Est. Price</span>
+                        <span class="info-value">CA$ 3.50</span>
+                      </div>
+                      <div class="info-item">
+                        <span class="info-label">Calories</span>
+                        <span class="info-value">320 kcal</span>
+                      </div>
+                      <button class="btn-save">Save</button>
+                    </div>
+                    <div class="feed-author-area">
+                      <div class="author-avatar">SA</div>
+                      <div class="author-info">
+                        <span class="author-name">Sarah A.</span>
+                        <span class="author-rating">★ 4.9</span>
+                      </div>
+                    
+                      <div class="feed-item-stats">
+                        <div class="f-stat">
+                          <span class="f-value">1.2k</span>
+                          <span class="f-label">Views</span>
+                        </div>
+                        <div class="f-stat">
+                          <span class="f-value">850</span>
+                          <span class="f-label">Likes</span>
+                        </div>
+                        <div class="f-stat">
+                          <span class="f-value">120</span>
+                          <span class="f-label">Reviews</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Item 3 -->
+                  <div class="feed-item">
+                    <div class="food-card">
+                      <div class="card-inner">
+                        <div class="card-front">
+                          <div class="card-img-bg" style="background-image: url('https://images.unsplash.com/photo-1600891964092-4316c288032e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                          <div class="rating-badge">★ 4.7</div>
+                          <div class="feed-content">
+                            <h2>Premium Steak</h2>
+                            <span class="food-tag">Western • Heavy & Rich</span>
+                          </div>
+                          <div class="dietary-tags">
+                            <span class="dietary-tag">Halal</span>
+                          </div>
+                        </div>
+                        <button class="btn-flip-back"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+<div class="card-back">
+                          
+                          <div class="recipe-section">
+                            <h3>Ingredients</h3>
+                            <div class="ingredients-list">
+                              <span class="ingredient-tag">Ribeye</span>
+                              <span class="ingredient-tag">Rosemary</span>
+                              <span class="ingredient-tag">Garlic</span>
+                              <span class="ingredient-tag">Butter</span>
+                              <span class="ingredient-tag">Salt</span>
+                              <span class="ingredient-tag">Pepper</span>
+                            </div>
+                          </div>
+                          <div class="recipe-section">
+                            <h3>Recipe</h3>
+                            <div class="recipe-steps">
+                              <div class="step-item active"><span class="step-num">1</span>Bring steak to room temp.</div>
+                              <div class="step-item"><span class="step-num">2</span>Season heavily with salt/pepper.</div>
+                              <div class="step-item"><span class="step-num">3</span>Sear in hot pan 3 mins/side.</div>
+                              <div class="step-item"><span class="step-num">4</span>Add butter, garlic, herbs.</div>
+                              <div class="step-item"><span class="step-num">5</span>Baste steak with butter.</div>
+                              <div class="step-item"><span class="step-num">6</span>Rest for 5 mins before slicing.</div>
+                            </div>
+                          </div>
+                          <div class="timer-control-panel">
+                            <div class="timer-adjust-group">
+                              <button class="btn-adjust minus">-</button>
+                              <div class="timer-display">06:00</div>
+                              <button class="btn-adjust plus">+</button>
+                            </div>
+                            <button class="btn-timer-toggle">Start</button>
+                          </div>
+                          <div class="step-nav-panel">
+                            <button class="btn-step prev">Prev</button>
+                            <span class="step-indicator">Step 1/6</span>
+                            <button class="btn-step next">Next</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="feed-info-box">
+                      <div class="info-item">
+                        <span class="info-label">Est. Price</span>
+                        <span class="info-value">CA$ 12.00</span>
+                      </div>
+                      <div class="info-item">
+                        <span class="info-label">Calories</span>
+                        <span class="info-value">900 kcal</span>
+                      </div>
+                      <button class="btn-save">Save</button>
+                    </div>
+                    <div class="feed-author-area">
+                      <div class="author-avatar">MK</div>
+                      <div class="author-info">
+                        <span class="author-name">Mike K.</span>
+                        <span class="author-rating">★ 4.7</span>
+                      </div>
+                    
+                      <div class="feed-item-stats">
+                        <div class="f-stat">
+                          <span class="f-value">1.2k</span>
+                          <span class="f-label">Views</span>
+                        </div>
+                        <div class="f-stat">
+                          <span class="f-value">850</span>
+                          <span class="f-label">Likes</span>
+                        </div>
+                        <div class="f-stat">
+                          <span class="f-value">120</span>
+                          <span class="f-label">Reviews</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Item 4: Tofu Stir-fry (Vegan) -->
+                  <div class="feed-item">
+                    <div class="food-card">
+                      <div class="card-inner">
+                        <div class="card-front">
+                          <div class="card-img-bg" style="background-image: url('https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                          <div class="rating-badge">★ 4.6</div>
+                          <div class="feed-content">
+                            <h2>Tofu Stir-fry</h2>
+                            <span class="food-tag">Asian • Healthy</span>
+                          </div>
+                          <div class="dietary-tags">
+                            <span class="dietary-tag">Vegan</span>
+                            <span class="dietary-tag">Diabetic-friendly</span>
+                          </div>
+                        </div>
+                        <button class="btn-flip-back"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+<div class="card-back">
+                          
+                          <div class="recipe-section">
+                            <h3>Ingredients</h3>
+                            <div class="ingredients-list">
+                              <span class="ingredient-tag">Tofu</span>
+                              <span class="ingredient-tag">Broccoli</span>
+                              <span class="ingredient-tag">Peppers</span>
+                              <span class="ingredient-tag">Soy Sauce</span>
+                              <span class="ingredient-tag">Ginger</span>
+                              <span class="ingredient-tag">Garlic</span>
+                            </div>
+                          </div>
+                          <div class="recipe-section">
+                            <h3>Recipe</h3>
+                            <div class="recipe-steps">
+                              <div class="step-item active"><span class="step-num">1</span>Press tofu to remove water.</div>
+                              <div class="step-item"><span class="step-num">2</span>Cube tofu and coat in starch.</div>
+                              <div class="step-item"><span class="step-num">3</span>Pan-fry tofu until crispy.</div>
+                              <div class="step-item"><span class="step-num">4</span>Stir-fry veggies in hot wok.</div>
+                              <div class="step-item"><span class="step-num">5</span>Add sauce and aromatics.</div>
+                              <div class="step-item"><span class="step-num">6</span>Toss tofu back in to coat.</div>
+                            </div>
+                          </div>
+                          <div class="timer-control-panel">
+                            <div class="timer-adjust-group">
+                              <button class="btn-adjust minus">-</button>
+                              <div class="timer-display">15:00</div>
+                              <button class="btn-adjust plus">+</button>
+                            </div>
+                            <button class="btn-timer-toggle">Start</button>
+                          </div>
+                          <div class="step-nav-panel">
+                            <button class="btn-step prev">Prev</button>
+                            <span class="step-indicator">Step 1/6</span>
+                            <button class="btn-step next">Next</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="feed-info-box">
+                      <div class="info-item">
+                        <span class="info-label">Est. Price</span>
+                        <span class="info-value">CA$ 3.80</span>
+                      </div>
+                      <div class="info-item">
+                        <span class="info-label">Calories</span>
+                        <span class="info-value">420 kcal</span>
+                      </div>
+                      <button class="btn-save">Save</button>
+                    </div>
+                    <div class="feed-author-area">
+                      <div class="author-avatar">JL</div>
+                      <div class="author-info">
+                        <span class="author-name">Jenny L.</span>
+                        <span class="author-rating">★ 4.5</span>
+                      </div>
+                    
+                      <div class="feed-item-stats">
+                        <div class="f-stat">
+                          <span class="f-value">1.2k</span>
+                          <span class="f-label">Views</span>
+                        </div>
+                        <div class="f-stat">
+                          <span class="f-value">850</span>
+                          <span class="f-label">Likes</span>
+                        </div>
+                        <div class="f-stat">
+                          <span class="f-value">120</span>
+                          <span class="f-label">Reviews</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Item 5: Margherita Pizza (Lacto-vegetarian) -->
+                  <div class="feed-item">
+                    <div class="food-card">
+                      <div class="card-inner">
+                        <div class="card-front">
+                          <div class="card-img-bg" style="background-image: url('https://images.unsplash.com/photo-1574071318508-1cdbab80d002?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                          <div class="rating-badge">★ 4.8</div>
+                          <div class="feed-content">
+                            <h2>Margherita Pizza</h2>
+                            <span class="food-tag">Italian • Comfort</span>
+                          </div>
+                          <div class="dietary-tags">
+                            <span class="dietary-tag">Lacto-vegetarian</span>
+                          </div>
+                        </div>
+                        <button class="btn-flip-back"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+<div class="card-back">
+                          
+                          <div class="recipe-section">
+                            <h3>Ingredients</h3>
+                            <div class="ingredients-list">
+                              <span class="ingredient-tag">Dough</span>
+                              <span class="ingredient-tag">Tomato Sauce</span>
+                              <span class="ingredient-tag">Mozzarella</span>
+                              <span class="ingredient-tag">Basil</span>
+                              <span class="ingredient-tag">Olive Oil</span>
+                            </div>
+                          </div>
+                          <div class="recipe-section">
+                            <h3>Recipe</h3>
+                            <div class="recipe-steps">
+                              <div class="step-item active"><span class="step-num">1</span>Stretch dough into circle.</div>
+                              <div class="step-item"><span class="step-num">2</span>Spread crushed tomatoes.</div>
+                              <div class="step-item"><span class="step-num">3</span>Tear mozzarella on top.</div>
+                              <div class="step-item"><span class="step-num">4</span>Bake at max temp (500°F+).</div>
+                              <div class="step-item"><span class="step-num">5</span>Cook until crust is charred.</div>
+                              <div class="step-item"><span class="step-num">6</span>Top with fresh basil & oil.</div>
+                            </div>
+                          </div>
+                          <div class="timer-control-panel">
+                            <div class="timer-adjust-group">
+                              <button class="btn-adjust minus">-</button>
+                              <div class="timer-display">12:00</div>
+                              <button class="btn-adjust plus">+</button>
+                            </div>
+                            <button class="btn-timer-toggle">Start</button>
+                          </div>
+                          <div class="step-nav-panel">
+                            <button class="btn-step prev">Prev</button>
+                            <span class="step-indicator">Step 1/6</span>
+                            <button class="btn-step next">Next</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="feed-info-box">
+                      <div class="info-item">
+                        <span class="info-label">Est. Price</span>
+                        <span class="info-value">CA$ 5.50</span>
+                      </div>
+                      <div class="info-item">
+                        <span class="info-label">Calories</span>
+                        <span class="info-value">780 kcal</span>
+                      </div>
+                      <button class="btn-save">Save</button>
+                    </div>
+                    <div class="feed-author-area">
+                      <div class="author-avatar">MR</div>
+                      <div class="author-info">
+                        <span class="author-name">Mario R.</span>
+                        <span class="author-rating">★ 4.9</span>
+                      </div>
+                    
+                      <div class="feed-item-stats">
+                        <div class="f-stat">
+                          <span class="f-value">1.2k</span>
+                          <span class="f-label">Views</span>
+                        </div>
+                        <div class="f-stat">
+                          <span class="f-value">850</span>
+                          <span class="f-label">Likes</span>
+                        </div>
+                        <div class="f-stat">
+                          <span class="f-value">120</span>
+                          <span class="f-label">Reviews</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Item 6: Salmon Poke Bowl (Pescatarian) -->
+                  <div class="feed-item">
+                    <div class="food-card">
+                      <div class="card-inner">
+                        <div class="card-front">
+                          <div class="card-img-bg" style="background-image: url('https://images.unsplash.com/photo-1519708227418-c8fd9a3a27cc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                          <div class="rating-badge">★ 4.9</div>
+                          <div class="feed-content">
+                            <h2>Salmon Poke Bowl</h2>
+                            <span class="food-tag">Hawaiian • Fresh</span>
+                          </div>
+                          <div class="dietary-tags">
+                            <span class="dietary-tag">Pescatarian</span>
+                            <span class="dietary-tag">Halal</span>
+                          </div>
+                        </div>
+                        <button class="btn-flip-back"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+<div class="card-back">
+                          
+                          <div class="recipe-section">
+                            <h3>Ingredients</h3>
+                            <div class="ingredients-list">
+                              <span class="ingredient-tag">Salmon</span>
+                              <span class="ingredient-tag">Rice</span>
+                              <span class="ingredient-tag">Avocado</span>
+                              <span class="ingredient-tag">Edamame</span>
+                              <span class="ingredient-tag">Soy Sauce</span>
+                              <span class="ingredient-tag">Sesame</span>
+                            </div>
+                          </div>
+                          <div class="recipe-section">
+                            <h3>Recipe</h3>
+                            <div class="recipe-steps">
+                              <div class="step-item active"><span class="step-num">1</span>Cook and season sushi rice.</div>
+                              <div class="step-item"><span class="step-num">2</span>Cube salmon into bite sizes.</div>
+                              <div class="step-item"><span class="step-num">3</span>Marinate salmon in soy/sesame.</div>
+                              <div class="step-item"><span class="step-num">4</span>Slice avocado and cucumber.</div>
+                              <div class="step-item"><span class="step-num">5</span>Arrange rice in bowl base.</div>
+                              <div class="step-item"><span class="step-num">6</span>Top with fish and veggies.</div>
+                            </div>
+                          </div>
+                          <div class="timer-control-panel">
+                            <div class="timer-adjust-group">
+                              <button class="btn-adjust minus">-</button>
+                              <div class="timer-display">20:00</div>
+                              <button class="btn-adjust plus">+</button>
+                            </div>
+                            <button class="btn-timer-toggle">Start</button>
+                          </div>
+                          <div class="step-nav-panel">
+                            <button class="btn-step prev">Prev</button>
+                            <span class="step-indicator">Step 1/6</span>
+                            <button class="btn-step next">Next</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="feed-info-box">
+                      <div class="info-item">
+                        <span class="info-label">Est. Price</span>
+                        <span class="info-value">CA$ 8.20</span>
+                      </div>
+                      <div class="info-item">
+                        <span class="info-label">Calories</span>
+                        <span class="info-value">550 kcal</span>
+                      </div>
+                      <button class="btn-save">Save</button>
+                    </div>
+                    <div class="feed-author-area">
+                      <div class="author-avatar">KL</div>
+                      <div class="author-info">
+                        <span class="author-name">Kai L.</span>
+                        <span class="author-rating">★ 4.8</span>
+                      </div>
+                    
+                      <div class="feed-item-stats">
+                        <div class="f-stat">
+                          <span class="f-value">1.2k</span>
+                          <span class="f-label">Views</span>
+                        </div>
+                        <div class="f-stat">
+                          <span class="f-value">850</span>
+                          <span class="f-label">Likes</span>
+                        </div>
+                        <div class="f-stat">
+                          <span class="f-value">120</span>
+                          <span class="f-label">Reviews</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Item 7: Mushroom Risotto (Lacto-ovo vegetarian) -->
+                  <div class="feed-item">
+                    <div class="food-card">
+                      <div class="card-inner">
+                        <div class="card-front">
+                          <div class="card-img-bg" style="background-image: url('https://images.unsplash.com/photo-1476124369491-e7addf5db371?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                          <div class="rating-badge">★ 4.7</div>
+                          <div class="feed-content">
+                            <h2>Mushroom Risotto</h2>
+                            <span class="food-tag">Italian • Creamy</span>
+                          </div>
+                          <div class="dietary-tags">
+                            <span class="dietary-tag">Lacto-ovo vegetarian</span>
+                          </div>
+                        </div>
+                        <button class="btn-flip-back"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+<div class="card-back">
+                          
+                          <div class="recipe-section">
+                            <h3>Ingredients</h3>
+                            <div class="ingredients-list">
+                              <span class="ingredient-tag">Rice</span>
+                              <span class="ingredient-tag">Mushrooms</span>
+                              <span class="ingredient-tag">Broth</span>
+                              <span class="ingredient-tag">Wine</span>
+                              <span class="ingredient-tag">Onion</span>
+                              <span class="ingredient-tag">Parmesan</span>
+                            </div>
+                          </div>
+                          <div class="recipe-section">
+                            <h3>Recipe</h3>
+                            <div class="recipe-steps">
+                              <div class="step-item active"><span class="step-num">1</span>SautÃ© mushrooms, set aside.</div>
+                              <div class="step-item"><span class="step-num">2</span>SautÃ© onion, toast rice.</div>
+                              <div class="step-item"><span class="step-num">3</span>Deglaze pan with white wine.</div>
+                              <div class="step-item"><span class="step-num">4</span>Add hot broth ladle by ladle.</div>
+                              <div class="step-item"><span class="step-num">5</span>Stir constantly until creamy.</div>
+                              <div class="step-item"><span class="step-num">6</span>Stir in butter, cheese, mushrooms.</div>
+                            </div>
+                          </div>
+                          <div class="timer-control-panel">
+                            <div class="timer-adjust-group">
+                              <button class="btn-adjust minus">-</button>
+                              <div class="timer-display">25:00</div>
+                              <button class="btn-adjust plus">+</button>
+                            </div>
+                            <button class="btn-timer-toggle">Start</button>
+                          </div>
+                          <div class="step-nav-panel">
+                            <button class="btn-step prev">Prev</button>
+                            <span class="step-indicator">Step 1/6</span>
+                            <button class="btn-step next">Next</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="feed-info-box">
+                      <div class="info-item">
+                        <span class="info-label">Est. Price</span>
+                        <span class="info-value">CA$ 6.00</span>
+                      </div>
+                      <div class="info-item">
+                        <span class="info-label">Calories</span>
+                        <span class="info-value">620 kcal</span>
+                      </div>
+                      <button class="btn-save">Save</button>
+                    </div>
+                    <div class="feed-author-area">
+                      <div class="author-avatar">AS</div>
+                      <div class="author-info">
+                        <span class="author-name">Anna S.</span>
+                        <span class="author-rating">★ 4.6</span>
+                      </div>
+                    
+                      <div class="feed-item-stats">
+                        <div class="f-stat">
+                          <span class="f-value">1.2k</span>
+                          <span class="f-label">Views</span>
+                        </div>
+                        <div class="f-stat">
+                          <span class="f-value">850</span>
+                          <span class="f-label">Likes</span>
+                        </div>
+                        <div class="f-stat">
+                          <span class="f-value">120</span>
+                          <span class="f-label">Reviews</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Item 8: Chicken Curry (Halal) -->
+                  <div class="feed-item">
+                    <div class="food-card">
+                      <div class="card-inner">
+                        <div class="card-front">
+                          <div class="card-img-bg" style="background-image: url('https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                          <div class="rating-badge">★ 4.8</div>
+                          <div class="feed-content">
+                            <h2>Chicken Curry</h2>
+                            <span class="food-tag">Indian • Spicy</span>
+                          </div>
+                          <div class="dietary-tags">
+                            <span class="dietary-tag">Halal</span>
+                          </div>
+                        </div>
+                        <button class="btn-flip-back"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+<div class="card-back">
+                          
+                          <div class="recipe-section">
+                            <h3>Ingredients</h3>
+                            <div class="ingredients-list">
+                              <span class="ingredient-tag">Chicken</span>
+                              <span class="ingredient-tag">Curry Powder</span>
+                              <span class="ingredient-tag">Coconut Milk</span>
+                              <span class="ingredient-tag">Onion</span>
+                              <span class="ingredient-tag">Garlic</span>
+                            </div>
+                          </div>
+                          <div class="recipe-section">
+                            <h3>Recipe</h3>
+                            <div class="recipe-steps">
+                              <div class="step-item active"><span class="step-num">1</span>SautÃ© onion, garlic, ginger.</div>
+                              <div class="step-item"><span class="step-num">2</span>Bloom spices in oil.</div>
+                              <div class="step-item"><span class="step-num">3</span>Brown chicken pieces.</div>
+                              <div class="step-item"><span class="step-num">4</span>Add tomato paste and cook.</div>
+                              <div class="step-item"><span class="step-num">5</span>Pour in coconut milk.</div>
+                              <div class="step-item"><span class="step-num">6</span>Simmer until chicken is tender.</div>
+                            </div>
+                          </div>
+                          <div class="timer-control-panel">
+                            <div class="timer-adjust-group">
+                              <button class="btn-adjust minus">-</button>
+                              <div class="timer-display">30:00</div>
+                              <button class="btn-adjust plus">+</button>
+                            </div>
+                            <button class="btn-timer-toggle">Start</button>
+                          </div>
+                          <div class="step-nav-panel">
+                            <button class="btn-step prev">Prev</button>
+                            <span class="step-indicator">Step 1/6</span>
+                            <button class="btn-step next">Next</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="feed-info-box">
+                      <div class="info-item">
+                        <span class="info-label">Est. Price</span>
+                        <span class="info-value">CA$ 5.80</span>
+                      </div>
+                      <div class="info-item">
+                        <span class="info-label">Calories</span>
+                        <span class="info-value">700 kcal</span>
+                      </div>
+                      <button class="btn-save">Save</button>
+                    </div>
+                    <div class="feed-author-area">
+                      <div class="author-avatar">RK</div>
+                      <div class="author-info">
+                        <span class="author-name">Raj K.</span>
+                        <span class="author-rating">★ 4.7</span>
+                      </div>
+                    
+                      <div class="feed-item-stats">
+                        <div class="f-stat">
+                          <span class="f-value">1.2k</span>
+                          <span class="f-label">Views</span>
+                        </div>
+                        <div class="f-stat">
+                          <span class="f-value">850</span>
+                          <span class="f-label">Likes</span>
+                        </div>
+                        <div class="f-stat">
+                          <span class="f-value">120</span>
+                          <span class="f-label">Reviews</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Item 9: Egg Salad Sandwich (Ovo-vegetarian) -->
+                  <div class="feed-item">
+                    <div class="food-card">
+                      <div class="card-inner">
+                        <div class="card-front">
+                          <div class="card-img-bg" style="background-image: url('https://images.unsplash.com/photo-1525351484163-7529414395d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                          <div class="rating-badge">★ 4.5</div>
+                          <div class="feed-content">
+                            <h2>Egg Salad Sandwich</h2>
+                            <span class="food-tag">Breakfast • Simple</span>
+                          </div>
+                          <div class="dietary-tags">
+                            <span class="dietary-tag">Ovo-vegetarian</span>
+                          </div>
+                        </div>
+                        <button class="btn-flip-back"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+<div class="card-back">
+                          
+                          <div class="recipe-section">
+                            <h3>Ingredients</h3>
+                            <div class="ingredients-list">
+                              <span class="ingredient-tag">Eggs</span>
+                              <span class="ingredient-tag">Mayo</span>
+                              <span class="ingredient-tag">Mustard</span>
+                              <span class="ingredient-tag">Chives</span>
+                              <span class="ingredient-tag">Bread</span>
+                              <span class="ingredient-tag">Lettuce</span>
+                            </div>
+                          </div>
+                          <div class="recipe-section">
+                            <h3>Recipe</h3>
+                            <div class="recipe-steps">
+                              <div class="step-item active"><span class="step-num">1</span>Boil eggs for 10 minutes.</div>
+                              <div class="step-item"><span class="step-num">2</span>Peel and chop eggs.</div>
+                              <div class="step-item"><span class="step-num">3</span>Mix with mayo and mustard.</div>
+                              <div class="step-item"><span class="step-num">4</span>Add chopped chives, salt, pepper.</div>
+                              <div class="step-item"><span class="step-num">5</span>Toast bread slices lightly.</div>
+                              <div class="step-item"><span class="step-num">6</span>Assemble sandwich with lettuce.</div>
+                            </div>
+                          </div>
+                          <div class="timer-control-panel">
+                            <div class="timer-adjust-group">
+                              <button class="btn-adjust minus">-</button>
+                              <div class="timer-display">10:00</div>
+                              <button class="btn-adjust plus">+</button>
+                            </div>
+                            <button class="btn-timer-toggle">Start</button>
+                          </div>
+                          <div class="step-nav-panel">
+                            <button class="btn-step prev">Prev</button>
+                            <span class="step-indicator">Step 1/6</span>
+                            <button class="btn-step next">Next</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="feed-info-box">
+                      <div class="info-item">
+                        <span class="info-label">Est. Price</span>
+                        <span class="info-value">CA$ 2.50</span>
+                      </div>
+                      <div class="info-item">
+                        <span class="info-label">Calories</span>
+                        <span class="info-value">450 kcal</span>
+                      </div>
+                      <button class="btn-save">Save</button>
+                    </div>
+                    <div class="feed-author-area">
+                      <div class="author-avatar">TB</div>
+                      <div class="author-info">
+                        <span class="author-name">Tom B.</span>
+                        <span class="author-rating">★ 4.4</span>
+                      </div>
+                    
+                      <div class="feed-item-stats">
+                        <div class="f-stat">
+                          <span class="f-value">1.2k</span>
+                          <span class="f-label">Views</span>
+                        </div>
+                        <div class="f-stat">
+                          <span class="f-value">850</span>
+                          <span class="f-label">Likes</span>
+                        </div>
+                        <div class="f-stat">
+                          <span class="f-value">120</span>
+                          <span class="f-label">Reviews</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Item 10: Vegetable Soup (Diabetic-friendly) -->
+                  <div class="feed-item">
+                    <div class="food-card">
+                      <div class="card-inner">
+                        <div class="card-front">
+                          <div class="card-img-bg" style="background-image: url('https://images.unsplash.com/photo-1547592166-23acbe34071b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                          <div class="rating-badge">★ 4.9</div>
+                          <div class="feed-content">
+                            <h2>Vegetable Soup</h2>
+                            <span class="food-tag">Healthy • Warm</span>
+                          </div>
+                          <div class="dietary-tags">
+                            <span class="dietary-tag">Vegan</span>
+                            <span class="dietary-tag">Diabetic-friendly</span>
+                          </div>
+                        </div>
+                        <button class="btn-flip-back"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+<div class="card-back">
+                          
+                          <div class="recipe-section">
+                            <h3>Ingredients</h3>
+                            <div class="ingredients-list">
+                              <span class="ingredient-tag">Carrots</span>
+                              <span class="ingredient-tag">Celery</span>
+                              <span class="ingredient-tag">Onion</span>
+                              <span class="ingredient-tag">Potato</span>
+                              <span class="ingredient-tag">Broth</span>
+                              <span class="ingredient-tag">Thyme</span>
+                            </div>
+                          </div>
+                          <div class="recipe-section">
+                            <h3>Recipe</h3>
+                            <div class="recipe-steps">
+                              <div class="step-item active"><span class="step-num">1</span>Dice all vegetables evenly.</div>
+                              <div class="step-item"><span class="step-num">2</span>SautÃ© onion, carrot, celery.</div>
+                              <div class="step-item"><span class="step-num">3</span>Add potatoes and tomatoes.</div>
+                              <div class="step-item"><span class="step-num">4</span>Pour in broth and herbs.</div>
+                              <div class="step-item"><span class="step-num">5</span>Bring to boil, then simmer.</div>
+                              <div class="step-item"><span class="step-num">6</span>Cook until veggies are tender.</div>
+                            </div>
+                          </div>
+                          <div class="timer-control-panel">
+                            <div class="timer-adjust-group">
+                              <button class="btn-adjust minus">-</button>
+                              <div class="timer-display">40:00</div>
+                              <button class="btn-adjust plus">+</button>
+                            </div>
+                            <button class="btn-timer-toggle">Start</button>
+                          </div>
+                          <div class="step-nav-panel">
+                            <button class="btn-step prev">Prev</button>
+                            <span class="step-indicator">Step 1/6</span>
+                            <button class="btn-step next">Next</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="feed-info-box">
+                      <div class="info-item">
+                        <span class="info-label">Est. Price</span>
+                        <span class="info-value">CA$ 3.00</span>
+                      </div>
+                      <div class="info-item">
+                        <span class="info-label">Calories</span>
+                        <span class="info-value">180 kcal</span>
+                      </div>
+                      <button class="btn-save">Save</button>
+                    </div>
+                    <div class="feed-author-area">
+                      <div class="author-avatar">EL</div>
+                      <div class="author-info">
+                        <span class="author-name">Emma L.</span>
+                        <span class="author-rating">★ 4.9</span>
+                      </div>
+                    
+                      <div class="feed-item-stats">
+                        <div class="f-stat">
+                          <span class="f-value">1.2k</span>
+                          <span class="f-label">Views</span>
+                        </div>
+                        <div class="f-stat">
+                          <span class="f-value">850</span>
+                          <span class="f-label">Likes</span>
+                        </div>
+                        <div class="f-stat">
+                          <span class="f-value">120</span>
+                          <span class="f-label">Reviews</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </article>
@@ -186,7 +1081,7 @@
                         <span class="username">chef_jo</span>
                         <span class="follow-btn">• Follow</span>
                       </div>
-                      <div class="reel-desc">Perfect knife skills for scallions! 🔪✨ #chef #skills</div>
+                      <div class="reel-desc">Perfect knife skills for scallions! ðŸ”ªœ¨ #chef #skills</div>
                       <div class="reel-audio">
                         <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
                         <span>Original Audio - chef_jo</span>
@@ -223,7 +1118,7 @@
                         <span class="username">street_eats</span>
                         <span class="follow-btn">• Follow</span>
                       </div>
-                      <div class="reel-desc">Sizzling steak perfection 🥩🔥 #steak #foodporn</div>
+                      <div class="reel-desc">Sizzling steak perfection ðŸ¥©ðŸ”¥ #steak #foodporn</div>
                       <div class="reel-audio">
                         <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
                         <span>Sizzle Sounds - street_eats</span>
@@ -305,11 +1200,11 @@
       <nav class="navbar">
         <button class="nav-btn active" data-target="feed">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-cooking-pot-icon lucide-cooking-pot"><path d="M2 12h20"/><path d="M20 12v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8"/><path d="m4 8 16-4"/><path d="m8.86 6.78-.45-1.81a2 2 0 0 1 1.45-2.43l1.94-.48a2 2 0 0 1 2.43 1.46l.45 1.8"/></svg>
-          <span class="nav-label">feed</span>
+          <span class="nav-label">Recipes</span>
         </button>
         <button class="nav-btn" data-target="reels">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-copy-icon lucide-book-copy"><path d="M5 7a2 2 0 0 0-2 2v11"/><path d="M5.803 18H5a2 2 0 0 0 0 4h9.5a.5.5 0 0 0 .5-.5V21"/><path d="M9 15V4a2 2 0 0 1 2-2h9.5a.5.5 0 0 1 .5.5v14a.5.5 0 0 1-.5.5H11a2 2 0 0 1 0-4h10"/></svg>
-          <span class="nav-label">recipes</span>
+          <span class="nav-label">Feed</span>
         </button>
         <button class="nav-btn" data-target="profile">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-user-round-icon lucide-circle-user-round nav-icon-profile"><path d="M18 20a6 6 0 0 0-12 0"/><circle cx="12" cy="10" r="4"/><circle cx="12" cy="12" r="10"/></svg>
@@ -320,5 +1215,60 @@
     </div>
   </div>
   <script src="app.js"></script>
+
+  <!-- Review Modal -->
+  <div class="review-modal-overlay hidden" id="reviewModalOverlay">
+    <div class="review-modal">
+      <button class="btn-close-modal" id="btnCloseModal">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+      
+      <div class="modal-user-info">
+        <div class="modal-user-profile">
+          <div class="modal-avatar">JD</div>
+          <div class="user-details">
+            <span class="user-name">John Doe</span>
+            <span class="user-rating">★ 4.8</span>
+          </div>
+        </div>
+        <div class="modal-stats">
+          <div class="stat-item">
+            <span class="stat-value">1.2k</span>
+            <span class="stat-label">Views</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">850</span>
+            <span class="stat-label">Likes</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">120</span>
+            <span class="stat-label">Reviews</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-header">
+        <h3>How was this recipe?</h3>
+      </div>
+      <div class="modal-body">
+        <div class="star-rating-container" id="starRating">
+          <button class="star-btn" data-value="1"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></button>
+          <button class="star-btn" data-value="2"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></button>
+          <button class="star-btn" data-value="3"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></button>
+          <button class="star-btn" data-value="4"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></button>
+          <button class="star-btn" data-value="5"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></button>
+        </div>
+        <div class="share-options">
+          <button class="btn-share">Share to Story</button>
+          <button class="btn-share">Send to Friend</button>
+        </div>
+        <textarea class="review-input" placeholder="Write your review here..."></textarea>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-modal-action primary" id="btnThankYou">Thank you!</button>
+        <button class="btn-modal-action secondary" id="btnRemix">Remix</button>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

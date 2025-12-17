@@ -3,7 +3,7 @@
   --text-color: #ffffff;
   --secondary-text: #a8a8a8;
   --border-color: #262626;
-  --accent-color: #0095f6;
+  --accent-color: #FF4444; /* Reddish Brand Color */
   --phone-width: 390px;
   --phone-height: 844px;
   --bottom-nav-height: 110px;
@@ -701,7 +701,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: var(--bg-color);
+  background: linear-gradient(to top, #5c0f22, #000000);
   z-index: 2000; /* Above everything */
   display: flex;
   flex-direction: column;
@@ -716,6 +716,33 @@ body {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
+}
+
+.onboarding-indicators {
+  position: absolute;
+  top: 20px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  z-index: 2010;
+}
+
+.indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #888;
+  opacity: 0.5;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.indicator.active {
+  width: 24px;
+  border-radius: 10px;
+  background-color: #FF512F;
+  opacity: 1;
 }
 
 /* Hide navbar when onboarding is active */
@@ -747,7 +774,7 @@ body {
 
 #step-1 .onboarding-title {
   position: absolute;
-  top: 12.5%;
+  top: 5%;
   left: 40px;
   right: 40px;
   width: auto;
@@ -756,7 +783,7 @@ body {
 
 #step-1 .onboarding-actions {
   position: absolute;
-  bottom: 12.5%;
+  bottom: 8%;
   left: 40px;
   right: 40px;
   width: auto;
@@ -782,6 +809,29 @@ body {
   right: 8%;
   width: 130px; /* Increased size */
   animation: breatheStarRotated 6s ease-in-out infinite; /* Same duration as onboarding1 */
+}
+
+.welcome-msg {
+  position: absolute;
+  bottom: 3%;
+  width: 100%;
+  text-align: center;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 500;
+  opacity: 0.8;
+  z-index: 20;
+}
+
+@keyframes slideDownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes breatheStar {
@@ -829,23 +879,28 @@ body {
 }
 
 .onboarding-title {
-  font-size: 32px;
+  font-family: 'Playfair Display', serif;
+  font-size: 64px;
   margin-top: 0;
-  font-weight: 800;
+  font-weight: 400;
   margin-bottom: 40px;
-  background: linear-gradient(45deg, #FF512F, #DD2476);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #ffffff;
   z-index: 10;
   flex-shrink: 0;
-  line-height: 1.3;
+  line-height: 1.1;
   padding-bottom: 10px; /* Prevent text cropping */
+  opacity: 0;
+  animation: slideDownFade 1s ease-out forwards;
 }
 
 .title-highlight {
-  font-size: 60px;
+  font-size: 140px;
   display: block;
+  font-style: italic;
   padding-right: 10px; /* Prevent italic/wide text cropping */
+  margin-top: 0px;
+  opacity: 0;
+  animation: slideDownFade 1s ease-out 0.3s forwards;
 }
 
 .onboarding-actions {
@@ -860,18 +915,21 @@ body {
 .onboarding-nav-buttons {
   display: flex;
   gap: 15px;
-  width: 100%;
-  margin-top: 30px;
-  position: relative;
+  position: absolute;
+  bottom: 8%;
+  left: 40px;
+  right: 40px;
+  width: auto;
+  margin-top: 0;
   z-index: 20;
 }
 
 .onboarding-btn {
   flex: 1;
-  padding: 12px;
+  padding: 16px;
   border-radius: 12px;
   border: none;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
   cursor: pointer;
   transition: transform 0.2s;
@@ -1051,51 +1109,533 @@ body {
   transform: scale(1.05);
 }
 
-/* TINDER FEED STYLES */
+/* FEED STYLES (Vertical Scroll) */
 .card-stack-container {
   width: 100%;
   height: 100%;
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   padding-bottom: 100px; /* Space for nav */
   overflow: hidden;
 }
 
-.card-stack {
+.feed-scroll-container {
   width: 100%;
   height: 100%;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scrollbar-width: none; /* Firefox */
+}
+
+.feed-scroll-container::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+.feed-item {
+  width: 100%;
+  height: 100%;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+}
+
+.food-card {
+  width: 100%;
+  aspect-ratio: 3/4;
+  border-radius: 24px;
   position: relative;
+  perspective: 1000px;
+  cursor: pointer;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: left;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.food-card.flipped .card-inner {
+  transform: rotateY(180deg);
+}
+
+/* Fix for button interaction on card back */
+.food-card.flipped .card-back {
+  z-index: 2;
+  pointer-events: auto;
+}
+
+.food-card.flipped .card-front {
+  pointer-events: none;
+  z-index: -1;
+}
+
+.card-front, .card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+.card-front {
+  /* background-size: cover; REMOVED - now handled by .card-img-bg */
+  /* background-position: center; REMOVED */
+  position: relative;
+  overflow: hidden; /* Ensure image doesn't overflow when scaled */
+}
+
+.card-img-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+  animation: breathe 10s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@keyframes breathe {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+/* Ensure content stays on top */
+.rating-badge,
+.feed-content,
+.dietary-tags {
+  position: relative;
+  z-index: 2;
+}
+
+.card-front::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60%;
+  background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.card-back {
+  background-color: #1a1a1a;
+  color: white;
+  transform: rotateY(180deg);
+  padding: 16px; /* Reduced padding */
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Reduced gap */
+  overflow-y: auto;
+  cursor: default;
+}
+
+/* Ensure buttons are always clickable */
+.card-back button, 
+.card-back .btn-step, 
+.card-back .btn-adjust, 
+.card-back .btn-timer-toggle {
+  pointer-events: auto;
+  cursor: pointer;
+  z-index: 20;
+  position: relative;
+}
+
+/* Scrollbar for card back */
+.card-back {
+  scrollbar-width: none; /* Firefox */
+}
+.card-back::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+.btn-flip-back {
+  position: absolute;
+  top: 16px;
+  left: 16px; /* Changed from right to left to appear on right when flipped */
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%; /* Circle shape */
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  z-index: 20; /* Higher than card content */
+  transition: background 0.2s;
+  padding: 0;
+  /* Fix for position and visibility on flip */
+  transform: rotateY(180deg) translateZ(1px);
+  backface-visibility: hidden;
 }
 
-.tinder-card {
+.btn-flip-back svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  stroke-width: 2.5;
+}
+
+.btn-flip-back:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.recipe-section h3 {
+  font-size: 14px;
+  color: var(--accent-color);
+  margin-bottom: 4px; /* Reduced margin */
+  border-bottom: none; /* Removed underline */
+  padding-bottom: 0; /* Removed padding */
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.ingredients-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.ingredient-tag {
+  background: #2a2a2a;
+  border: 1px solid #333;
+  padding: 6px 12px;
+  border-radius: 20px; /* Pill shape */
+  font-size: 11px;
+  color: #ccc;
+}
+
+.recipe-steps {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.step-item {
+  background: #222;
+  padding: 8px;
+  border-radius: 8px;
+  font-size: 10px;
+  line-height: 1.4;
+  border: 1px solid #333;
+  transition: all 0.3s ease;
+}
+
+.step-item.completed {
+  opacity: 0.4;
+  filter: grayscale(100%);
+}
+
+.step-item.active {
+  border-color: var(--accent-color);
+  background: rgba(255, 68, 68, 0.1); /* Brand color tint (Red) */
+  box-shadow: 0 0 8px rgba(255, 68, 68, 0.3);
+}
+
+.step-num {
+  color: var(--accent-color);
+  font-weight: bold;
+  margin-bottom: 2px;
+  display: block;
+  font-size: 11px;
+}
+
+/* New Timer & Nav Styles */
+.timer-control-panel {
+  background: #222;
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 8px; /* Reduced padding */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 5px; /* Reduced margin */
+  margin-bottom: 5px; /* Reduced margin */
+}
+
+.timer-adjust-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-adjust {
+  background: #333;
+  border: none;
+  color: #fff;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-adjust:active {
+  background: #444;
+}
+
+.timer-display {
+  font-size: 16px;
+  font-weight: bold;
+  font-family: monospace;
+  color: #fff;
+  min-width: 50px;
+  text-align: center;
+}
+
+.btn-timer-toggle {
+  background: var(--accent-color);
+  border: none;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.step-nav-panel {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping */
+  justify-content: center; /* Center content */
+  gap: 4px; /* Small gap between buttons */
+  margin-top: auto; /* Push to bottom if space allows */
+  padding-top: 5px; /* Reduced padding */
+  border-top: none; /* Removed top border */
+}
+
+.btn-step {
+  background: transparent;
+  border: 1px solid #444;
+  color: #ccc;
+  padding: 10px 16px; /* Increased padding for touch target */
+  border-radius: 12px; /* Slightly less rounded */
+  font-size: 14px; /* Larger font */
+  cursor: pointer;
+  transition: all 0.2s;
+  flex: 1; /* Share width */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  order: 1; /* Buttons first */
+}
+
+.btn-step:hover {
+  border-color: #666;
+  color: #fff;
+}
+
+.btn-step:active {
+  background: #333;
+}
+
+.step-indicator {
+  font-size: 11px;
+  color: #666;
+  font-weight: 600;
+  width: 100%; /* Full width to force new line */
+  text-align: center;
+  order: 2; /* Indicator last */
+  margin-top: 4px;
+}
+
+.feed-content {
   position: absolute;
-  width: 90%;
-  height: 70%;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  z-index: 2;
+  color: #fff;
+}
+
+.feed-content h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  margin-bottom: 6px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.rating-badge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 6px 12px;
   border-radius: 20px;
-  background-size: cover;
-  background-position: center;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.food-tag {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 6px 12px;
+  border-radius: 20px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 5px;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+
+.dietary-tags {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  padding: 20px;
-  transition: transform 0.1s ease-out;
-  cursor: grab;
-  user-select: none;
-  touch-action: none;
+  align-items: flex-end;
+  gap: 6px;
+  z-index: 10;
 }
 
-.tinder-card:active {
-  cursor: grabbing;
+.dietary-tag {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 4px 10px;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
-.card-content {
+.feed-info-box {
+  margin-top: 15px;
+  background: #080808;
+  border: none;
+  border-radius: 16px;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-label {
+  font-size: 10px;
+  color: #888;
+  margin-bottom: 4px;
+}
+
+.info-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.btn-save {
+  background: #fff;
+  color: #000;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.feed-author-area {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 5px;
+}
+
+.feed-item-stats {
+  margin-left: auto; /* Push to right */
+  display: flex;
+  gap: 12px;
+}
+
+.f-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.f-value {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-color);
+}
+
+.f-label {
+  font-size: 9px;
+  color: var(--secondary-text);
+  text-transform: uppercase;
+}
+
+.author-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.author-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.author-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.author-rating {
+  font-size: 12px;
+  color: #FFD700; /* Gold */
+}
+
+
   color: white;
   text-shadow: 0 2px 4px rgba(0,0,0,0.5);
   pointer-events: none;
@@ -1142,11 +1682,7 @@ body {
 }
 
 .tinder-actions {
-  position: absolute;
-  bottom: 120px;
-  display: flex;
-  gap: 30px;
-  z-index: 10;
+  display: none;
 }
 
 .tinder-btn {
@@ -1171,4 +1707,285 @@ body {
 
 .btn-like { color: #4CD964; }
 .btn-pass { color: #FF3B30; }
+
+
+/* Mobile Optimization for Onboarding Steps */
+@media (max-width: 480px), (max-height: 800px) {
+  .onboarding-title {
+    font-size: 35px;
+    margin-bottom: 20px;
+  }
+
+  .title-highlight {
+    font-size: 75px;
+  }
+
+  .preference-grid-images {
+    gap: 8px;
+    max-width: 280px; /* Smaller width to fit screen */
+    margin-bottom: 15px;
+  }
+
+  .preference-grid-images.grid-3-cols {
+    max-width: 320px;
+    gap: 6px;
+  }
+
+  .pref-image-btn {
+    padding: 8px;
+  }
+
+  .pref-icon-wrapper {
+    margin-bottom: 5px; /* Reduce spacing */
+    height: 60%;
+  }
+
+  .pref-label {
+    font-size: 12px;
+  }
+  
+  .preference-grid-images.grid-3-cols .pref-label {
+    font-size: 10px;
+  }
+  
+  .onboarding-nav-buttons {
+    margin-top: 15px;
+  }
+}
+
+/* Review Modal Styles */
+.review-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 10001; /* Higher than navbar (9999) */
+  display: flex;
+  align-items: flex-end; /* Bottom sheet */
+  justify-content: center;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.review-modal-overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.review-modal {
+  background: #000000; /* Solid Black Background */
+  width: 100%;
+  max-width: 480px; /* Match app width */
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  padding: 24px;
+  padding-top: 60px; /* Increased top padding to clear close button */
+  padding-bottom: 40px; /* Extra padding at bottom */
+  min-height: 80%; /* Increased height */
+  position: relative;
+  transform: translateY(0);
+  transition: transform 0.3s cubic-bezier(0.1, 0.7, 0.1, 1);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.5);
+  border-top: none; /* Removed border */
+}
+
+.review-modal-overlay.hidden .review-modal {
+  transform: translateY(100%);
+}
+
+.btn-close-modal {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: var(--secondary-text);
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-user-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #262626;
+  margin-top: 10px;
+}
+
+.modal-user-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.modal-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  color: #fff;
+  font-size: 14px;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.user-name {
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--text-color);
+}
+
+.user-rating {
+  font-size: 13px;
+  color: #FFD700; /* Gold for star */
+  font-weight: 600;
+}
+
+.modal-stats {
+  display: flex;
+  gap: 20px;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.stat-value {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--text-color);
+}
+
+.stat-label {
+  font-size: 11px;
+  color: var(--secondary-text);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Interactive Star Rating */
+.star-rating-container {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.star-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: #333; /* Default empty color */
+  transition: transform 0.1s, color 0.2s;
+}
+
+.star-btn svg {
+  width: 32px;
+  height: 32px;
+  fill: currentColor;
+  stroke: currentColor;
+  stroke-width: 1;
+}
+
+.star-btn.active,
+.star-btn.hover {
+  color: #FFD700; /* Gold */
+}
+
+.star-btn:active {
+  transform: scale(0.9);
+}
+
+.modal-header h3 {
+  margin: 0 0 20px 0;
+  font-size: 20px;
+  color: var(--text-color);
+}
+
+.share-options {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.btn-share {
+  flex: 1;
+  padding: 12px;
+  border-radius: 12px;
+  border: none; /* Removed border */
+  background: #1F1F1F; /* Dark Gray Background */
+  color: var(--text-color);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.review-input {
+  width: 100%;
+  height: 100px;
+  border-radius: 12px;
+  border: none; /* Removed border */
+  background: #1F1F1F; /* Dark Gray Background */
+  color: var(--text-color);
+  padding: 12px;
+  font-family: inherit;
+  resize: none;
+  margin-bottom: 20px;
+}
+
+.modal-footer {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.btn-modal-action {
+  padding: 14px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  font-size: 16px;
+  flex: 1; /* Equal width for both buttons */
+}
+
+.btn-modal-action.primary {
+  background: var(--accent-color);
+  color: white;
+}
+
+.btn-modal-action.secondary {
+  background: #1F1F1F; /* Dark Gray Background */
+  color: var(--text-color);
+  border: none; /* Removed border */
+}
+
+/* Bon Appétit Button State */
+.btn-step.finish {
+  background-color: var(--accent-color);
+  color: white;
+  width: auto;
+  padding: 0 16px;
+  font-weight: 700;
+}
 

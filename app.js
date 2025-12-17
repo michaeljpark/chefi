@@ -3,6 +3,80 @@ document.addEventListener('DOMContentLoaded', () => {
   const navButtons = document.querySelectorAll('.nav-btn');
   const pager = document.getElementById('pager');
   
+  // --- MODAL LOGIC ---
+  const reviewModalOverlay = document.getElementById('reviewModalOverlay');
+  const btnCloseModal = document.getElementById('btnCloseModal');
+  const btnThankYou = document.getElementById('btnThankYou');
+  const btnRemix = document.getElementById('btnRemix');
+  let activeCardForModal = null; // Track which card opened the modal
+
+  const closeReviewModal = () => {
+      if (reviewModalOverlay) reviewModalOverlay.classList.add('hidden');
+      
+      // Auto-flip back the card
+      if (activeCardForModal) {
+          activeCardForModal.classList.remove('flipped');
+          activeCardForModal = null;
+      }
+  };
+
+  const openReviewModal = (card) => {
+      activeCardForModal = card;
+      if (reviewModalOverlay) reviewModalOverlay.classList.remove('hidden');
+  };
+
+  if (btnCloseModal) btnCloseModal.addEventListener('click', closeReviewModal);
+  if (btnThankYou) btnThankYou.addEventListener('click', closeReviewModal);
+  if (btnRemix) btnRemix.addEventListener('click', () => {
+      // Mockup action
+      closeReviewModal();
+  });
+  if (reviewModalOverlay) {
+      reviewModalOverlay.addEventListener('click', (e) => {
+          if (e.target === reviewModalOverlay) closeReviewModal();
+      });
+  }
+
+  // --- STAR RATING LOGIC ---
+  const starContainer = document.getElementById('starRating');
+  if (starContainer) {
+    const stars = starContainer.querySelectorAll('.star-btn');
+    let currentRating = 0;
+
+    stars.forEach(star => {
+      // Hover effect
+      star.addEventListener('mouseenter', () => {
+        const value = parseInt(star.dataset.value);
+        stars.forEach(s => {
+          if (parseInt(s.dataset.value) <= value) {
+            s.classList.add('hover');
+          } else {
+            s.classList.remove('hover');
+          }
+        });
+      });
+
+      // Click effect
+      star.addEventListener('click', () => {
+        currentRating = parseInt(star.dataset.value);
+        stars.forEach(s => {
+          if (parseInt(s.dataset.value) <= currentRating) {
+            s.classList.add('active');
+          } else {
+            s.classList.remove('active');
+          }
+        });
+      });
+    });
+
+    // Reset hover on mouse leave
+    starContainer.addEventListener('mouseleave', () => {
+      stars.forEach(s => {
+        s.classList.remove('hover');
+      });
+    });
+  }
+
   // State
   let currentPageIndex = 0; // 0: Feed, 1: Reels, 2: Profile
   const totalPages = 3;
@@ -12,6 +86,14 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.onboarding-step').forEach(el => el.classList.remove('active'));
     const nextEl = document.getElementById(`step-${step}`);
     if (nextEl) nextEl.classList.add('active');
+
+    // Update indicators
+    document.querySelectorAll('.indicator').forEach(el => {
+      el.classList.remove('active');
+      if (el.dataset.step == step) {
+        el.classList.add('active');
+      }
+    });
   };
 
   window.skipOnboarding = function() {
@@ -38,123 +120,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  // --- TINDER FEED LOGIC ---
-  const cardStack = document.getElementById('card-stack');
-  let cards = Array.from(document.querySelectorAll('.tinder-card'));
-
-  function initCards() {
-    cards.forEach((card, index) => {
-      card.style.zIndex = cards.length - index;
-      // Reset transform
-      card.style.transform = '';
-      
-      // Add listeners only to the top card
-      if (index === 0) {
-        addSwipeListeners(card);
-      }
-    });
-  }
-
-  function addSwipeListeners(card) {
-    let startX = 0;
-    let currentX = 0;
-    let isDragging = false;
-    const threshold = 100; // px to trigger swipe
-
-    const onDown = (e) => {
-      startX = e.clientX || e.touches[0].clientX;
-      isDragging = true;
-      card.style.transition = 'none';
-    };
-
-    const onMove = (e) => {
-      if (!isDragging) return;
-      const x = (e.clientX || e.touches[0].clientX);
-      currentX = x - startX;
-      
-      // Rotate based on X movement
-      const rotate = currentX * 0.1;
-      card.style.transform = `translateX(${currentX}px) rotate(${rotate}deg)`;
-
-      // Show overlays
-      const likeOverlay = card.querySelector('.overlay-like');
-      const nopeOverlay = card.querySelector('.overlay-nope');
-      
-      if (currentX > 0) {
-        likeOverlay.style.opacity = Math.min(currentX / 100, 1);
-        nopeOverlay.style.opacity = 0;
-      } else {
-        nopeOverlay.style.opacity = Math.min(Math.abs(currentX) / 100, 1);
-        likeOverlay.style.opacity = 0;
-      }
-    };
-
-    const onUp = (e) => {
-      if (!isDragging) return;
-      isDragging = false;
-      card.style.transition = 'transform 0.3s ease-out';
-
-      if (currentX > threshold) {
-        // Swipe Right (Like)
-        card.style.transform = `translateX(${window.innerWidth}px) rotate(30deg)`;
-        setTimeout(() => removeCard(card), 300);
-      } else if (currentX < -threshold) {
-        // Swipe Left (Nope)
-        card.style.transform = `translateX(-${window.innerWidth}px) rotate(-30deg)`;
-        setTimeout(() => removeCard(card), 300);
-      } else {
-        // Snap back
-        card.style.transform = '';
-        card.querySelector('.overlay-like').style.opacity = 0;
-        card.querySelector('.overlay-nope').style.opacity = 0;
-      }
-    };
-
-    card.addEventListener('mousedown', onDown);
-    card.addEventListener('touchstart', onDown);
-    
-    document.addEventListener('mousemove', onMove);
-    document.addEventListener('touchmove', onMove);
-    
-    document.addEventListener('mouseup', onUp);
-    document.addEventListener('touchend', onUp);
-    
-    // Store cleanup function on card to remove listeners later if needed
-    card._cleanup = () => {
-      document.removeEventListener('mousemove', onMove);
-      document.removeEventListener('touchmove', onMove);
-      document.removeEventListener('mouseup', onUp);
-      document.removeEventListener('touchend', onUp);
-    };
-  }
-
-  function removeCard(card) {
-    if (card._cleanup) card._cleanup();
-    card.remove();
-    cards.shift(); // Remove from array
-    
-    if (cards.length > 0) {
-      initCards(); // Re-init next card
-    } else {
-      // No more cards
-      cardStack.innerHTML = '<div style="color:white; text-align:center;"><h3>No more food nearby! 😭</h3><button onclick="location.reload()" style="margin-top:10px; padding:10px; border-radius:8px; border:none;">Refresh</button></div>';
-    }
-  }
-
-  window.swipeCard = function(direction) {
-    if (cards.length === 0) return;
-    const card = cards[0];
-    card.style.transition = 'transform 0.5s ease-out';
-    if (direction === 'right') {
-      card.style.transform = `translateX(${window.innerWidth}px) rotate(30deg)`;
-    } else {
-      card.style.transform = `translateX(-${window.innerWidth}px) rotate(-30deg)`;
-    }
-    setTimeout(() => removeCard(card), 500);
-  };
-
-  // Initialize Tinder Cards
-  initCards();
+  // --- FEED LOGIC (Vertical Scroll) ---
+  // No complex JS needed for CSS Scroll Snap
   
   // Navigation Logic
   function navigateTo(index) {
@@ -299,6 +266,200 @@ document.addEventListener('DOMContentLoaded', () => {
       profileTabs.forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
     });
+  });
+
+  // --- FLIP CARD & TIMER LOGIC ---
+  document.querySelectorAll('.food-card').forEach(card => {
+    // 1. Card Flip
+    card.addEventListener('click', (e) => {
+      const isFlipped = card.classList.contains('flipped');
+
+      // Case 1: Clicking the "Back" button on the back of the card
+      if (e.target.closest('.btn-flip-back')) {
+          card.classList.remove('flipped');
+          e.stopPropagation();
+          return;
+      }
+
+      // Case 2: Clicking any other interactive element (buttons, tags, panels)
+      if (e.target.closest('button') || 
+          e.target.closest('.ingredient-tag') || 
+          e.target.closest('.timer-control-panel') || 
+          e.target.closest('.step-nav-panel')) {
+          return;
+      }
+
+      // Case 3: Clicking on the card background
+      if (!isFlipped) {
+          // If showing front, flip to back
+          card.classList.add('flipped');
+      }
+      // If showing back, DO NOTHING (User must use the Back button)
+    });
+
+    // State for this card
+    let currentStep = 0;
+    const steps = card.querySelectorAll('.step-item');
+    const totalSteps = steps.length;
+    const stepIndicator = card.querySelector('.step-indicator');
+    const timerDisplay = card.querySelector('.timer-display');
+    const btnTimerToggle = card.querySelector('.btn-timer-toggle');
+    let timerInterval = null;
+    let isTimerRunning = false;
+    let timeRemaining = 0; // in seconds
+
+    // Helper: Parse time string "MM:SS" to seconds
+    const parseTime = (str) => {
+      if (!str) return 0;
+      const [m, s] = str.split(':').map(Number);
+      return m * 60 + s;
+    };
+
+    // Helper: Format seconds to "MM:SS"
+    const formatTime = (seconds) => {
+      const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+      const s = (seconds % 60).toString().padStart(2, '0');
+      return `${m}:${s}`;
+    };
+
+    // Initialize timer from HTML
+    if (timerDisplay) {
+        timeRemaining = parseTime(timerDisplay.textContent);
+    }
+
+    // Navigation Buttons
+    const btnPrev = card.querySelector('.btn-step.prev');
+    const btnNext = card.querySelector('.btn-step.next');
+
+    // Update Step UI
+    const updateStepUI = () => {
+      steps.forEach((step, index) => {
+        step.classList.remove('active', 'completed');
+        if (index < currentStep) {
+          step.classList.add('completed');
+        } else if (index === currentStep) {
+          step.classList.add('active');
+        }
+      });
+      if (stepIndicator) {
+        stepIndicator.textContent = `Step ${currentStep + 1}/${totalSteps}`;
+      }
+
+      // Handle Last Step Button
+      if (btnNext) {
+        if (currentStep === totalSteps - 1) {
+          btnNext.textContent = "Bon Appétit!";
+          btnNext.classList.add('finish');
+        } else {
+          btnNext.textContent = "Next";
+          btnNext.classList.remove('finish');
+        }
+      }
+    };
+
+    // Randomize Timer (5-60 mins)
+    const randomizeTimer = () => {
+        // Random multiple of 5 between 5 and 60
+        const minutes = (Math.floor(Math.random() * 12) + 1) * 5; 
+        timeRemaining = minutes * 60;
+        if (timerDisplay) timerDisplay.textContent = formatTime(timeRemaining);
+        
+        // Reset timer state if running
+        if (isTimerRunning) {
+            clearInterval(timerInterval);
+            isTimerRunning = false;
+            if (btnTimerToggle) {
+                btnTimerToggle.textContent = 'Start';
+                btnTimerToggle.classList.remove('running');
+            }
+        }
+    };
+
+    if (btnPrev) {
+      btnPrev.addEventListener('click', (e) => {
+        e.stopPropagation(); // Stop bubbling to card
+        if (currentStep > 0) {
+          currentStep--;
+          updateStepUI();
+          randomizeTimer(); // Randomize timer on step change
+        }
+      });
+    }
+
+    if (btnNext) {
+      btnNext.addEventListener('click', (e) => {
+        e.stopPropagation(); // Stop bubbling to card
+        
+        // If it's the last step (Bon Appétit button)
+        if (currentStep === totalSteps - 1) {
+            openReviewModal(card); // Pass the card reference
+            return;
+        }
+
+        if (currentStep < totalSteps - 1) {
+          currentStep++;
+          updateStepUI();
+          randomizeTimer(); // Randomize timer on step change
+        }
+      });
+    }
+
+    // Timer Adjustment Buttons
+    const btnMinus = card.querySelector('.btn-adjust.minus');
+    const btnPlus = card.querySelector('.btn-adjust.plus');
+
+    if (btnMinus) {
+      btnMinus.addEventListener('click', (e) => {
+        e.stopPropagation(); // Stop bubbling to card
+        if (timeRemaining >= 300) { 
+             timeRemaining = Math.max(0, timeRemaining - 300);
+             if (timerDisplay) timerDisplay.textContent = formatTime(timeRemaining);
+        }
+      });
+    }
+
+    if (btnPlus) {
+      btnPlus.addEventListener('click', (e) => {
+        e.stopPropagation(); // Stop bubbling to card
+        timeRemaining += 300; // Add 5 mins
+        if (timerDisplay) timerDisplay.textContent = formatTime(timeRemaining);
+      });
+    }
+
+    // Timer Toggle Button
+    if (btnTimerToggle) {
+      btnTimerToggle.addEventListener('click', (e) => {
+        e.stopPropagation(); // Stop bubbling to card
+        if (isTimerRunning) {
+          // Stop
+          clearInterval(timerInterval);
+          isTimerRunning = false;
+          btnTimerToggle.textContent = 'Start';
+          btnTimerToggle.classList.remove('running');
+        } else {
+          // Start
+          if (timeRemaining <= 0) return;
+          isTimerRunning = true;
+          btnTimerToggle.textContent = 'Pause';
+          btnTimerToggle.classList.add('running');
+          
+          timerInterval = setInterval(() => {
+            if (timeRemaining > 0) {
+              timeRemaining--;
+              if (timerDisplay) timerDisplay.textContent = formatTime(timeRemaining);
+            } else {
+              clearInterval(timerInterval);
+              isTimerRunning = false;
+              btnTimerToggle.textContent = 'Done';
+              btnTimerToggle.classList.remove('running');
+            }
+          }, 1000);
+        }
+      });
+    }
+    
+    // Initial UI setup
+    updateStepUI();
   });
 
   // Initialize
