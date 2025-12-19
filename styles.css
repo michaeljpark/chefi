@@ -2523,7 +2523,7 @@ h1, h2, h3, h4, h5, h6 {
   background: transparent; /* Changed to transparent for pseudo-element */
   color: #000;
   border: none;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  box-shadow: none;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -2908,14 +2908,17 @@ h1, h2, h3, h4, h5, h6 {
   flex-direction: column;
   justify-content: center;
   padding: 40px;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  visibility: hidden; /* Hide completely when not active */
+  
+  /* Animation: Expand from FAB */
+  clip-path: circle(0px at 48px 48px); /* Start at FAB center */
+  transition: clip-path 0.6s cubic-bezier(0.77, 0, 0.175, 1), visibility 0s 0.6s; /* Custom ease */
+  visibility: hidden;
 }
 
 .journal-overlay.visible {
-  opacity: 1;
+  clip-path: circle(150% at 48px 48px); /* Expand to fill screen */
   visibility: visible;
+  transition: clip-path 0.6s cubic-bezier(0.77, 0, 0.175, 1);
 }
 
 .journal-text-group {
@@ -2949,7 +2952,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-journal-start {
-  margin-top: 80px; /* Optimized for mobile (was 180px) */
+  margin-top: 180px; /* Restored to original position */
   background: #000;
   color: #fff;
   font-family: 'Source Serif 4', serif;
@@ -2967,7 +2970,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-journal-start.camera-mode {
-  transform: translateY(220px) !important; /* Reduced distance */
+  transform: translateY(300px) !important; /* Restored to original position */
 }
 
 /* --- Journal Camera Box --- */
