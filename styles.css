@@ -634,7 +634,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .nav-btn.active {
-  width: 110px;
+  width: 125px; /* Increased width for safety */
   border-radius: 24px;
   color: #fff;
   /* Standard Glassmorphism Recipe */
@@ -647,17 +647,18 @@ h1, h2, h3, h4, h5, h6 {
   
   /* Layout */
   justify-content: center;
-  padding: 0;
+  padding: 0 16px; /* Added horizontal padding */
   gap: 8px;
   
   /* Ensure rendering */
   z-index: 10;
-  will-change: backdrop-filter;
+  will-change: width, backdrop-filter; /* Optimize */
 }
 
 .nav-btn.active svg,
 .nav-btn.active .nav-label {
-  mix-blend-mode: difference;
+  mix-blend-mode: normal; /* Removed difference mode for better visibility */
+  text-shadow: 0 1px 3px rgba(0,0,0,0.3); /* Added shadow for contrast */
 }
 
 .nav-btn svg {
@@ -2918,10 +2919,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .journal-text-group {
-  margin-top: 60px; /* Space below the X button */
+  margin-top: 40px; /* Reduced space */
   display: flex;
   flex-direction: column;
-  gap: 32px; /* Increased gap */
+  gap: 20px; /* Reduced gap */
   transition: transform 0.5s ease, opacity 0.5s ease; /* For slide out */
   pointer-events: auto; /* Enable clicks on text/buttons */
 }
@@ -2934,7 +2935,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .journal-title-line {
   font-family: 'Instrument Serif', serif;
-  font-size: 48px;
+  font-size: 42px; /* Optimized for mobile */
   line-height: 1.1;
   color: #000;
   opacity: 0;
@@ -2944,11 +2945,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .journal-title-line:first-child {
-  font-size: 64px; /* Increased size for "Hey there," */
+  font-size: 56px; /* Optimized for mobile */
 }
 
 .btn-journal-start {
-  margin-top: 180px; /* Increased margin to push button down initially */
+  margin-top: 80px; /* Optimized for mobile (was 180px) */
   background: #000;
   color: #fff;
   font-family: 'Source Serif 4', serif;
@@ -2966,7 +2967,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-journal-start.camera-mode {
-  transform: translateY(300px); /* Move down further below camera box */
+  transform: translateY(220px) !important; /* Reduced distance */
 }
 
 /* --- Journal Camera Box --- */
@@ -2975,8 +2976,10 @@ h1, h2, h3, h4, h5, h6 {
   top: 50%;
   left: 50%;
   transform: translate(100vw, -50%); /* Start off-screen right */
-  width: 300px;
-  height: 300px; /* Square */
+  width: 75vw; /* Responsive width */
+  height: 75vw; /* Responsive height (square) */
+  max-width: 300px;
+  max-height: 300px;
   background: #000;
   border-radius: 32px;
   overflow: hidden;
@@ -3011,11 +3014,11 @@ h1, h2, h3, h4, h5, h6 {
 /* Camera Status Text */
 .camera-status-text {
   position: absolute;
-  top: 120px; /* Moved down significantly */
+  top: 15%; /* Responsive top */
   right: 24px; /* Screen relative right */
   color: #000; /* Black text */
   font-family: 'Instrument Serif', serif;
-  font-size: 48px; /* Increased font size */
+  font-size: 42px; /* Optimized font size */
   z-index: 102; /* Above overlay */
   text-align: right;
   opacity: 0;
@@ -3095,9 +3098,9 @@ h1, h2, h3, h4, h5, h6 {
 /* Upload Text */
 .journal-upload-text {
   position: absolute;
-  top: 50%;
+  bottom: 10%; /* Responsive bottom */
   left: 50%;
-  transform: translate(-50%, 180px); /* Below camera box */
+  transform: translateX(-50%); /* Center horizontally */
   font-family: 'Source Serif 4', serif;
   font-size: 14px;
   color: #999;
@@ -3106,6 +3109,8 @@ h1, h2, h3, h4, h5, h6 {
   transition: opacity 0.5s ease 0.5s;
   pointer-events: auto;
   z-index: 102;
+  width: 100%;
+  text-align: center;
 }
 
 .journal-camera-box.active ~ .journal-upload-text {
