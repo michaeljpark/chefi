@@ -603,6 +603,12 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 9999; /* Ensure it's always on top */
   padding: 0;
   pointer-events: none; /* Allow clicks to pass through the container area */
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.navbar.hidden {
+  transform: translate(-50%, 200%); /* Slide down */
+  opacity: 0;
 }
 
 .nav-btn {
@@ -729,7 +735,7 @@ h1, h2, h3, h4, h5, h6 {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to top, #5c0f22, #000000);
+  background: #000; /* Changed from gradient to black */
   z-index: 2000; /* Above everything */
   display: flex;
   flex-direction: column;
@@ -801,12 +807,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #step-1 .onboarding-title {
-  position: absolute;
-  top: 5%;
-  left: 40px;
-  right: 40px;
-  width: auto;
-  text-align: left;
+  /* Removed absolute positioning that was hiding the title */
+  position: relative;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 #step-1 .onboarding-actions {
@@ -968,9 +973,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-yes {
-  background: linear-gradient(45deg, #FF512F, #DD2476);
-  color: white;
-  box-shadow: 0 4px 15px rgba(221, 36, 118, 0.4);
+  background: #fff; /* Changed to white */
+  color: #000; /* Changed to black */
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
 }
 
 .btn-no {
@@ -1036,7 +1041,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .pref-image-btn {
-  background: transparent;
+  background: #1a1a1a;
   border: none;
   border-radius: 20px;
   padding: 15px;
@@ -1050,7 +1055,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .pref-image-btn.selected {
-  background: transparent;
+  background: #1a1a1a;
   border: none;
 }
 
@@ -1090,6 +1095,7 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  border-radius: 12px;
   transform-origin: center center;
   transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s ease, opacity 0.3s ease;
   will-change: transform;
@@ -2047,6 +2053,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
   color: var(--text-color);
   margin: 0;
+  font-family: 'Source Serif 4', serif; /* Changed to sub font */
 }
 
 .profile-actions-centered {
@@ -2123,7 +2130,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .fs-value {
   position: absolute;
-  bottom: 10px;
+  bottom: 60px; /* Moved up to avoid overlap with marquee */
   right: 20px;
   font-size: 96px; /* Much larger */
   font-weight: 400; /* Lighter weight for large serif */
@@ -2502,4 +2509,640 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Removed old button styles to avoid conflict */
 /* .btn-check-journey { ... } */
+
+
+/* FAB Button */
+.fab-btn {
+  position: absolute;
+  top: 20px; /* Moved to top left */
+  left: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: transparent; /* Changed to transparent for pseudo-element */
+  color: #000;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 105; /* Increased z-index to be above overlay (104) */
+  transition: box-shadow 0.2s;
+}
+
+/* White Circle Background */
+.fab-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  border-radius: 50%;
+  z-index: -1;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Expanded State */
+.fab-btn.active::before {
+  transform: scale(1); /* Don't expand, let overlay handle background */
+}
+
+.fab-btn.active {
+  box-shadow: none; /* Remove shadow when expanded */
+}
+
+/* Icon Rotation */
+.fab-btn svg {
+  transition: transform 0.3s ease;
+}
+
+.fab-btn.active svg {
+  transform: rotate(135deg); /* Rotate to X */
+}
+
+.fab-btn:active {
+  transform: scale(0.95);
+}
+
+/* Step 1 Updates */
+#step-1 {
+  background: #000 !important; /* Force black */
+}
+
+.marquee-container {
+  width: 100%;
+  overflow: hidden;
+  margin: 40px 0;
+  position: relative;
+}
+
+.marquee-content {
+  display: flex;
+  gap: 16px;
+  animation: marquee-scroll 20s linear infinite;
+  width: max-content;
+}
+
+.marquee-img {
+  width: 220px; /* Increased size */
+  height: 320px; /* Increased size */
+  object-fit: cover;
+  border-radius: 24px;
+  flex-shrink: 0;
+}
+
+@keyframes marquee-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Step 2 & 3 Title Animation */
+.onboarding-title {
+  font-size: 36px !important; /* Increased size */
+  animation: bounce-down-up 2s ease-in-out infinite;
+}
+
+@keyframes bounce-down-up {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(10px); }
+}
+
+/* Fridge Ingredients Marquee */
+.ingredients-marquee-container {
+  width: 100%;
+  overflow: hidden;
+  position: absolute; /* Position absolutely within the fridge container */
+  bottom: 20px; /* Place at the bottom */
+  left: 0;
+  z-index: 5;
+}
+
+.ingredients-marquee-content {
+  display: flex;
+  gap: 12px;
+  animation: marquee-scroll-left 15s linear infinite;
+  width: max-content;
+}
+
+.pill-glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(4px);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  color: #fff;
+  white-space: nowrap;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Food Journey Button Styling */
+.btn-check-journey {
+  width: auto; /* Let margins control width */
+  margin: 0 20px 20px 20px; /* Match Fridge margins */
+  background: #ffffff; /* Changed to White */
+  border-radius: 20px;
+  padding: 24px;
+  border: none;
+  cursor: pointer;
+  display: block;
+  text-align: left;
+  transition: transform 0.2s;
+  min-height: 100px;
+  position: relative;
+}
+
+.btn-check-journey:active {
+  transform: scale(0.98);
+}
+
+.journey-content-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.journey-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: 32px;
+  color: black; /* Changed to Black */
+  font-weight: 400;
+}
+
+.journey-icon {
+  color: black; /* Changed to Black */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes marquee-scroll-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+
+/* Fix Onboarding Title Visibility */
+.onboarding-title {
+  color: #fff !important;
+  text-align: left; /* Changed to left */
+  margin-bottom: 20px;
+}
+
+.title-highlight {
+  color: #fff !important; /* Unified white */
+}
+
+
+/* FORCE FIX for Step 1 Title */
+#step-1 .onboarding-title {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  text-align: left !important; /* Left align */
+  margin-top: 60px;
+  margin-left: 24px; /* Left margin */
+  z-index: 20;
+  width: auto !important;
+  font-size: 52px !important; /* Larger size */
+  line-height: 1.1;
+}
+
+
+/* FINAL VISIBILITY FIX */
+.onboarding-title {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  color: #fff !important;
+  z-index: 9999 !important;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+
+/* Ensure Marquee Container has enough height for larger images */
+.marquee-container {
+  height: 340px;
+  display: flex;
+  align-items: center;
+}
+
+
+/* Updated Check Journey Button */
+.btn-check-journey {
+  background: #2C2C2C;
+  color: #fff;
+  border: 1px solid #333;
+  padding: 10px 20px; /* Reduced padding */
+  border-radius: 24px;
+  font-size: 14px; /* Reduced font size */
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s;
+  width: auto; /* Auto width */
+}
+
+.btn-check-journey:hover {
+  background: #333;
+}
+
+/* Updated Pill Glass (Smaller) */
+.pill-glass {
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(4px) !important;
+  padding: 6px 12px !important; /* Reduced padding */
+  border-radius: 16px !important;
+  font-size: 12px !important; /* Reduced font size */
+  color: #fff !important;
+  white-space: nowrap !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+
+/* Further Reduce Check Journey Button Size */
+.btn-check-journey {
+  padding: 6px 16px !important;
+  font-size: 12px !important;
+  border-radius: 20px !important;
+  height: auto !important;
+  min-height: 30px !important;
+}
+
+.btn-check-journey svg {
+  width: 14px !important;
+  height: 14px !important;
+}
+
+
+/* Minimalist Check Journey Button (Arrow Only) */
+.btn-check-journey {
+  background: #ffffff !important;
+  border: none !important;
+  padding: 12px 20px !important; /* Reduced vertical padding */
+  margin: 0 20px 20px 20px !important; /* Match Fridge margins */
+  width: calc(100% - 40px) !important; /* Force full width minus margins */
+  min-height: auto !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
+  border-radius: 20px !important; /* Match Fridge border-radius */
+  color: #000 !important;
+  display: block !important;
+  box-sizing: border-box !important;
+}
+
+.btn-check-journey .journey-content-wrapper {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  width: 100% !important;
+}
+
+.btn-check-journey .journey-title {
+  font-size: 20px !important; /* Reduced font size */
+}
+
+.btn-check-journey:hover {
+  background: #f0f0f0 !important;
+}
+
+.btn-check-journey svg {
+  width: 20px !important;
+  height: 20px !important;
+  stroke: #000 !important;
+  stroke-width: 1.5px !important;
+}
+
+/* Align Onboarding Title with Buttons */
+#step-1 .onboarding-title {
+  margin-left: 0 !important; /* Reset margin */
+  padding-left: 0 !important;
+  text-align: left !important;
+  width: 100% !important;
+  padding: 0 20px; /* Match container padding if needed, or 0 if container has padding */
+}
+
+/* Ensure Onboarding Actions align */
+.onboarding-actions {
+  width: 100%;
+  padding: 0 20px; /* Ensure buttons have same side spacing */
+  display: flex;
+  gap: 12px;
+}
+
+/* Override Step 1 Title specific positioning */
+#step-1 .onboarding-title {
+  padding-left: 20px !important; /* Align with button container padding */
+}
+
+
+/* Adjust Marquee Position and Speed */
+.marquee-container {
+  margin-top: -40px !important; /* Move up */
+  margin-bottom: 20px !important;
+}
+
+/* --- Final Onboarding Adjustments --- */
+
+/* Marquee Container & Animation */
+.marquee-container {
+  margin-top: 20px !important;
+  margin-bottom: 40px !important;
+}
+
+.marquee-content {
+  animation-duration: 60s !important; /* Slower speed */
+}
+
+/* Marquee Images Wrapper */
+.marquee-item {
+  width: 240px !important; /* Reduced size as requested */
+  height: 320px !important; /* 3:4 Aspect Ratio */
+  border-radius: 24px !important;
+  overflow: hidden !important;
+  flex-shrink: 0 !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important;
+  background: #222 !important;
+  position: relative !important;
+  margin-right: 8px !important; /* Add spacing between items */
+  /* WebKit Fix for Border Radius Clipping */
+  transform: translateZ(0);
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+}
+
+.marquee-item img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+  border-radius: 0 !important;
+}
+
+/* Title Adjustments */
+#step-1 .onboarding-title {
+  margin-top: -60px !important;
+  margin-bottom: 40px !important;
+  text-shadow: none !important;
+  position: relative;
+  z-index: 10;
+}
+
+/* --- Journal Onboarding Overlay --- */
+.journal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 104; /* Above FAB (103) so text is visible */
+  pointer-events: auto; /* Capture clicks so they don't go through */
+  background: #fff; /* White background */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  visibility: hidden; /* Hide completely when not active */
+}
+
+.journal-overlay.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.journal-text-group {
+  margin-top: 60px; /* Space below the X button */
+  display: flex;
+  flex-direction: column;
+  gap: 32px; /* Increased gap */
+  transition: transform 0.5s ease, opacity 0.5s ease; /* For slide out */
+  pointer-events: auto; /* Enable clicks on text/buttons */
+}
+
+.journal-text-group.slide-out {
+  transform: translateX(-50px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.journal-title-line {
+  font-family: 'Instrument Serif', serif;
+  font-size: 48px;
+  line-height: 1.1;
+  color: #000;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  margin: 0;
+}
+
+.journal-title-line:first-child {
+  font-size: 64px; /* Increased size for "Hey there," */
+}
+
+.btn-journal-start {
+  margin-top: 180px; /* Increased margin to push button down initially */
+  background: #000;
+  color: #fff;
+  font-family: 'Source Serif 4', serif;
+  font-size: 16px; /* Reduced font size */
+  padding: 12px 28px; /* Reduced padding */
+  border-radius: 100px;
+  border: none;
+  cursor: pointer;
+  width: fit-content;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  pointer-events: auto; /* Enable click for this button */
+  font-weight: 600;
+}
+
+.btn-journal-start.camera-mode {
+  transform: translateY(300px); /* Move down further below camera box */
+}
+
+/* --- Journal Camera Box --- */
+.journal-camera-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(100vw, -50%); /* Start off-screen right */
+  width: 300px;
+  height: 300px; /* Square */
+  background: #000;
+  border-radius: 32px;
+  overflow: hidden;
+  opacity: 0;
+  transition: all 0.6s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  pointer-events: auto;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+.journal-camera-box.active {
+  transform: translate(-50%, -50%); /* Center */
+  opacity: 1;
+}
+
+.journal-camera-feed {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scaleX(-1); /* Mirror effect */
+}
+
+.journal-captured-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+}
+
+/* Camera Status Text */
+.camera-status-text {
+  position: absolute;
+  top: 120px; /* Moved down significantly */
+  right: 24px; /* Screen relative right */
+  color: #000; /* Black text */
+  font-family: 'Instrument Serif', serif;
+  font-size: 48px; /* Increased font size */
+  z-index: 102; /* Above overlay */
+  text-align: right;
+  opacity: 0;
+  transition: opacity 0.5s ease 0.5s; /* Delay to appear after box slides in */
+  pointer-events: none;
+  line-height: 1;
+}
+
+.camera-status-text.visible {
+  opacity: 1;
+}
+
+.loading-dots {
+  display: none; /* Remove animation */
+}
+
+/* Red Circle (Enable Camera) - Top Left */
+
+.loading-dots::after {
+  content: '...';
+  animation: dots 2s steps(4, end) infinite;
+  display: inline-block;
+  width: 0;
+  overflow: hidden;
+  vertical-align: bottom;
+  text-align: left;
+}
+
+@keyframes dots {
+  to { width: 1.25em; }
+}
+
+/* Red Circle (Enable Camera) - Top Left */
+.btn-camera-enable {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: transparent;
+  border: 2px solid #FF453A; /* Red border */
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.3s;
+}
+
+.btn-camera-enable:hover {
+  background: rgba(255, 69, 58, 0.2);
+}
+
+.btn-camera-enable.active {
+  background: #FF453A;
+  box-shadow: 0 0 10px #FF453A;
+}
+
+/* White Circle (Capture) - Bottom Right */
+.btn-camera-capture-journal {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #fff;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+  transition: transform 0.2s;
+  display: none; /* Hidden until camera enabled */
+}
+
+.btn-camera-capture-journal:active {
+  transform: scale(0.9);
+}
+
+/* Upload Text */
+.journal-upload-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 180px); /* Below camera box */
+  font-family: 'Source Serif 4', serif;
+  font-size: 14px;
+  color: #999;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.5s ease 0.5s;
+  pointer-events: auto;
+  z-index: 102;
+}
+
+.journal-camera-box.active ~ .journal-upload-text {
+  opacity: 1;
+}
+
+/* Animation Delays & Visibility */
+.journal-overlay.visible .journal-title-line,
+.journal-overlay.visible .btn-journal-start {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.delay-1 { transition-delay: 0.2s; }
+.delay-2 { transition-delay: 0.4s; }
+.delay-3 { transition-delay: 0.6s; }
+
+/* Button States - Overrides */
+
+/* Camera Mode (Waiting for Photo): Gray, Disabled */
+.btn-journal-start.camera-mode {
+  background: #E5E5EA !important; /* Light Gray */
+  color: #999 !important;
+  border: none !important;
+  transform: translateY(0) !important;
+  pointer-events: none !important; /* Not clickable */
+}
+
+/* Camera Mode + Photo: Black, Active */
+.btn-journal-start.camera-mode.has-photo {
+  background: #000 !important;
+  color: #fff !important;
+  pointer-events: auto !important; /* Clickable */
+  cursor: pointer !important;
+}
+
+.btn-journal-start:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
 

@@ -24,11 +24,31 @@
         <!-- Step 1: Hungry? -->
         <div class="onboarding-step active" id="step-1">
           <h1 class="onboarding-title">Are you<br><span class="title-highlight">Hungry?</span></h1>
-          <img src="onboarding1.png" class="onboarding-image" alt="Hungry?" />
           
-          <!-- Deco Stars -->
-          <img src="star2.png" class="deco-star star-left" alt="" />
-          <img src="star1.png" class="deco-star star-right" alt="" />
+          <!-- Infinite Image Marquee -->
+          <div class="marquee-container">
+            <div class="marquee-content">
+              <!-- Randomized Order -->
+              <div class="marquee-item"><img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="" /></div>
+              <div class="marquee-item"><img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="" /></div>
+              <div class="marquee-item"><img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="" /></div>
+              <div class="marquee-item"><img src="https://images.unsplash.com/photo-1519708227418-c8fd9a3a27cc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="" /></div>
+              <div class="marquee-item"><img src="https://images.unsplash.com/photo-1600891964092-4316c288032e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="" /></div>
+              <div class="marquee-item"><img src="https://images.unsplash.com/photo-1476124369491-e7addf5db371?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="" /></div>
+              <div class="marquee-item"><img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="" /></div>
+              <div class="marquee-item"><img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="" /></div>
+              
+              <!-- Duplicate for seamless loop (Same Random Order) -->
+              <div class="marquee-item"><img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="" /></div>
+              <div class="marquee-item"><img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="" /></div>
+              <div class="marquee-item"><img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="" /></div>
+              <div class="marquee-item"><img src="https://images.unsplash.com/photo-1519708227418-c8fd9a3a27cc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="" /></div>
+              <div class="marquee-item"><img src="https://images.unsplash.com/photo-1600891964092-4316c288032e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="" /></div>
+              <div class="marquee-item"><img src="https://images.unsplash.com/photo-1476124369491-e7addf5db371?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="" /></div>
+              <div class="marquee-item"><img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="" /></div>
+              <div class="marquee-item"><img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="" /></div>
+            </div>
+          </div>
 
           <div class="onboarding-actions">
             <button class="onboarding-btn btn-yes" onclick="nextStep(2)">Yes!!</button>
@@ -1162,10 +1182,14 @@
                 </div>
 
                 <!-- Check My Food Journey -->
-                <div class="journey-card btn-check-journey">
-                  <span class="journey-title">Food Journey</span>
-                  <span class="journey-desc">Check History</span>
-                </div>
+                <button class="btn-check-journey" aria-label="Check My Food Journey">
+                  <div class="journey-content-wrapper">
+                    <span class="journey-title">Food Journey</span>
+                    <div class="journey-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-move-right-icon lucide-move-right"><path d="M18 8L22 12L18 16"/><path d="M2 12H22"/></svg>
+                    </div>
+                  </div>
+                </button>
 
                 <!-- 2. My Fridge -->
                 <div class="section-header">
@@ -1177,7 +1201,38 @@
                 </div>
                 <div class="fridge-image-container">
                   <span class="fs-label">Freshness</span>
-                  <span class="fs-value" id="fridgeFreshness">0.85</span>
+                  <span class="fs-value" id="fridgeFreshness">82.5</span>
+                  
+                  <!-- Ingredients Marquee (Moved Inside) -->
+                  <div class="ingredients-marquee-container">
+                    <div class="ingredients-marquee-content">
+                      <span class="pill-glass">Milk - 1L</span>
+                      <span class="pill-glass">Eggs - 6pcs</span>
+                      <span class="pill-glass">Cheese - Cheddar 200g</span>
+                      <span class="pill-glass">Lettuce - Romaine 1head</span>
+                      <span class="pill-glass">Tomato - 3pcs</span>
+                      <span class="pill-glass">Chicken - Breast 500g</span>
+                      <span class="pill-glass">Yogurt - Greek 500g</span>
+                      <span class="pill-glass">Apple - Fuji 4pcs</span>
+                      <span class="pill-glass">Beef - Ribeye 300g</span>
+                      <span class="pill-glass">Pork - Belly 400g</span>
+                      <span class="pill-glass">Onion - Red 2pcs</span>
+                      <span class="pill-glass">Garlic - 1bulb</span>
+                      <!-- Duplicate -->
+                      <span class="pill-glass">Milk - 1L</span>
+                      <span class="pill-glass">Eggs - 6pcs</span>
+                      <span class="pill-glass">Cheese - Cheddar 200g</span>
+                      <span class="pill-glass">Lettuce - Romaine 1head</span>
+                      <span class="pill-glass">Tomato - 3pcs</span>
+                      <span class="pill-glass">Chicken - Breast 500g</span>
+                      <span class="pill-glass">Yogurt - Greek 500g</span>
+                      <span class="pill-glass">Apple - Fuji 4pcs</span>
+                      <span class="pill-glass">Beef - Ribeye 300g</span>
+                      <span class="pill-glass">Pork - Belly 400g</span>
+                      <span class="pill-glass">Onion - Red 2pcs</span>
+                      <span class="pill-glass">Garlic - 1bulb</span>
+                    </div>
+                  </div>
                 </div>
 
                 <!-- 3. My Food Journal -->
@@ -1194,8 +1249,15 @@
                 </div>
 
                 <!-- 4. Check My Food Journey -->
-                <div class="journey-btn-container" style="display: none;">
-                  <button class="btn-check-journey">Check My Food Journey</button>
+                <div class="journey-btn-container" style="display: flex; justify-content: center; margin-top: 10px;">
+                  <button class="btn-check-journey" aria-label="Check My Food Journey">
+                    <div class="journey-content-wrapper">
+                      <span class="journey-title">Food Journey</span>
+                      <div class="journey-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-move-right-icon lucide-move-right"><path d="M18 8L22 12L18 16"/><path d="M2 12H22"/></svg>
+                      </div>
+                    </div>
+                  </button>
                 </div>
 
                 <div class="spacer-bottom"></div>
@@ -1340,6 +1402,35 @@
           <span class="nav-label">Journal</span>
         </button>
       </nav>
+
+      <!-- FAB Button -->
+      <button class="fab-btn" id="fabBtn">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+      </button>
+
+      <!-- Journal Onboarding Overlay -->
+      <div class="journal-overlay" id="journalOverlay">
+        <div class="journal-text-group">
+          <h1 class="journal-title-line delay-1">Hey there,</h1>
+          <h1 class="journal-title-line delay-2">Let's start<br>journaling!</h1>
+        </div>
+        <button class="btn-journal-start delay-3" id="btnJournalStart">Let's start!</button>
+
+        <!-- Journal Camera Box -->
+        <div class="journal-camera-box" id="journalCameraBox">
+          <video class="journal-camera-feed" id="journalCameraFeed" autoplay playsinline muted></video>
+          <img class="journal-captured-img" id="journalCapturedImg" />
+          <button class="btn-camera-enable" id="btnJournalCameraEnable"></button>
+          <button class="btn-camera-capture-journal" id="btnJournalCapture"></button>
+        </div>
+        
+        <!-- Upload Option -->
+        <input type="file" id="journalFileInput" hidden accept="image/*">
+        <p class="journal-upload-text" id="btnJournalUpload">Or <span style="text-decoration: underline;">upload your photo!</span></p>
+        
+        <!-- Status Text (Screen Relative) -->
+        <div class="camera-status-text" id="cameraStatusText">Let's see...</div>
+      </div>
     </div>
   </div>
   <script src="app.js"></script>

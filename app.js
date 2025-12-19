@@ -131,6 +131,16 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Slide pages
     pagesContainer.style.transform = `translateX(-${index * 25}%)`;
+
+    // Hide FAB on Daily Recap (Journey Page - Index 3)
+    const fabBtn = document.getElementById('fabBtn');
+    if (fabBtn) {
+      if (index === 3) {
+        fabBtn.style.display = 'none';
+      } else {
+        fabBtn.style.display = 'flex';
+      }
+    }
     
     // Update Bottom Nav
     navButtons.forEach((btn, i) => {
@@ -497,13 +507,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const fridgeVal = document.getElementById('fridgeFreshness');
   const fridgeContainer = document.querySelector('.fridge-image-container');
 
-  if (fridgeVal && fridgeContainer) {
-    // Fixed value
-    const randomVal = 0.82;
-    fridgeVal.textContent = randomVal.toFixed(2);
-
-    // Background gradient logic removed as per request
-    // fridgeContainer.style.background = '#2C2C2C'; // Handled in CSS
+  if (fridgeVal) {
+    let freshness = 82.5;
+    fridgeVal.textContent = freshness.toFixed(1);
+    setInterval(() => {
+      freshness -= 0.1;
+      if (freshness < 0) freshness = 0;
+      fridgeVal.textContent = freshness.toFixed(1);
+    }, 5000);
   }
 
   // --- JOURNEY DASHBOARD TOGGLE ---
@@ -537,6 +548,403 @@ document.addEventListener('DOMContentLoaded', () => {
           if (sodiumVal) { sodiumVal.textContent = '1.2g'; sodiumVal.nextElementSibling.textContent = 'Good'; }
         }
       });
+    });
+  }
+
+  // --- AI CAMERA & FAB LOGIC ---
+  const btnIdentify = document.getElementById('btnIdentify');
+  const btnCameraCapture = document.getElementById('btnCameraCapture');
+  const fileInput = document.getElementById('fileInput');
+  const aiResult = document.getElementById('aiResult');
+  const aiLoading = document.getElementById('aiLoading');
+  const aiContent = document.getElementById('aiContent');
+  const cameraViewport = document.getElementById('cameraViewport');
+  const cameraFeed = document.getElementById('cameraFeed');
+  const capturedImage = document.getElementById('capturedImage');
+  const btnCameraToggle = document.getElementById('btnCameraToggle');
+  const fabBtn = document.getElementById('fabBtn');
+  
+  let stream = null;
+  let isCameraActive = false;
+  const API_KEY = 'YOUR_GEMINI_API_KEY'; 
+
+  // FAB Toggle
+  if (fabBtn) {
+    fabBtn.addEventListener('click', () => {
+      fabBtn.classList.toggle('active');
+      const navbar = document.querySelector('.navbar');
+      if (navbar) {
+        navbar.classList.toggle('hidden');
+      }
+      
+      // Toggle Journal Overlay
+      const journalOverlay = document.getElementById('journalOverlay');
+      if (journalOverlay) {
+        journalOverlay.classList.toggle('visible');
+      }
+    });
+  }
+
+  async function startCamera() {
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({ 
+        video: { facingMode: 'environment' } 
+      });
+      if (cameraFeed) {
+        cameraFeed.srcObject = stream;
+        cameraFeed.style.display = 'block';
+      }
+      isCameraActive = true;
+      if (btnCameraToggle) btnCameraToggle.classList.add('active');
+      if (capturedImage) capturedImage.style.display = 'none';
+    } catch (err) {
+      console.error('Camera error:', err);
+      alert('Could not access camera');
+    }
+  }
+
+  function stopCamera() {
+    if (stream) {
+      stream.getTracks().forEach(track => track.stop());
+      stream = null;
+    }
+    if (cameraFeed) cameraFeed.srcObject = null;
+    isCameraActive = false;
+    if (btnCameraToggle) btnCameraToggle.classList.remove('active');
+  }
+
+  if (btnCameraToggle) {
+    btnCameraToggle.addEventListener('click', () => {
+      if (isCameraActive) {
+        stopCamera();
+      } else {
+        startCamera();
+        if (capturedImage) capturedImage.style.display = 'none';
+        if (cameraFeed) cameraFeed.style.display = 'block';
+        if (aiResult) aiResult.classList.add('hidden');
+      }
+    });
+  }
+
+  // Capture Button (White)
+  if (btnCameraCapture) {
+    btnCameraCapture.addEventListener('click', () => {
+      if (isCameraActive && cameraFeed && cameraFeed.readyState === 4) {
+        const canvas = document.createElement('canvas');
+        canvas.width = cameraFeed.videoWidth;
+        canvas.height = cameraFeed.videoHeight;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(cameraFeed, 0, 0);
+        const imageData = canvas.toDataURL('image/jpeg', 0.8);
+        
+        if (capturedImage) {
+          capturedImage.src = imageData;
+          capturedImage.style.display = 'block';
+        }
+        cameraFeed.style.display = 'none';
+        stopCamera();
+      }
+    });
+  }
+
+  // Identify Button (Red)
+  if (btnIdentify) {
+    btnIdentify.addEventListener('click', async () => {
+      let imageData = null;
+
+      if (isCameraActive && cameraFeed && cameraFeed.readyState === 4) {
+        const canvas = document.createElement('canvas');
+        canvas.width = cameraFeed.videoWidth;
+        canvas.height = cameraFeed.videoHeight;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(cameraFeed, 0, 0);
+        imageData = canvas.toDataURL('image/jpeg', 0.8);
+        
+        if (capturedImage) {
+          capturedImage.src = imageData;
+          capturedImage.style.display = 'block';
+        }
+        cameraFeed.style.display = 'none';
+        stopCamera();
+      } else if (capturedImage && capturedImage.src && capturedImage.style.display !== 'none') {
+        imageData = capturedImage.src;
+      } else {
+        alert('Please start camera or upload an image first');
+        return;
+      }
+
+      analyzeImage(imageData);
+    });
+  }
+
+  // File Upload
+  if (fileInput) {
+    fileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const imageData = e.target.result;
+          if (capturedImage) {
+            capturedImage.src = imageData;
+            capturedImage.style.display = 'block';
+          }
+          if (cameraFeed) cameraFeed.style.display = 'none';
+          stopCamera();
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  }
+
+  async function analyzeImage(base64Data) {
+    if (!API_KEY || API_KEY === 'YOUR_GEMINI_API_KEY') {
+      alert('Please set your Gemini API Key in app.js');
+      return;
+    }
+
+    if (aiResult) aiResult.classList.remove('hidden');
+    if (aiLoading) aiLoading.classList.remove('hidden');
+    if (aiContent) aiContent.innerHTML = '';
+    if (cameraViewport) cameraViewport.classList.add('scanning');
+
+    try {
+      const base64Image = base64Data.split(',')[1];
+
+      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{
+            parts: [
+              { text: 'Identify this food. Return a short title, estimated calories, and 3 key ingredients. Format: <strong>Title</strong><br>Calories: ...<br>Ingredients: ...' },
+              { inline_data: { mime_type: 'image/jpeg', data: base64Image } }
+            ]
+          }]
+        })
+      });
+
+      const data = await response.json();
+      if (data.error) throw new Error(data.error.message);
+
+      const text = data.candidates[0].content.parts[0].text;
+      if (aiContent) aiContent.innerHTML = text;
+
+    } catch (err) {
+      console.error('AI Error:', err);
+      if (aiContent) aiContent.innerHTML = 'Failed to identify food. Please try again.';
+    } finally {
+      if (aiLoading) aiLoading.classList.add('hidden');
+      if (cameraViewport) cameraViewport.classList.remove('scanning');
+    }
+  }
+
+  // --- JOURNAL ONBOARDING LOGIC ---
+  const btnJournalStart = document.getElementById('btnJournalStart');
+  const journalTextGroup = document.querySelector('.journal-text-group');
+  const journalCameraBox = document.getElementById('journalCameraBox');
+  const btnJournalCameraEnable = document.getElementById('btnJournalCameraEnable');
+  const btnJournalCapture = document.getElementById('btnJournalCapture');
+  const journalCameraFeed = document.getElementById('journalCameraFeed');
+  const journalCapturedImg = document.getElementById('journalCapturedImg');
+  const cameraStatusText = document.getElementById('cameraStatusText');
+  const btnJournalUpload = document.getElementById('btnJournalUpload');
+  const journalFileInput = document.getElementById('journalFileInput');
+  
+  let journalStream = null;
+  let journalDraft = null; // { image: base64 }
+
+  async function animateTextChange(element, newText) {
+    let currentText = element.innerText;
+    // Backspace effect
+    while (currentText.length > 0) {
+      currentText = currentText.slice(0, -1);
+      element.innerText = currentText;
+      await new Promise(r => setTimeout(r, 30)); // Speed of backspace
+    }
+    // Typing effect
+    for (let i = 0; i < newText.length; i++) {
+      element.innerText += newText[i];
+      await new Promise(r => setTimeout(r, 50)); // Speed of typing
+    }
+  }
+
+  function setJournalPhotoState(hasPhoto) {
+    if (hasPhoto) {
+      btnJournalStart.classList.add('has-photo');
+    } else {
+      btnJournalStart.classList.remove('has-photo');
+    }
+  }
+
+  // FAB Toggle Logic Update
+  if (fabBtn) {
+    // Remove old listener to avoid duplicates if re-run (though in this context it's fine)
+    // We need to replace the previous logic completely.
+    // Since I can't easily remove anonymous listeners, I'll assume this block replaces the previous one in the file.
+    // But wait, I'm editing the file. I should replace the FAB logic block earlier in the file or just update the logic here if I can access it.
+    // The FAB logic is at line 570. I am editing lines 740+.
+    // I will add a new function `toggleJournalOverlay` and call it from the FAB listener.
+    // But I can't change the FAB listener easily from here without reading that part again.
+    // Let's just handle the "Close" logic here by listening to the overlay click or re-implementing the FAB click if possible.
+    // Actually, the user asked for "x or margin" to close.
+    // I'll add a listener to the overlay background.
+  }
+  
+  const journalOverlay = document.getElementById('journalOverlay');
+  // Background click close removed as per request
+
+
+  // We need to hook into the FAB click to handle Draft Logic.
+  // Since I cannot easily modify the existing FAB listener which is far above, 
+  // I will add a MutationObserver to watch for visibility changes on the overlay?
+  // Or just add another click listener to FAB that runs AFTER the toggle.
+  
+  fabBtn.addEventListener('click', () => {
+    const isClosing = !fabBtn.classList.contains('active'); // It was just toggled, so if it's NOT active now, it means we just closed it.
+    // Wait, the previous listener toggles 'active'.
+    // If I add this listener, it runs after.
+    // If 'active' is present, we just opened it. If not, we closed it.
+    
+    if (fabBtn.classList.contains('active')) {
+      // OPENING
+      if (journalDraft && journalDraft.image) {
+        // Restore Draft
+        if (journalCapturedImg) {
+          journalCapturedImg.src = journalDraft.image;
+          journalCapturedImg.style.display = 'block';
+        }
+        if (journalTextGroup) journalTextGroup.classList.add('slide-out');
+        btnJournalStart.classList.add('camera-mode');
+        btnJournalStart.innerText = "Analysis";
+        setJournalPhotoState(true);
+        if (journalCameraBox) journalCameraBox.classList.add('active');
+        if (cameraStatusText) cameraStatusText.classList.add('visible');
+      } else {
+        // Reset / Start Fresh
+        // The CSS transitions might need a reset if we just closed it.
+        // But usually "Start Fresh" means showing the "Hey there" text.
+        // The default HTML state is "Hey there".
+        // We just need to ensure classes are removed.
+        if (journalTextGroup) journalTextGroup.classList.remove('slide-out');
+        btnJournalStart.classList.remove('camera-mode');
+        btnJournalStart.innerText = "Let's start!";
+        setJournalPhotoState(false);
+        if (journalCameraBox) journalCameraBox.classList.remove('active');
+        if (cameraStatusText) cameraStatusText.classList.remove('visible');
+        if (journalCapturedImg) {
+            journalCapturedImg.style.display = 'none';
+            journalCapturedImg.src = '';
+        }
+      }
+    } else {
+      // CLOSING
+      // Save Draft if image exists
+      if (journalCapturedImg && journalCapturedImg.style.display === 'block' && journalCapturedImg.src) {
+        journalDraft = { image: journalCapturedImg.src };
+      } else {
+        journalDraft = null;
+      }
+      
+      // Stop Camera if running
+      if (journalStream) {
+        journalStream.getTracks().forEach(track => track.stop());
+        journalStream = null;
+        if (btnJournalCameraEnable) btnJournalCameraEnable.classList.remove('active');
+        if (btnJournalCapture) btnJournalCapture.style.display = 'none';
+      }
+    }
+  });
+
+
+  if (btnJournalStart) {
+    btnJournalStart.addEventListener('click', () => {
+      // Slide out text
+      if (journalTextGroup) journalTextGroup.classList.add('slide-out');
+      
+      // Move button down
+      btnJournalStart.classList.add('camera-mode');
+      
+      // Animate text change
+      animateTextChange(btnJournalStart, "Analysis");
+      
+      // Slide in camera box
+      if (journalCameraBox) journalCameraBox.classList.add('active');
+      
+      // Show status text
+      if (cameraStatusText) cameraStatusText.classList.add('visible');
+    });
+  }
+
+  if (btnJournalCameraEnable) {
+    btnJournalCameraEnable.addEventListener('click', async () => {
+      try {
+        journalStream = await navigator.mediaDevices.getUserMedia({ 
+          video: { facingMode: 'environment' } 
+        });
+        if (journalCameraFeed) {
+          journalCameraFeed.srcObject = journalStream;
+          btnJournalCameraEnable.classList.add('active');
+          if (btnJournalCapture) btnJournalCapture.style.display = 'block';
+        }
+      } catch (err) {
+        console.error("Camera Error:", err);
+        alert("Could not access camera.");
+      }
+    });
+  }
+
+  if (btnJournalCapture) {
+    btnJournalCapture.addEventListener('click', () => {
+      if (!journalStream) return;
+      
+      // Capture logic
+      const canvas = document.createElement('canvas');
+      canvas.width = journalCameraFeed.videoWidth;
+      canvas.height = journalCameraFeed.videoHeight;
+      const ctx = canvas.getContext('2d');
+      
+      ctx.translate(canvas.width, 0);
+      ctx.scale(-1, 1);
+      ctx.drawImage(journalCameraFeed, 0, 0, canvas.width, canvas.height);
+      
+      const dataUrl = canvas.toDataURL('image/jpeg');
+      if (journalCapturedImg) {
+        journalCapturedImg.src = dataUrl;
+        journalCapturedImg.style.display = 'block';
+      }
+      
+      setJournalPhotoState(true); // Update button color
+
+      // Stop stream
+      journalStream.getTracks().forEach(track => track.stop());
+      journalStream = null;
+      
+      // UI Updates
+      btnJournalCameraEnable.classList.remove('active');
+      btnJournalCapture.style.display = 'none';
+    });
+  }
+  
+  // Upload Logic
+  if (btnJournalUpload && journalFileInput) {
+    btnJournalUpload.addEventListener('click', () => {
+      journalFileInput.click();
+    });
+    
+    journalFileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (evt) => {
+          if (journalCapturedImg) {
+            journalCapturedImg.src = evt.target.result;
+            journalCapturedImg.style.display = 'block';
+            setJournalPhotoState(true); // Update button color
+          }
+        };
+        reader.readAsDataURL(file);
+      }
     });
   }
 
