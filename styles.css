@@ -755,7 +755,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .onboarding-indicators {
   position: absolute;
-  top: 30px; /* Adjusted to 30px as requested */
+  top: 20px; /* Adjusted to 20px as requested */
   left: 0;
   width: 100%;
   display: flex;
@@ -852,7 +852,7 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
   text-align: center;
   color: #ffffff;
-  font-size: 12px;
+  font-size: 9px; /* Reduced font size to 9px */
   font-weight: 500;
   opacity: 0.8;
   z-index: 20;
