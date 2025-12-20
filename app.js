@@ -208,17 +208,26 @@ document.addEventListener('DOMContentLoaded', () => {
   let startY = 0;
   let isDragging = false;
   let isHorizontalDrag = false;
+  let currentPointerId = null;
 
   pager.addEventListener('pointerdown', (e) => {
+    if (isDragging) return;
+    
     startX = e.clientX;
     startY = e.clientY;
     isDragging = true;
     isHorizontalDrag = false;
+    currentPointerId = e.pointerId;
+    try {
+      pager.setPointerCapture(e.pointerId);
+    } catch (err) {
+      // Ignore
+    }
     // Don't prevent default yet, we need to know direction
   });
 
   pager.addEventListener('pointermove', (e) => {
-    if (!isDragging) return;
+    if (!isDragging || e.pointerId !== currentPointerId) return;
 
     const dx = e.clientX - startX;
     const dy = e.clientY - startY;
@@ -232,6 +241,8 @@ document.addEventListener('DOMContentLoaded', () => {
       } else if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 10) {
         // Vertical scroll, ignore swipe
         isDragging = false;
+        currentPointerId = null;
+        try { pager.releasePointerCapture(e.pointerId); } catch(err) {}
         return;
       }
     }
@@ -246,8 +257,10 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   const endDrag = (e) => {
-    if (!isDragging) return;
+    if (!isDragging || e.pointerId !== currentPointerId) return;
     isDragging = false;
+    currentPointerId = null;
+    try { pager.releasePointerCapture(e.pointerId); } catch(err) {}
     
     if (isHorizontalDrag) {
       const dx = e.clientX - startX;
