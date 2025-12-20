@@ -1092,13 +1092,12 @@
             <!-- PAGE 2: REELS -->
             <article class="page page-reels" id="page-reels">
               <div class="reels-header-overlay">
-                <span class="reels-title">Reels</span>
-                <button class="icon-btn"><svg viewBox="0 0 24 24"><path d="M7 7h2l1-2h4l1 2h2a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3v-8a3 3 0 0 1 3-3Zm5 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/></svg></button>
+                <button class="icon-btn" style="margin-left: auto; color: white; background: none; border: none; cursor: pointer;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></button>
               </div>
               <div class="reels-container" id="reels-container">
-                <!-- Reel 1 -->
+                <!-- Reel 1: Tomato Pasta -->
                 <div class="reel-item">
-                  <video class="reel-video" src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" loop muted playsinline></video>
+                  <video class="reel-video" src="video1.mp4" loop muted playsinline></video>
                   <div class="reel-ui">
                     <div class="reel-info">
                       <div class="reel-user">
@@ -1106,36 +1105,41 @@
                         <span class="username">chef_jo</span>
                         <span class="follow-btn">• Follow</span>
                       </div>
-                      <div class="reel-desc">Perfect knife skills for scallions! ðŸ”ªœ¨ #chef #skills</div>
+                      <div class="reel-desc">Tomato Pasta 🍝 #italian #classic</div>
+                      <div class="reel-tags">
+                        <span class="pill-glass">Vegan</span>
+                        <span class="pill-glass">Italian</span>
+                      </div>
                       <div class="reel-audio">
                         <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
                         <span>Original Audio - chef_jo</span>
                       </div>
                     </div>
                     <div class="reel-actions-bar">
-                      <button class="reel-action">
-                        <svg viewBox="0 0 24 24"><path d="M12 21s-7-4.35-10-9.5C-.7 6.2 3 2.5 7 4.2c1.3.55 2.3 1.65 3 2.7.7-1.05 1.7-2.15 3-2.7 4-1.7 7.7 2 5 7.3C19 16.65 12 21 12 21Z"/></svg>
+                      <button class="reel-action btn-reel-like">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart-icon lucide-heart"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></svg>
                         <span>24K</span>
                       </button>
-                      <button class="reel-action">
-                        <svg viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v8Z"/></svg>
+                      <button class="reel-action btn-reel-comment">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-messages-square-icon lucide-messages-square"><path d="M16 10a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 14.286V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/><path d="M20 9a2 2 0 0 1 2 2v10.286a.71.71 0 0 1-1.212.502l-2.202-2.202A2 2 0 0 0 17.172 19H10a2 2 0 0 1-2-2v-1"/></svg>
                         <span>420</span>
                       </button>
-                      <button class="reel-action">
-                        <svg viewBox="0 0 24 24"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7Z"/></svg>
+                      <button class="reel-action btn-reel-share">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send-icon lucide-send"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg>
                         <span>Share</span>
                       </button>
-                      <button class="reel-action">
-                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="1.5"/><circle cx="6" cy="12" r="1.5"/><circle cx="18" cy="12" r="1.5"/></svg>
+                      <button class="reel-action btn-reel-remix">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-repeat2-icon lucide-repeat-2"><path d="m2 9 3-3 3 3"/><path d="M13 18H7a2 2 0 0 1-2-2V6"/><path d="m22 15-3 3-3-3"/><path d="M11 6h6a2 2 0 0 1 2 2v10"/></svg>
+                        <span>Remix</span>
                       </button>
                       <div class="reel-audio-cover"></div>
                     </div>
                   </div>
                 </div>
 
-                <!-- Reel 2 -->
+                <!-- Reel 2: Steak Tutorial -->
                 <div class="reel-item">
-                  <video class="reel-video" src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" loop muted playsinline></video>
+                  <video class="reel-video" src="video2.mp4" loop muted playsinline></video>
                   <div class="reel-ui">
                     <div class="reel-info">
                       <div class="reel-user">
@@ -1143,27 +1147,158 @@
                         <span class="username">street_eats</span>
                         <span class="follow-btn">• Follow</span>
                       </div>
-                      <div class="reel-desc">Sizzling steak perfection ðŸ¥©ðŸ”¥ #steak #foodporn</div>
+                      <div class="reel-desc">Steak Tutorial 🥩 #meatlover #cooking</div>
+                      <div class="reel-tags">
+                        <span class="pill-glass">High Protein</span>
+                        <span class="pill-glass">Keto</span>
+                      </div>
                       <div class="reel-audio">
                         <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
                         <span>Sizzle Sounds - street_eats</span>
                       </div>
                     </div>
                     <div class="reel-actions-bar">
-                      <button class="reel-action">
-                        <svg viewBox="0 0 24 24"><path d="M12 21s-7-4.35-10-9.5C-.7 6.2 3 2.5 7 4.2c1.3.55 2.3 1.65 3 2.7.7-1.05 1.7-2.15 3-2.7 4-1.7 7.7 2 5 7.3C19 16.65 12 21 12 21Z"/></svg>
+                      <button class="reel-action btn-reel-like">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart-icon lucide-heart"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></svg>
                         <span>58K</span>
                       </button>
-                      <button class="reel-action">
-                        <svg viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v8Z"/></svg>
+                      <button class="reel-action btn-reel-comment">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-messages-square-icon lucide-messages-square"><path d="M16 10a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 14.286V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/><path d="M20 9a2 2 0 0 1 2 2v10.286a.71.71 0 0 1-1.212.502l-2.202-2.202A2 2 0 0 0 17.172 19H10a2 2 0 0 1-2-2v-1"/></svg>
                         <span>1.2K</span>
                       </button>
-                      <button class="reel-action">
-                        <svg viewBox="0 0 24 24"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7Z"/></svg>
+                      <button class="reel-action btn-reel-share">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send-icon lucide-send"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg>
                         <span>Share</span>
                       </button>
-                      <button class="reel-action">
-                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="1.5"/><circle cx="6" cy="12" r="1.5"/><circle cx="18" cy="12" r="1.5"/></svg>
+                      <button class="reel-action btn-reel-remix">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-repeat2-icon lucide-repeat-2"><path d="m2 9 3-3 3 3"/><path d="M13 18H7a2 2 0 0 1-2-2V6"/><path d="m22 15-3 3-3-3"/><path d="M11 6h6a2 2 0 0 1 2 2v10"/></svg>
+                        <span>Remix</span>
+                      </button>
+                      <div class="reel-audio-cover"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Reel 3: Apple Pie -->
+                <div class="reel-item">
+                  <video class="reel-video" src="video3.mp4" loop muted playsinline></video>
+                  <div class="reel-ui">
+                    <div class="reel-info">
+                      <div class="reel-user">
+                        <div class="avatar-small">BK</div>
+                        <span class="username">baking_king</span>
+                        <span class="follow-btn">• Follow</span>
+                      </div>
+                      <div class="reel-desc">Apple Pie 🥧 #dessert #baking</div>
+                      <div class="reel-tags">
+                        <span class="pill-glass">Dessert</span>
+                        <span class="pill-glass">Sweet</span>
+                      </div>
+                      <div class="reel-audio">
+                        <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+                        <span>Crunchy ASMR - baking_king</span>
+                      </div>
+                    </div>
+                    <div class="reel-actions-bar">
+                      <button class="reel-action btn-reel-like">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart-icon lucide-heart"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></svg>
+                        <span>15K</span>
+                      </button>
+                      <button class="reel-action btn-reel-comment">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-messages-square-icon lucide-messages-square"><path d="M16 10a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 14.286V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/><path d="M20 9a2 2 0 0 1 2 2v10.286a.71.71 0 0 1-1.212.502l-2.202-2.202A2 2 0 0 0 17.172 19H10a2 2 0 0 1-2-2v-1"/></svg>
+                        <span>300</span>
+                      </button>
+                      <button class="reel-action btn-reel-share">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send-icon lucide-send"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg>
+                        <span>Share</span>
+                      </button>
+                      <button class="reel-action btn-reel-remix">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-repeat2-icon lucide-repeat-2"><path d="m2 9 3-3 3 3"/><path d="M13 18H7a2 2 0 0 1-2-2V6"/><path d="m22 15-3 3-3-3"/><path d="M11 6h6a2 2 0 0 1 2 2v10"/></svg>
+                        <span>Remix</span>
+                      </button>
+                      <div class="reel-audio-cover"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Reel 4: Cream Pasta -->
+                <div class="reel-item">
+                  <video class="reel-video" src="video4.mp4" loop muted playsinline></video>
+                  <div class="reel-ui">
+                    <div class="reel-info">
+                      <div class="reel-user">
+                        <div class="avatar-small">VG</div>
+                        <span class="username">veggie_good</span>
+                        <span class="follow-btn">• Follow</span>
+                      </div>
+                      <div class="reel-desc">Cream Pasta 🥛 #creamy #comfortfood</div>
+                      <div class="reel-tags">
+                        <span class="pill-glass">Comfort Food</span>
+                        <span class="pill-glass">Dairy</span>
+                      </div>
+                      <div class="reel-audio">
+                        <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+                        <span>Fresh Beats - veggie_good</span>
+                      </div>
+                    </div>
+                    <div class="reel-actions-bar">
+                      <button class="reel-action btn-reel-like">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart-icon lucide-heart"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></svg>
+                        <span>8K</span>
+                      </button>
+                      <button class="reel-action btn-reel-comment">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-messages-square-icon lucide-messages-square"><path d="M16 10a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 14.286V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/><path d="M20 9a2 2 0 0 1 2 2v10.286a.71.71 0 0 1-1.212.502l-2.202-2.202A2 2 0 0 0 17.172 19H10a2 2 0 0 1-2-2v-1"/></svg>
+                        <span>150</span>
+                      </button>
+                      <button class="reel-action btn-reel-share">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send-icon lucide-send"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg>
+                        <span>Share</span>
+                      </button>
+                      <button class="reel-action btn-reel-remix">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-repeat2-icon lucide-repeat-2"><path d="m2 9 3-3 3 3"/><path d="M13 18H7a2 2 0 0 1-2-2V6"/><path d="m22 15-3 3-3-3"/><path d="M11 6h6a2 2 0 0 1 2 2v10"/></svg>
+                        <span>Remix</span>
+                      </button>
+                      <div class="reel-audio-cover"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Reel 5: Salmon Sandwich -->
+                <div class="reel-item">
+                  <video class="reel-video" src="video5.mp4" loop muted playsinline></video>
+                  <div class="reel-ui">
+                    <div class="reel-info">
+                      <div class="reel-user">
+                        <div class="avatar-small">PC</div>
+                        <span class="username">pasta_chef</span>
+                        <span class="follow-btn">• Follow</span>
+                      </div>
+                      <div class="reel-desc">Salmon Sandwich 🥪 #healthy #brunch</div>
+                      <div class="reel-tags">
+                        <span class="pill-glass">Pescatarian</span>
+                        <span class="pill-glass">Healthy</span>
+                      </div>
+                      <div class="reel-audio">
+                        <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+                        <span>Italian Vibes - pasta_chef</span>
+                      </div>
+                    </div>
+                    <div class="reel-actions-bar">
+                      <button class="reel-action btn-reel-like">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart-icon lucide-heart"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></svg>
+                        <span>45K</span>
+                      </button>
+                      <button class="reel-action btn-reel-comment">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-messages-square-icon lucide-messages-square"><path d="M16 10a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 14.286V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/><path d="M20 9a2 2 0 0 1 2 2v10.286a.71.71 0 0 1-1.212.502l-2.202-2.202A2 2 0 0 0 17.172 19H10a2 2 0 0 1-2-2v-1"/></svg>
+                        <span>900</span>
+                      </button>
+                      <button class="reel-action btn-reel-share">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send-icon lucide-send"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg>
+                        <span>Share</span>
+                      </button>
+                      <button class="reel-action btn-reel-remix">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-repeat2-icon lucide-repeat-2"><path d="m2 9 3-3 3 3"/><path d="M13 18H7a2 2 0 0 1-2-2V6"/><path d="m22 15-3 3-3-3"/><path d="M11 6h6a2 2 0 0 1 2 2v10"/></svg>
+                        <span>Remix</span>
                       </button>
                       <div class="reel-audio-cover"></div>
                     </div>
@@ -1266,13 +1401,22 @@
                 <!-- Header & Toggle -->
                 <div class="journey-header">
                   <div class="journey-title-group">
-                    <h2>Daily Recap</h2>
-                    <span class="journey-date">Dec 17, 2025</span>
+                    <h2>Recap</h2>
+                    <span class="journey-date" id="recapDate">Dec 17, 2025</span>
                   </div>
-                  <div class="toggle-container">
-                    <button class="toggle-btn active">Daily</button>
-                    <button class="toggle-btn">Weekly</button>
+                </div>
+
+                <!-- Latest Food Section -->
+                <div class="latest-food-section">
+                  <div class="latest-food-image" id="latestFoodImage" style="background-image: url('https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80');"></div>
+                  <div class="latest-food-info">
+                    <div class="latest-meta-group">
+                      <span class="latest-date" id="latestFoodDate">--</span>
+                      <span class="latest-time" id="latestFoodTime">--:--</span>
+                    </div>
+                    <span class="latest-name" id="latestFoodName">--</span>
                   </div>
+                  <p class="latest-description" id="latestFoodDesc">Analyzing food...</p>
                 </div>
 
                 <!-- Bento Grid Dashboard -->
@@ -1282,28 +1426,39 @@
                   <div class="bento-card calorie-card">
                     <div class="card-header">
                       <span class="card-title">Calories</span>
-                      <span class="badge-good">Good</span>
+                      <span class="badge-good" id="calBadge">Good</span>
                     </div>
                     <div class="calorie-display">
-                      <span class="big-number">1,850</span>
+                      <span class="big-number" id="calVal">--</span>
                       <span class="unit">kcal</span>
                     </div>
                     <div class="calorie-progress-bg">
-                      <div class="calorie-progress-fill" style="width: 75%;"></div>
+                      <div class="calorie-progress-fill" id="calProgress" style="width: 0%;"></div>
                     </div>
-                    <span class="sub-text">240 kcal remaining</span>
+                    <span class="sub-text" id="calRemaining">-- kcal remaining</span>
                   </div>
 
                   <!-- 2. Glucose Spike Risk -->
                   <div class="bento-card spike-card">
                     <div class="card-header">
                       <span class="card-title">Glucose</span>
+                      <button class="btn-glucose-notify" id="btnGlucoseNotify">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell-icon lucide-bell"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></svg>
+                      </button>
                     </div>
                     <div class="spike-content">
-                      <div class="spike-status">
-                        <span class="spike-icon">⚡</span>
-                        <span class="spike-text">Stable</span>
+                      <!-- Pill & Timer Section -->
+                      <div class="glucose-pill-group">
+                        <div class="glucose-pill-track">
+                          <div class="glucose-pill-fill" id="glucosePillFill" style="width: 85%"></div>
+                        </div>
+                        <div class="glucose-info">
+                          <span class="glucose-percentage" id="glucosePercentage">85%</span>
+                          <span class="glucose-timer" id="glucoseTimer">25m left</span>
+                        </div>
                       </div>
+
+                      <!-- Graph (Unified Black) -->
                       <div class="mini-chart">
                         <div class="bar" style="height: 30%"></div>
                         <div class="bar" style="height: 45%"></div>
@@ -1321,23 +1476,23 @@
                       <div class="macro-item">
                         <div class="macro-label-row">
                           <span class="label">Carbs</span>
-                          <span class="val">50%</span>
+                          <span class="val" id="carbsVal">--%</span>
                         </div>
-                        <div class="m-bar-bg"><div class="m-bar-fill c-fill" style="width: 50%"></div></div>
+                        <div class="m-bar-bg"><div class="m-bar-fill c-fill" id="carbsBar" style="width: 0%"></div></div>
                       </div>
                       <div class="macro-item">
                         <div class="macro-label-row">
                           <span class="label">Protein</span>
-                          <span class="val">30%</span>
+                          <span class="val" id="proteinVal">--%</span>
                         </div>
-                        <div class="m-bar-bg"><div class="m-bar-fill p-fill" style="width: 30%"></div></div>
+                        <div class="m-bar-bg"><div class="m-bar-fill p-fill" id="proteinBar" style="width: 0%"></div></div>
                       </div>
                       <div class="macro-item">
                         <div class="macro-label-row">
                           <span class="label">Fat</span>
-                          <span class="val">20%</span>
+                          <span class="val" id="fatVal">--%</span>
                         </div>
-                        <div class="m-bar-bg"><div class="m-bar-fill f-fill" style="width: 20%"></div></div>
+                        <div class="m-bar-bg"><div class="m-bar-fill f-fill" id="fatBar" style="width: 0%"></div></div>
                       </div>
                     </div>
                   </div>
@@ -1346,14 +1501,14 @@
                   <div class="bento-card nutrient-split-card">
                     <div class="nutrient-half">
                       <span class="n-label">Sugar</span>
-                      <span class="n-val warning">32g</span>
-                      <span class="n-sub">High</span>
+                      <span class="n-val warning" id="sugarVal">--g</span>
+                      <span class="n-sub" id="sugarStatus">--</span>
                     </div>
                     <div class="nutrient-divider"></div>
                     <div class="nutrient-half">
                       <span class="n-label">Sodium</span>
-                      <span class="n-val good">1.2g</span>
-                      <span class="n-sub">Good</span>
+                      <span class="n-val good" id="sodiumVal">--g</span>
+                      <span class="n-sub" id="sodiumStatus">--</span>
                     </div>
                   </div>
 
@@ -1374,6 +1529,13 @@
                 </div>
 
                 <div class="spacer-bottom"></div>
+              </div>
+            </article>
+
+            <!-- PAGE 5: JOURNAL ENTRY (White Blank Page) -->
+            <article class="page page-journal-entry" id="page-journal-entry" style="background: #fff;">
+              <div class="journal-entry-content" style="padding: 20px; height: 100%; overflow-y: auto;">
+                <!-- Content will go here later -->
               </div>
             </article>
 
@@ -1425,9 +1587,95 @@
         
         <!-- Status Text (Screen Relative) -->
         <div class="camera-status-text" id="cameraStatusText">Let's see...</div>
+
+        <!-- Analysis Phase Elements -->
+        <div class="analysis-prompt hidden" id="analysisPrompt">This is...</div>
+        <button class="btn-write-journal hidden" id="btnWriteJournal">
+          <span>Write Journal</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </button>
+        <input type="text" class="analysis-input hidden" id="analysisInput" placeholder="Type food name..." autocomplete="off">
+        <div class="analysis-text-display hidden" id="analysisTextDisplay"></div>
+      </div>
+
+  <!-- Comment Bottom Sheet -->
+  <div class="bottom-sheet-overlay" id="commentSheetOverlay">
+    <div class="bottom-sheet">
+      <div class="sheet-header">
+        <div class="sheet-handle"></div>
+        <span class="sheet-title">Comments</span>
+      </div>
+      <div class="sheet-content" id="commentList">
+        <div class="comment-item">
+          <div class="comment-avatar">U1</div>
+          <div class="comment-body">
+            <div class="comment-user">user_one <span class="comment-meta">2h</span></div>
+            <div class="comment-text">This looks amazing! 😍</div>
+          </div>
+        </div>
+        <div class="comment-item">
+          <div class="comment-avatar">U2</div>
+          <div class="comment-body">
+            <div class="comment-user">foodie_life <span class="comment-meta">5h</span></div>
+            <div class="comment-text">Recipe please? 🙏</div>
+          </div>
+        </div>
+        <div class="comment-item">
+          <div class="comment-avatar">U3</div>
+          <div class="comment-body">
+            <div class="comment-user">chef_mike <span class="comment-meta">1d</span></div>
+            <div class="comment-text">Great technique!</div>
+          </div>
+        </div>
+      </div>
+      <div class="sheet-footer">
+        <div class="comment-input-container">
+          <div class="comment-avatar small">Me</div>
+          <input type="text" id="commentInput" placeholder="Add a comment..." autocomplete="off">
+          <button id="btnPostComment" disabled>Post</button>
+        </div>
       </div>
     </div>
   </div>
+
+  <!-- Share Bottom Sheet -->
+  <div class="bottom-sheet-overlay" id="shareSheetOverlay">
+    <div class="bottom-sheet">
+      <div class="sheet-header">
+        <div class="sheet-handle"></div>
+        <span class="sheet-title">Share to</span>
+      </div>
+      <div class="sheet-content">
+        <div class="share-grid">
+          <div class="share-item">
+            <div class="share-avatar">A</div>
+            <span class="share-name">Anna</span>
+          </div>
+          <div class="share-item">
+            <div class="share-avatar">B</div>
+            <span class="share-name">Ben</span>
+          </div>
+          <div class="share-item">
+            <div class="share-avatar">C</div>
+            <span class="share-name">Chloe</span>
+          </div>
+          <div class="share-item">
+            <div class="share-avatar">D</div>
+            <span class="share-name">David</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    </div>
+  </div>
+
+  <!-- Notification Toast -->
+  <div class="notification-toast hidden" id="notificationToast">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-icon lucide-check"><path d="M20 6 9 17l-5-5"/></svg>
+    <span>Notification enabled!</span>
+  </div>
+
   <script src="app.js"></script>
 
   <!-- Review Modal -->
@@ -1480,7 +1728,10 @@
       </div>
       <div class="modal-footer">
         <button class="btn-modal-action primary" id="btnThankYou">Thank you!</button>
-        <button class="btn-modal-action secondary" id="btnRemix">Remix</button>
+        <button class="btn-modal-action secondary" id="btnRemix">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-repeat2-icon lucide-repeat-2" style="margin-right: 6px;"><path d="m2 9 3-3 3 3"/><path d="M13 18H7a2 2 0 0 1-2-2V6"/><path d="m22 15-3 3-3-3"/><path d="M11 6h6a2 2 0 0 1 2 2v10"/></svg>
+          Remix
+        </button>
       </div>
     </div>
   </div>

@@ -78,8 +78,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // State
-  let currentPageIndex = 0; // 0: Feed, 1: Reels, 2: Profile, 3: Journey
-  const totalPages = 4;
+  let currentPageIndex = 0; // 0: Feed, 1: Reels, 2: Profile, 3: Journey, 4: Journal Entry
+  const totalPages = 5;
 
   // --- ONBOARDING LOGIC ---
   window.nextStep = function(step) {
@@ -130,12 +130,12 @@ document.addEventListener('DOMContentLoaded', () => {
     currentPageIndex = index;
     
     // Slide pages
-    pagesContainer.style.transform = `translateX(-${index * 25}%)`;
+    pagesContainer.style.transform = `translateX(-${index * 20}%)`;
 
-    // Hide FAB on Daily Recap (Journey Page - Index 3)
+    // Hide FAB on Daily Recap (Journey Page - Index 3) or Journal Entry (Index 4)
     const fabBtn = document.getElementById('fabBtn');
     if (fabBtn) {
-      if (index === 3) {
+      if (index === 3 || index === 4) {
         fabBtn.style.display = 'none';
       } else {
         fabBtn.style.display = 'flex';
@@ -148,6 +148,16 @@ document.addEventListener('DOMContentLoaded', () => {
       // When on Journey page, the Profile button (Index 2) should be active but in 'journey-mode'
       if (index === 3) {
         if (i === 2) {
+          btn.classList.add('active');
+          btn.classList.add('journey-mode');
+        } else {
+          btn.classList.remove('active');
+          btn.classList.remove('journey-mode');
+        }
+      } else if (index === 4) {
+         // Keep Profile active for Journal Entry too, or maybe no nav active?
+         // Let's keep Profile active as it's part of the journal flow
+         if (i === 2) {
           btn.classList.add('active');
           btn.classList.add('journey-mode');
         } else {
@@ -228,8 +238,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (isHorizontalDrag) {
       e.preventDefault(); // Stop browser back/forward gestures
-      const currentTranslate = -currentPageIndex * 33.333;
-      const percentMove = (dx / window.innerWidth) * 33.333;
+      const currentTranslate = -currentPageIndex * 20;
+      const percentMove = (dx / window.innerWidth) * 20;
       pagesContainer.style.transition = 'none';
       pagesContainer.style.transform = `translateX(${currentTranslate + percentMove}%)`;
     }
@@ -859,6 +869,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (btnJournalStart) {
     btnJournalStart.addEventListener('click', () => {
+      // Check if it's in Analysis mode
+      if (btnJournalStart.innerText === "Analysis") {
+          // 1. Slide out button (Left)
+          btnJournalStart.classList.add('slide-out-left');
+          
+          // 2. Slide out "Let's see..." (Right)
+          const cameraStatusText = document.getElementById('cameraStatusText');
+          if (cameraStatusText) cameraStatusText.classList.add('slide-out-right');
+
+          // Hide "Or upload" text
+          const btnJournalUpload = document.getElementById('btnJournalUpload');
+          if (btnJournalUpload) btnJournalUpload.classList.add('slide-out-right');
+
+          // Hide Red Ring (Camera Enable Button)
+          const btnJournalCameraEnable = document.getElementById('btnJournalCameraEnable');
+          if (btnJournalCameraEnable) btnJournalCameraEnable.classList.add('hidden');
+          
+          // 3. Show "This is..."
+          const analysisPrompt = document.getElementById('analysisPrompt');
+          if (analysisPrompt) {
+              analysisPrompt.classList.remove('hidden');
+              setTimeout(() => analysisPrompt.classList.add('visible'), 50);
+          }
+          
+          // 4. Show Input
+          const analysisInput = document.getElementById('analysisInput');
+          if (analysisInput) {
+              analysisInput.classList.remove('hidden');
+              setTimeout(() => {
+                  analysisInput.classList.add('visible');
+                  analysisInput.focus();
+              }, 50);
+          }
+          return;
+      }
+
       // Slide out text
       if (journalTextGroup) journalTextGroup.classList.add('slide-out');
       
@@ -951,3 +997,619 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize
   navigateTo(0);
 });
+
+  // --- Reels Interactions (Event Delegation) ---
+  const reelsContainer = document.getElementById('reels-container');
+  const commentSheetOverlay = document.getElementById('commentSheetOverlay');
+  const shareSheetOverlay = document.getElementById('shareSheetOverlay');
+
+  if (reelsContainer) {
+    // Single Click Delegation (Like, Comment, Share)
+    reelsContainer.addEventListener('click', (e) => {
+      const target = e.target;
+      
+      // Like Button
+      const likeBtn = target.closest('.btn-reel-like');
+      if (likeBtn) {
+        e.stopPropagation();
+        likeBtn.classList.toggle('filled');
+        return;
+      }
+
+      // Comment Button
+      const commentBtn = target.closest('.btn-reel-comment');
+      if (commentBtn) {
+        e.stopPropagation();
+        if (commentSheetOverlay) commentSheetOverlay.classList.add('visible');
+        return;
+      }
+
+      // Share Button
+      const shareBtn = target.closest('.btn-reel-share');
+      if (shareBtn) {
+        e.stopPropagation();
+        if (shareSheetOverlay) shareSheetOverlay.classList.add('visible');
+        return;
+      }
+    });
+
+    // Double Click Delegation (Heart Animation)
+    reelsContainer.addEventListener('dblclick', (e) => {
+      const reelItem = e.target.closest('.reel-item');
+      if (reelItem) {
+        const likeBtn = reelItem.querySelector('.btn-reel-like');
+        const heartOverlay = reelItem.querySelector('.double-tap-heart');
+        
+        if (likeBtn && !likeBtn.classList.contains('filled')) {
+          likeBtn.classList.add('filled');
+        }
+        
+        if (heartOverlay) {
+          heartOverlay.classList.remove('animate');
+          void heartOverlay.offsetWidth; // Trigger reflow
+          heartOverlay.classList.add('animate');
+        }
+      }
+    });
+    
+    // Initialize Heart Overlays for existing items
+    document.querySelectorAll('.reel-item').forEach(item => {
+      if (!item.querySelector('.double-tap-heart')) {
+        const heartOverlay = document.createElement('div');
+        heartOverlay.className = 'double-tap-heart';
+        heartOverlay.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>';
+        item.appendChild(heartOverlay);
+      }
+    });
+
+    // Infinite Scroll Logic for Reels
+    // Capture original items to cycle through
+    const originalReels = Array.from(reelsContainer.querySelectorAll('.reel-item'));
+    let nextReelIndex = 0;
+
+    reelsContainer.addEventListener('scroll', () => {
+      // Check if scrolled to bottom
+      if (reelsContainer.scrollTop + reelsContainer.clientHeight >= reelsContainer.scrollHeight - 50) {
+        // Clone the next reel in the sequence
+        const reelToClone = originalReels[nextReelIndex];
+        if (reelToClone) {
+          const clone = reelToClone.cloneNode(true);
+          reelsContainer.appendChild(clone);
+          
+          // Update index for next time (cycle 0 to length-1)
+          nextReelIndex = (nextReelIndex + 1) % originalReels.length;
+        }
+      }
+    });
+  }
+
+  if (commentSheetOverlay) {
+    commentSheetOverlay.addEventListener('click', (e) => {
+      if (e.target === commentSheetOverlay) {
+        commentSheetOverlay.classList.remove('visible');
+      }
+    });
+
+    // Comment Posting Logic
+    const commentInput = document.getElementById('commentInput');
+    const btnPostComment = document.getElementById('btnPostComment');
+    const commentList = document.getElementById('commentList');
+
+    if (commentInput && btnPostComment && commentList) {
+      // Enable/Disable button based on input
+      commentInput.addEventListener('input', () => {
+        btnPostComment.disabled = commentInput.value.trim() === '';
+      });
+
+      // Post Comment Function
+      const postComment = () => {
+        const text = commentInput.value.trim();
+        if (!text) return;
+
+        // Create new comment element
+        const newComment = document.createElement('div');
+        newComment.className = 'comment-item';
+        newComment.innerHTML = `
+          <div class="comment-avatar">Me</div>
+          <div class="comment-body">
+            <div class="comment-user">You <span class="comment-meta">Just now</span></div>
+            <div class="comment-text">${text}</div>
+          </div>
+        `;
+
+        // Append and scroll
+        commentList.appendChild(newComment);
+        commentList.scrollTop = commentList.scrollHeight;
+
+        // Reset input
+        commentInput.value = '';
+        btnPostComment.disabled = true;
+      };
+
+      btnPostComment.addEventListener('click', postComment);
+
+      commentInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          postComment();
+        }
+      });
+    }
+  }
+
+  if (shareSheetOverlay) {
+    shareSheetOverlay.addEventListener('click', (e) => {
+      if (e.target === shareSheetOverlay) {
+        shareSheetOverlay.classList.remove('visible');
+      }
+    });
+  }
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  // --- Random Food Data ---
+  const foodItems = [
+    { name: 'Double Cheeseburger', image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80' },
+    { name: 'Steak & Fries', image: 'https://images.unsplash.com/photo-1600891964092-4316c288032e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80' },
+    { name: 'Grilled Salmon', image: 'https://images.unsplash.com/photo-1467003909585-2f8a7270028d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80' },
+    { name: 'Chicken Breast & Rice', image: 'https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80' },
+    { name: 'Pasta Primavera', image: 'https://images.unsplash.com/photo-1473093295043-cdd812d0e601?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80' },
+    { name: 'Caesar Salad', image: 'https://images.unsplash.com/photo-1550304943-4f24f54ddde9?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80' }
+  ];
+
+  // Pick Random Food
+  const randomFood = foodItems[Math.floor(Math.random() * foodItems.length)];
+  
+  // Update UI with Random Food
+  const foodNameEl = document.getElementById('latestFoodName');
+  const foodImageEl = document.getElementById('latestFoodImage');
+  
+  if (foodNameEl) foodNameEl.textContent = randomFood.name;
+  if (foodImageEl) foodImageEl.style.backgroundImage = `url('${randomFood.image}')`;
+
+  // --- Time & Date Logic ---
+  const updateLatestFoodTime = () => {
+    const timeEl = document.getElementById('latestFoodTime');
+    const dateEl = document.getElementById('latestFoodDate');
+    if (!timeEl) return;
+
+    const now = new Date();
+    // Subtract 1 hour 20 minutes = 80 minutes
+    now.setMinutes(now.getMinutes() - 80);
+
+    // Time
+    let hours = now.getHours();
+    const minutes = now.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+    const strMinutes = minutes < 10 ? '0' + minutes : minutes;
+    timeEl.textContent = `${hours}:${strMinutes} ${ampm}`;
+
+    // Date (e.g. Dec 19)
+    if (dateEl) {
+      const month = now.toLocaleString('default', { month: 'short' });
+      const day = now.getDate();
+      dateEl.textContent = `${month} ${day}`;
+    }
+  };
+
+  updateLatestFoodTime();
+  setInterval(updateLatestFoodTime, 60000);
+
+  // --- AI Analysis Logic ---
+  const analyzeFood = async () => {
+    const prompt = `Analyze nutritional info for '${randomFood.name}'. Return ONLY a JSON object (no markdown, no backticks) with the following keys:
+    - description (string: Assume the user has diabetes. Provide a short, friendly 2-sentence feedback on this meal. Suggest eating order (e.g. veggies first) or a quick walk if needed.)
+    - calories (number)
+    - glucose_risk (string: 'Stable', 'Medium', 'High')
+    - carbs_pct (number, e.g. 50)
+    - protein_pct (number, e.g. 30)
+    - fat_pct (number, e.g. 20)
+    - sugar (string, e.g. '12g')
+    - sugar_status (string: 'Good', 'Moderate', 'High')
+    - sodium (string, e.g. '0.5g')
+    - sodium_status (string: 'Good', 'Moderate', 'High')`;
+
+    try {
+      const encodedPrompt = encodeURIComponent(prompt);
+      const response = await fetch(`https://text.pollinations.ai/${encodedPrompt}`);
+      if (!response.ok) throw new Error('Network response was not ok');
+      
+      const text = await response.text();
+      const jsonStr = text.replace(/```json/g, '').replace(/```/g, '').trim();
+      const data = JSON.parse(jsonStr);
+
+      // Update Description
+      const descEl = document.getElementById('latestFoodDesc');
+      if (descEl && data.description) {
+        descEl.textContent = data.description;
+      }
+
+      // Update Bento Grid
+      const calVal = document.getElementById('calVal');
+      const calBadge = document.getElementById('calBadge');
+      const calProgress = document.getElementById('calProgress');
+      const calRemaining = document.getElementById('calRemaining');
+      
+      if (calVal) {
+        calVal.textContent = data.calories;
+        const dailyGoal = 2000;
+        const remaining = dailyGoal - data.calories;
+        calRemaining.textContent = `${remaining > 0 ? remaining : 0} kcal remaining`;
+        calProgress.style.width = `${Math.min((data.calories / dailyGoal) * 100, 100)}%`;
+        
+        if (data.calories > 800) {
+            calBadge.textContent = 'Heavy';
+            calBadge.className = 'badge-good warning';
+            calBadge.style.color = '#FF453A';
+            calBadge.style.background = 'rgba(255, 69, 58, 0.2)';
+        } else {
+            calBadge.textContent = 'Good';
+            calBadge.className = 'badge-good';
+            calBadge.style.color = '#34C759';
+            calBadge.style.background = 'rgba(52, 199, 89, 0.2)';
+        }
+      }
+
+      // Glucose Pill Logic
+      const glucosePillFill = document.getElementById('glucosePillFill');
+      const glucosePercentage = document.getElementById('glucosePercentage');
+      const glucoseTimer = document.getElementById('glucoseTimer');
+      
+      if (glucosePillFill && glucosePercentage && glucoseTimer) {
+        let startPct = 35;
+        if (data.glucose_risk === 'High') startPct = 88;
+        else if (data.glucose_risk === 'Medium') startPct = 62;
+        
+        // Initial State
+        glucosePillFill.style.width = `${startPct}%`;
+        glucosePercentage.textContent = `${startPct}%`;
+        
+        // Animation Variables
+        let currentPct = startPct;
+        let totalSeconds = 45 * 60; // 45 minutes countdown
+        
+        // Clear existing intervals
+        if (window.glucoseAnimInterval) clearInterval(window.glucoseAnimInterval);
+        
+        window.glucoseAnimInterval = setInterval(() => {
+          // Decrease Percentage slowly
+          if (currentPct > 15) {
+            currentPct -= 0.005; // Extremely slow decrease (10x slower)
+            glucosePillFill.style.width = `${currentPct}%`;
+            glucosePercentage.textContent = `${Math.floor(currentPct)}%`;
+          }
+          
+          // Decrease Timer
+          if (totalSeconds > 0) {
+            totalSeconds--;
+            const m = Math.floor(totalSeconds / 60);
+            const s = totalSeconds % 60;
+            glucoseTimer.textContent = `${m}m ${s < 10 ? '0'+s : s}s left`;
+          } else {
+            clearInterval(window.glucoseAnimInterval);
+          }
+        }, 1000); // Update every 1 second instead of 100ms
+      }
+
+      const carbsVal = document.getElementById('carbsVal');
+      const carbsBar = document.getElementById('carbsBar');
+      if (carbsVal) {
+        carbsVal.textContent = `${data.carbs_pct}%`;
+        carbsBar.style.width = `${data.carbs_pct}%`;
+      }
+
+      const proteinVal = document.getElementById('proteinVal');
+      const proteinBar = document.getElementById('proteinBar');
+      if (proteinVal) {
+        proteinVal.textContent = `${data.protein_pct}%`;
+        proteinBar.style.width = `${data.protein_pct}%`;
+      }
+
+      const fatVal = document.getElementById('fatVal');
+      const fatBar = document.getElementById('fatBar');
+      if (fatVal) {
+        fatVal.textContent = `${data.fat_pct}%`;
+        fatBar.style.width = `${data.fat_pct}%`;
+      }
+
+      const sugarVal = document.getElementById('sugarVal');
+      const sugarStatus = document.getElementById('sugarStatus');
+      if (sugarVal) {
+        sugarVal.textContent = data.sugar;
+        sugarStatus.textContent = data.sugar_status;
+        if (data.sugar_status === 'High') {
+            sugarVal.className = 'n-val warning';
+        } else {
+            sugarVal.className = 'n-val good';
+        }
+      }
+
+      const sodiumVal = document.getElementById('sodiumVal');
+      const sodiumStatus = document.getElementById('sodiumStatus');
+      if (sodiumVal) {
+        sodiumVal.textContent = data.sodium;
+        sodiumStatus.textContent = data.sodium_status;
+         if (data.sodium_status === 'High') {
+            sodiumVal.className = 'n-val warning';
+        } else {
+            sodiumVal.className = 'n-val good';
+        }
+      }
+
+    } catch (error) {
+      console.error('Error fetching nutritional info:', error);
+      const descEl = document.getElementById('latestFoodDesc');
+      if (descEl) descEl.textContent = "Could not analyze food data.";
+    }
+  };
+
+  analyzeFood();
+});
+
+
+  // --- Glucose Notification Logic ---
+  const btnGlucoseNotify = document.getElementById('btnGlucoseNotify');
+  const notificationToast = document.getElementById('notificationToast');
+  let toastTimeout;
+
+  if (btnGlucoseNotify && notificationToast) {
+    btnGlucoseNotify.addEventListener('click', () => {
+      // Toggle Active State
+      const isActive = btnGlucoseNotify.classList.toggle('active');
+      
+      if (isActive) {
+        // Show Toast
+        notificationToast.classList.remove('hidden');
+        
+        // Hide after 2 seconds
+        if (toastTimeout) clearTimeout(toastTimeout);
+        toastTimeout = setTimeout(() => {
+          notificationToast.classList.add('hidden');
+        }, 2000);
+      } else {
+        // Optional: Show 'Notification disabled' or just do nothing
+        notificationToast.classList.add('hidden');
+      }
+    });
+  }
+
+
+  // --- User Analysis Logic ---
+  const resetJournalOverlay = () => {
+      const btnJournalStart = document.getElementById('btnJournalStart');
+      const cameraStatusText = document.getElementById('cameraStatusText');
+      const analysisPrompt = document.getElementById('analysisPrompt');
+      const analysisInput = document.getElementById('analysisInput');
+      const btnJournalUpload = document.getElementById('btnJournalUpload');
+      const btnJournalCameraEnable = document.getElementById('btnJournalCameraEnable');
+      const btnWriteJournal = document.getElementById('btnWriteJournal');
+      
+      if(btnJournalStart) {
+          btnJournalStart.classList.remove('slide-out-left', 'camera-mode');
+          btnJournalStart.innerText = "Let's start!";
+          btnJournalStart.style.opacity = '';
+          btnJournalStart.style.pointerEvents = '';
+      }
+      if(cameraStatusText) cameraStatusText.classList.remove('slide-out-right');
+      if(btnJournalCameraEnable) btnJournalCameraEnable.classList.remove('hidden');
+      if(analysisPrompt) {
+          analysisPrompt.classList.remove('visible');
+          analysisPrompt.classList.add('hidden');
+      }
+      if(analysisInput) {
+          analysisInput.classList.remove('visible');
+          analysisInput.classList.add('hidden');
+          analysisInput.value = '';
+          analysisInput.disabled = false;
+      }
+      if(btnJournalUpload) btnJournalUpload.classList.remove('slide-out-right');
+      if(btnWriteJournal) {
+          btnWriteJournal.classList.remove('visible');
+          btnWriteJournal.classList.add('hidden');
+      }
+  };
+
+  const analyzeUserFood = async (foodName) => {
+    const prompt = `Analyze nutritional info for '${foodName}'. Return ONLY a JSON object (no markdown, no backticks) with the following keys:
+    - description (string: Assume the user has diabetes. Provide a short, friendly 2-sentence feedback on this meal IN ENGLISH. Suggest eating order (e.g. veggies first) or a quick walk if needed.)
+    - calories (number)
+    - glucose_risk (string: 'Stable', 'Medium', 'High')
+    - carbs_pct (number, e.g. 50)
+    - protein_pct (number, e.g. 30)
+    - fat_pct (number, e.g. 20)
+    - sugar (string, e.g. '12g')
+    - sugar_status (string: 'Good', 'Moderate', 'High')
+    - sodium (string, e.g. '0.5g')
+    - sodium_status (string: 'Good', 'Moderate', 'High')
+    - ingredients (array of strings)`;
+
+    try {
+      const encodedPrompt = encodeURIComponent(prompt);
+      const response = await fetch(`https://text.pollinations.ai/${encodedPrompt}`);
+      if (!response.ok) throw new Error('Network response was not ok');
+      
+      const text = await response.text();
+      const jsonStr = text.replace(/```json/g, '').replace(/```/g, '').trim();
+      const data = JSON.parse(jsonStr);
+
+      // Update Description
+      const descEl = document.getElementById('latestFoodDesc');
+      if (descEl && data.description) {
+        descEl.textContent = data.description;
+      }
+
+      // Update Bento Grid
+      const calVal = document.getElementById('calVal');
+      const calBadge = document.getElementById('calBadge');
+      const calProgress = document.getElementById('calProgress');
+      const calRemaining = document.getElementById('calRemaining');
+      
+      if (calVal) {
+        calVal.textContent = data.calories;
+        const dailyGoal = 2000;
+        const remaining = dailyGoal - data.calories;
+        calRemaining.textContent = `${remaining > 0 ? remaining : 0} kcal remaining`;
+        calProgress.style.width = `${Math.min((data.calories / dailyGoal) * 100, 100)}%`;
+        
+        if (data.calories > 800) {
+            calBadge.textContent = 'Heavy';
+            calBadge.className = 'badge-good warning';
+            calBadge.style.color = '#FF453A';
+            calBadge.style.background = 'rgba(255, 69, 58, 0.2)';
+        } else {
+            calBadge.textContent = 'Good';
+            calBadge.className = 'badge-good';
+            calBadge.style.color = '#34C759';
+            calBadge.style.background = 'rgba(52, 199, 89, 0.2)';
+        }
+      }
+
+      // Glucose Pill Logic
+      const glucosePillFill = document.getElementById('glucosePillFill');
+      const glucosePercentage = document.getElementById('glucosePercentage');
+      const glucoseTimer = document.getElementById('glucoseTimer');
+      
+      if (glucosePillFill && glucosePercentage && glucoseTimer) {
+        let startPct = 35;
+        if (data.glucose_risk === 'High') startPct = 88;
+        else if (data.glucose_risk === 'Medium') startPct = 62;
+        
+        // Initial State
+        glucosePillFill.style.width = `${startPct}%`;
+        glucosePercentage.textContent = `${startPct}%`;
+        
+        // Animation Variables
+        let currentPct = startPct;
+        let totalSeconds = 45 * 60; // 45 minutes countdown
+        
+        // Clear existing intervals
+        if (window.glucoseAnimInterval) clearInterval(window.glucoseAnimInterval);
+        
+        window.glucoseAnimInterval = setInterval(() => {
+          // Decrease Percentage slowly
+          if (currentPct > 15) {
+            currentPct -= 0.005; // Extremely slow decrease (10x slower)
+            glucosePillFill.style.width = `${currentPct}%`;
+            glucosePercentage.textContent = `${Math.floor(currentPct)}%`;
+          }
+          
+          // Decrease Timer
+          if (totalSeconds > 0) {
+            totalSeconds--;
+            const m = Math.floor(totalSeconds / 60);
+            const s = totalSeconds % 60;
+            glucoseTimer.textContent = `${m}m ${s < 10 ? '0'+s : s}s left`;
+          } else {
+            clearInterval(window.glucoseAnimInterval);
+          }
+        }, 1000); // Update every 1 second instead of 100ms
+      }
+
+      const carbsVal = document.getElementById('carbsVal');
+      const carbsBar = document.getElementById('carbsBar');
+      if (carbsVal) {
+        carbsVal.textContent = `${data.carbs_pct}%`;
+        carbsBar.style.width = `${data.carbs_pct}%`;
+      }
+
+      const proteinVal = document.getElementById('proteinVal');
+      const proteinBar = document.getElementById('proteinBar');
+      if (proteinVal) {
+        proteinVal.textContent = `${data.protein_pct}%`;
+        proteinBar.style.width = `${data.protein_pct}%`;
+      }
+
+      const fatVal = document.getElementById('fatVal');
+      const fatBar = document.getElementById('fatBar');
+      if (fatVal) {
+        fatVal.textContent = `${data.fat_pct}%`;
+        fatBar.style.width = `${data.fat_pct}%`;
+      }
+
+      const sugarVal = document.getElementById('sugarVal');
+      const sugarStatus = document.getElementById('sugarStatus');
+      if (sugarVal) {
+        sugarVal.textContent = data.sugar;
+        sugarStatus.textContent = data.sugar_status;
+        if (data.sugar_status === 'High') {
+            sugarVal.className = 'n-val warning';
+        } else {
+            sugarVal.className = 'n-val good';
+        }
+      }
+
+      const sodiumVal = document.getElementById('sodiumVal');
+      const sodiumStatus = document.getElementById('sodiumStatus');
+      if (sodiumVal) {
+        sodiumVal.textContent = data.sodium;
+        sodiumStatus.textContent = data.sodium_status;
+         if (data.sodium_status === 'High') {
+            sodiumVal.className = 'n-val warning';
+        } else {
+            sodiumVal.className = 'n-val good';
+        }
+      }
+
+      // Show Analysis Result Text
+      const analysisTextDisplay = document.getElementById('analysisTextDisplay');
+      if (analysisTextDisplay) {
+          analysisTextDisplay.innerHTML = `
+            ${data.description}<br><br>
+            <span style="font-size: 14px; color: #666;">
+            Estimated Calories: <strong>${data.calories} kcal</strong><br>
+            Estimated Sugar: <strong>${data.sugar}</strong>
+            </span>
+          `;
+          analysisTextDisplay.classList.remove('hidden');
+          setTimeout(() => {
+              analysisTextDisplay.classList.add('visible');
+          }, 50);
+      }
+
+      // Show Write Journal Button
+      const btnWriteJournal = document.getElementById('btnWriteJournal');
+      if (btnWriteJournal) {
+          btnWriteJournal.classList.remove('hidden');
+          setTimeout(() => btnWriteJournal.classList.add('visible'), 100);
+      }
+
+    } catch (error) {
+      console.error('Error fetching nutritional info:', error);
+      alert("Could not analyze food data. Please try again.");
+      const analysisInput = document.getElementById('analysisInput');
+      if(analysisInput) analysisInput.disabled = false;
+    }
+  };
+
+  const analysisInput = document.getElementById('analysisInput');
+  if (analysisInput) {
+      analysisInput.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+              const val = analysisInput.value.trim();
+              if (val) {
+                  // Do not disable input so user can edit
+                  // analysisInput.disabled = true; 
+                  analyzeUserFood(val);
+              }
+          }
+      });
+  }
+
+  const btnWriteJournal = document.getElementById('btnWriteJournal');
+  if (btnWriteJournal) {
+      btnWriteJournal.addEventListener('click', () => {
+          // document.getElementById('journalOverlay').classList.remove('active');
+          // resetJournalOverlay();
+          // navigateTo(4);
+      });
+  }
+
+  // --- Update Recap Date ---
+  const recapDateEl = document.getElementById('recapDate');
+  if (recapDateEl) {
+    const now = new Date();
+    const options = { month: 'short', day: 'numeric', year: 'numeric' };
+    recapDateEl.textContent = now.toLocaleDateString('en-US', options);
+  }
+
