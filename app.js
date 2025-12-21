@@ -292,61 +292,65 @@ document.addEventListener('DOMContentLoaded', () => {
   const reelsContainer = document.getElementById('reels-container');
   const videos = document.querySelectorAll('.reel-video');
 
-  function handleReelsPlayback(isActive) {
-    if (!isActive) {
-      videos.forEach(v => v.pause());
-      return;
-    }
-    
-    // Play the visible reel
-    checkVisibleReel();
-  }
+  // Click to Play Logic
+  document.querySelectorAll('.reel-item').forEach(item => {
+    const video = item.querySelector('video');
+    if (!video) return;
 
-  function checkVisibleReel() {
-    // Find the reel item that is most visible
-    let maxRatio = 0;
-    let visibleVideo = null;
+    item.addEventListener('click', (e) => {
+      // Ignore clicks on buttons
+      if (e.target.closest('button')) return;
 
-    document.querySelectorAll('.reel-item').forEach(item => {
-      const rect = item.getBoundingClientRect();
-      const video = item.querySelector('video');
-      if (!video) return;
-
-      // Calculate intersection ratio manually
-      const visibleHeight = Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0);
-      const ratio = Math.max(0, visibleHeight / rect.height);
-
-      if (ratio > 0.6 && ratio > maxRatio) {
-        maxRatio = ratio;
-        visibleVideo = video;
+      if (video.paused) {
+        // Pause all other videos
+        videos.forEach(v => {
+          if (v !== video) {
+            v.pause();
+            v.closest('.reel-item').classList.remove('playing');
+          }
+        });
+        video.play().then(() => {
+          item.classList.add('playing');
+        }).catch(err => console.log("Play error", err));
       } else {
         video.pause();
+        item.classList.remove('playing');
       }
     });
 
-    if (visibleVideo) {
-      visibleVideo.play().catch(e => console.log("Autoplay prevented", e));
+    // Sync UI state
+    video.addEventListener('pause', () => {
+      item.classList.remove('playing');
+    });
+    video.addEventListener('play', () => {
+      item.classList.add('playing');
+    });
+  });
+
+  function handleReelsPlayback(isActive) {
+    if (!isActive) {
+      videos.forEach(v => {
+        v.pause();
+        v.closest('.reel-item').classList.remove('playing');
+      });
+      return;
     }
+    // No autoplay on active
   }
 
+  // Observer only to pause off-screen videos
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       const video = entry.target.querySelector('video');
       if (!video) return;
 
-      // Force pause if not on reels page
-      if (currentPageIndex !== 1) {
+      // Pause if scrolled away
+      if (!entry.isIntersecting || entry.intersectionRatio < 0.1) {
         video.pause();
-        return;
-      }
-
-      if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
-        video.play().catch(e => console.log("Autoplay prevented", e));
-      } else {
-        video.pause();
+        entry.target.classList.remove('playing');
       }
     });
-  }, { threshold: 0.6 });
+  }, { threshold: 0.1 });
 
   document.querySelectorAll('.reel-item').forEach(item => {
     observer.observe(item);
