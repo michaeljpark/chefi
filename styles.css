@@ -677,19 +677,21 @@ h1, h2, h3, h4, h5, h6 {
 .nav-label {
   font-size: 13px;
   font-weight: 600;
-  display: none;
   white-space: nowrap;
   opacity: 0;
-  animation: fadeIn 0.3s forwards 0.1s;
+  max-width: 0;
+  overflow: hidden;
+  transition: opacity 0.3s ease 0.1s, max-width 0.3s ease;
   margin-top: 1px; /* Optical vertical alignment */
 }
 
-@keyframes fadeIn {
+/* @keyframes fadeIn {
   to { opacity: 1; }
-}
+} */
 
 .nav-btn.active .nav-label {
-  display: block;
+  opacity: 1;
+  max-width: 100px;
 }
 
 .nav-btn.active svg {

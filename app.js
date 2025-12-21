@@ -102,7 +102,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.finishOnboarding = function() {
     document.getElementById('onboarding').classList.add('hidden');
-    // Could save preferences here
+    // Force update nav state to ensure labels are visible
+    navigateTo(currentPageIndex);
   };
 
   window.togglePref = function(btn) {
@@ -206,6 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Swipe Logic (Pointer Events for Desktop/Mobile compatibility)
   let startX = 0;
   let startY = 0;
+  let startTime = 0;
   let isDragging = false;
   let isHorizontalDrag = false;
   let currentPointerId = null;
@@ -215,6 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     startX = e.clientX;
     startY = e.clientY;
+    startTime = Date.now();
     isDragging = true;
     isHorizontalDrag = false;
     currentPointerId = e.pointerId;
@@ -264,13 +267,15 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if (isHorizontalDrag) {
       const dx = e.clientX - startX;
+      const dt = Date.now() - startTime;
+      const velocity = Math.abs(dx) / dt;
       const threshold = window.innerWidth * 0.2; // 20% swipe to change
 
       pagesContainer.style.transition = 'transform 0.3s cubic-bezier(0.215, 0.610, 0.355, 1.000)';
 
-      if (dx < -threshold && currentPageIndex < totalPages - 1) {
+      if ((dx < -threshold || (dx < -30 && velocity > 0.3)) && currentPageIndex < totalPages - 1) {
         navigateTo(currentPageIndex + 1);
-      } else if (dx > threshold && currentPageIndex > 0) {
+      } else if ((dx > threshold || (dx > 30 && velocity > 0.3)) && currentPageIndex > 0) {
         navigateTo(currentPageIndex - 1);
       } else {
         navigateTo(currentPageIndex); // Snap back
