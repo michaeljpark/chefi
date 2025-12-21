@@ -303,18 +303,42 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function checkVisibleReel() {
-    // Simple intersection check or center check
-    // Since we use scroll-snap, one is usually dominant
-    // Let's use IntersectionObserver for robustness
+    // Find the reel item that is most visible
+    let maxRatio = 0;
+    let visibleVideo = null;
+
+    document.querySelectorAll('.reel-item').forEach(item => {
+      const rect = item.getBoundingClientRect();
+      const video = item.querySelector('video');
+      if (!video) return;
+
+      // Calculate intersection ratio manually
+      const visibleHeight = Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0);
+      const ratio = Math.max(0, visibleHeight / rect.height);
+
+      if (ratio > 0.6 && ratio > maxRatio) {
+        maxRatio = ratio;
+        visibleVideo = video;
+      } else {
+        video.pause();
+      }
+    });
+
+    if (visibleVideo) {
+      visibleVideo.play().catch(e => console.log("Autoplay prevented", e));
+    }
   }
 
   const observer = new IntersectionObserver((entries) => {
-    // Only play if we are on the reels page
-    if (currentPageIndex !== 1) return;
-
     entries.forEach(entry => {
       const video = entry.target.querySelector('video');
       if (!video) return;
+
+      // Force pause if not on reels page
+      if (currentPageIndex !== 1) {
+        video.pause();
+        return;
+      }
 
       if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
         video.play().catch(e => console.log("Autoplay prevented", e));
