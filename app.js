@@ -199,7 +199,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Check My Food Journey Button
   const btnCheckJourney = document.querySelector('.btn-check-journey');
   if (btnCheckJourney) {
-    btnCheckJourney.addEventListener('click', () => {
+    btnCheckJourney.addEventListener('click', (e) => {
+      e.stopPropagation();
       navigateTo(3);
     });
   }
@@ -219,13 +220,14 @@ document.addEventListener('DOMContentLoaded', () => {
     startY = e.clientY;
     startTime = Date.now();
     isDragging = true;
-    isHorizontalDrag = false;
+    isHorizontalDrag = false; // Reset
     currentPointerId = e.pointerId;
-    try {
-      pager.setPointerCapture(e.pointerId);
-    } catch (err) {
-      // Ignore
-    }
+    
+    // REMOVED setPointerCapture here to allow clicks to pass through
+    // try {
+    //   pager.setPointerCapture(e.pointerId);
+    // } catch (err) { }
+    
     // Don't prevent default yet, we need to know direction
   });
 
@@ -238,6 +240,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Determine direction once
     if (!isHorizontalDrag) {
       if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 10) {
+        isHorizontalDrag = true;
+        try { pager.setPointerCapture(e.pointerId); } catch(err) {} // CAPTURE HERE
+        
+        // Disable vertical scroll if horizontal swipe detected
+        // e.preventDefault(); // This might be tricky with pointer events, usually touch-action: pan-y handles it in CSS
+      } else if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 10) {
         isHorizontalDrag = true;
         // Disable vertical scroll if horizontal swipe detected
         // e.preventDefault(); // This might be tricky with pointer events, usually touch-action: pan-y handles it in CSS
@@ -1645,9 +1653,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnWriteJournal = document.getElementById('btnWriteJournal');
   if (btnWriteJournal) {
       btnWriteJournal.addEventListener('click', () => {
-          // document.getElementById('journalOverlay').classList.remove('active');
-          // resetJournalOverlay();
-          // navigateTo(4);
+          document.getElementById('journalOverlay')?.classList.remove('active');
+          resetJournalOverlay();
+          navigateTo(4);
       });
   }
 
